@@ -2,8 +2,8 @@
 <Configuration>
     <Appenders>
         <!-- 输出到文件，按天或者超过80MB分割 -->
-        <RollingFile name="INFORollingFile" fileName="/sdeyfollowuplogs/sdeyfollowupINFO.log"
-                     filePattern="/sdeyfollowuplogs/$${date:yyyy-MM}/sdeyfollowupINFO-%d{yyyy-MM-dd}-%i.log.gz">
+        <RollingFile name="INFORollingFile" fileName="/hypertensionManagerlogs/hypertensionManagerINFO.log"
+                     filePattern="/hypertensionManager/$${date:yyyy-MM}/hypertensionManagerINFO-%d{yyyy-MM-dd}-%i.log.gz">
             <!-- 需要记录的级别 -->
             <!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"/>
@@ -38,7 +38,7 @@
             <AppenderRef ref="errorFile"/>
         </Root>
         <!--level表示最小输出级别，低于这个级别不输出,这里输出com包下的所有日志-->
-        <Logger name="com.sdey.impl.service.SdeyFollowUpServiceImpl" level="DEBUG" additivity="false">
+        <Logger name="com.kangkang.controller" level="DEBUG" additivity="false">
             <AppenderRef ref="INFORollingFile"/>
         </Logger>
 

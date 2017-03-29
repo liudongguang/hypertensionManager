@@ -1,9 +1,9 @@
-package com.kangkang.vo;
+package com.kangkang.api.vo;
 
 /**
  * Created by liudo on 2017/3/29.
  */
-public class AcceptVo {
+public class AcceptResultVo {
     private Integer code;
     private String status;
     private String msg;
