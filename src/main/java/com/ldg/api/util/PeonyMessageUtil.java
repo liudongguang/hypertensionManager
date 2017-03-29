@@ -14,7 +14,7 @@ public class PeonyMessageUtil {
 	private static String sign;
 	private static String sendServer;
 	static {
-		ClassPathResource hospitalInterface = new ClassPathResource("hisinterface.properties");
+		ClassPathResource hospitalInterface = new ClassPathResource("kangkang.properties");
 		try {
 			hospitalInterfaceProperties.load(hospitalInterface.getInputStream());
 			StringBuilder mstr=new StringBuilder(hospitalInterfaceProperties.getProperty("msg.userName"));

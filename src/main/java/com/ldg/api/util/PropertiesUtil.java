@@ -10,7 +10,7 @@ public class PropertiesUtil {
 	private static Properties hospitalInterfaceProperties = new Properties();
 	private static String hosptalServer;
 	static {
-		ClassPathResource hospitalInterface = new ClassPathResource("hisinterface.properties");
+		ClassPathResource hospitalInterface = new ClassPathResource("kangkang.properties");
 		try {
 			hospitalInterfaceProperties.load(hospitalInterface.getInputStream());
 			hosptalServer = hospitalInterfaceProperties.getProperty("hospitalServer");
