@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdey.impl.mapper.PatientsMapper">
+    <resultMap id="BaseResultMap" type="com.sdey.api.po.Patients">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="zyh" jdbcType="VARCHAR" property="zyh"/>
+        <result column="zyhm" jdbcType="VARCHAR" property="zyhm"/>
+        <result column="brxm" jdbcType="VARCHAR" property="brxm"/>
+        <result column="csny" jdbcType="DATE" property="csny"/>
+        <result column="age" jdbcType="VARCHAR" property="age"/>
+        <result column="xb" jdbcType="VARCHAR" property="xb"/>
+        <result column="cyks" jdbcType="VARCHAR" property="cyks"/>
+        <result column="brbq" jdbcType="VARCHAR" property="brbq"/>
+        <result column="ryrq" jdbcType="TIMESTAMP" property="ryrq"/>
+        <result column="hkdz" jdbcType="VARCHAR" property="hkdz"/>
+        <result column="lxdh" jdbcType="VARCHAR" property="lxdh"/>
+        <result column="jtdh" jdbcType="VARCHAR" property="jtdh"/>
+        <result column="cyrq" jdbcType="TIMESTAMP" property="cyrq"/>
+        <result column="zgqk" jdbcType="VARCHAR" property="zgqk"/>
+        <result column="zd" jdbcType="VARCHAR" property="zd"/>
+        <result column="importDateStr" jdbcType="VARCHAR" property="importdatestr"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+
+    <select id="selectDisPatients" resultType="com.sdey.api.vo.ext.DisPatients"
+            parameterType="com.sdey.api.vo.DisSearch">
+        select a.*,b.uid as workid,b.workstate,b.managerid from sdeyfollowup.patients a left JOIN sdeyfollowup.managerwork b on   a.uid=b.patientsid
+        <!--
+        <if test="sessionUser!=null and sessionUser.name!='超级管理'">
+            a.uid=b.patientsid
+        </if>
+        <if test="sessionUser!=null and sessionUser.name=='超级管理'">
+            (a.uid=b.patientsid and b.managerid=#{sessionUser.uid})
+        </if>
+        -->
+        <where>
+            <if test="sessionUser!=null and sessionUser.name!='超级管理'">
+               and b.managerid=#{sessionUser.uid}
+            </if>
+            <if test="state!=null and state!=1">
+                and b.workstate=1
+            </if>
+            <if test="state==1">
+                and b.workstate is null
+            </if>
+            <if test="ksid!=null and ksid!=''">
+                and  a.cyks=#{ksid}
+            </if>
+            <if test="patientName!=null and patientName!=''">
+                and  a.brxm  like CONCAT(#{patientName},'%')
+            </if>
+            <if test="startTime!=null and endTime!=null">
+                and a.cyrq between #{startTime} and #{endTime}
+            </if>
+
+        </where>
+        order by a.cyrq
+
+    </select>
+    <select id="selectUidsByDate" resultType="java.lang.Integer">
+        select uid from patients where importDateStr=#{importDateStr} order by cyrq
+    </select>
+    <select id="selectUidsByDatePlus" resultType="com.sdey.api.vo.ext.FenpeiWorkPlus">
+          select uid as pationtID,cyks as ksName,zgqk,lxdh,jtdh from patients where importDateStr=#{importDateStr} order by cyrq
+    </select>
+    <select id="getListKsName" resultType="java.lang.String">
+        select cyks from patients group by  cyks
+    </select>
+</mapper>

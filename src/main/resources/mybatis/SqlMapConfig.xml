@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--2.settings全局参数配置 -->
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+        <!-- 打开延时加载开关 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 将积极加载关闭，成为按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!-- 开启二级缓存，默认是开启的，这里便于理解 -->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <!-- <settings></settings> -->
+    <!-- 3.类型别名 （重点）针对parameterType和resultType指定的类型定义别名方便开发 -->
+    <typeAliases>
+        <!-- 针对单个别名的定义 <typeAlias type="com.ldg.mybatis.po.Users" alias="users"/> -->
+        <!--自动命名， 首字母大小写都可以 -->
+        <!-- <package name="com.peony" /> -->
+    </typeAliases>
+    <!--类型处理器 完成jdbc类和java类型直接的转换，通常mybatis自己提供的处理器就满足了日常需要，不需要自定义 -->
+    <typeHandlers></typeHandlers>
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--指定分页插件使用哪种方言-->
+            <property name="helperDialect" value="mysql"></property>
+            <!--当该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）-->
+            <property name="pageSizeZero" value="true"></property>
+        </plugin>
+    </plugins>
+</configuration>

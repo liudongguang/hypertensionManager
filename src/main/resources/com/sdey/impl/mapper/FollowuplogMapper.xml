@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdey.impl.mapper.FollowuplogMapper">
+  <resultMap id="BaseResultMap" type="com.sdey.api.po.Followuplog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="followupstate" jdbcType="INTEGER" property="followupstate" />
+    <result column="huifustate" jdbcType="INTEGER" property="huifustate" />
+    <result column="manyistate" jdbcType="INTEGER" property="manyistate" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="pationtid" jdbcType="INTEGER" property="pationtid" />
+    <result column="duanxistate" jdbcType="INTEGER" property="duanxistate" />
+    <result column="workerid" jdbcType="INTEGER" property="workerid" />
+    <result column="isfirstlog" jdbcType="INTEGER" property="isfirstlog" />
+    <result column="workername" jdbcType="VARCHAR" property="workername" />
+    <result column="beizhu" jdbcType="VARCHAR" property="beizhu" />
+    <result column="logdate" jdbcType="TIMESTAMP" property="logdate" />
+  </resultMap>
+  <select id="selectByPatientIDAndFirstState" parameterType="com.sdey.api.po.Followuplog" resultType="int">
+       select uid from followuplog where pationtid=#{pationtid} and isfirstlog=1
+  </select>
+  <select id="getpationtSFLogs" parameterType="int" resultMap="BaseResultMap">
+      SELECT  followupstate,huifustate,manyistate,logdate,workername,beizhu from followuplog
+      where pationtid=#{pationtid}
+      order by createTime desc
+  </select>
+</mapper>

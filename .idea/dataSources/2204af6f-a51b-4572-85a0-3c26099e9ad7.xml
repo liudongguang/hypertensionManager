@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="sdeyfollowup@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="sdeyfollowup">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="lvfei"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sdeyweixin"/>
+    <schema id="8" parent="1" name="sys"/>
+    <table id="9" parent="2" name="followuplog">
+      <Comment>随访记录</Comment>
+    </table>
+    <table id="10" parent="2" name="importlog">
+      <Comment>导入信息记录列表</Comment>
+    </table>
+    <table id="11" parent="2" name="manager"/>
+    <table id="12" parent="2" name="patients">
+      <Comment>病人列表</Comment>
+    </table>
+    <column id="13" parent="9" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="14" parent="9" name="followupstate">
+      <Position>2</Position>
+      <Comment>随访状态  1.未随访  2.以随访  3.联系不上</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="15" parent="9" name="huifustate">
+      <Position>3</Position>
+      <Comment>回复情况  1.康复  2.未康复</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="16" parent="9" name="manyistate">
+      <Position>4</Position>
+      <Comment>满意情况   1 满意  2不满意</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="17" parent="9" name="createTime">
+      <Position>5</Position>
+      <Comment>创建记录时间</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="18" parent="9" name="pationtid">
+      <Position>6</Position>
+      <Comment>患者id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="19" parent="9" name="duanxistate">
+      <Position>7</Position>
+      <Comment>短信发送情况  1发送  2发送失败</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="20" parent="9" name="workerid">
+      <Position>8</Position>
+      <Comment>操作员id</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="21" parent="9" name="isfirstlog">
+      <Position>9</Position>
+      <Comment>是否是第一条随访</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="22" parent="9" name="workername">
+      <Position>10</Position>
+      <Comment>操作员姓名</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="23" parent="9" name="beizhu">
+      <Position>11</Position>
+      <DataType>varchar(1000)|0</DataType>
+    </column>
+    <column id="24" parent="9" name="logdate">
+      <Position>12</Position>
+      <Comment>随访时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="25" parent="9" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="26" parent="10" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="27" parent="10" name="importDateStr">
+      <Position>2</Position>
+      <Comment>导入的日期</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="28" parent="10" name="createTime">
+      <Position>3</Position>
+      <Comment>导入时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="29" parent="10" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="30" parent="11" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="31" parent="11" name="name">
+      <Position>2</Position>
+      <Comment>姓名</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="11" name="username">
+      <Position>3</Position>
+      <Comment>登陆名</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="11" name="pass">
+      <Position>4</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="11" name="createtime">
+      <Position>5</Position>
+      <Comment>创建日期</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="35" parent="11" name="username_UNIQUE">
+      <ColNames>username</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="36" parent="11" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="37" parent="11" name="username_UNIQUE">
+      <ColNames>username</ColNames>
+      <UnderlyingIndexName>username_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="38" parent="12" name="uid">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="39" parent="12" name="zyh">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="40" parent="12" name="zyhm">
+      <Position>3</Position>
+      <Comment>住院号码</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="41" parent="12" name="brxm">
+      <Position>4</Position>
+      <Comment>病人姓名</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="42" parent="12" name="csny">
+      <Position>5</Position>
+      <Comment>出生年月</Comment>
+      <DataType>date|0</DataType>
+    </column>
+    <column id="43" parent="12" name="age">
+      <Position>6</Position>
+      <Comment>年龄</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="44" parent="12" name="xb">
+      <Position>7</Position>
+      <Comment>性别</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="45" parent="12" name="cyks">
+      <Position>8</Position>
+      <Comment>出院科室</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="46" parent="12" name="brbq">
+      <Position>9</Position>
+      <Comment>病人病区</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="47" parent="12" name="ryrq">
+      <Position>10</Position>
+      <Comment>入院日期</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="48" parent="12" name="hkdz">
+      <Position>11</Position>
+      <Comment>户口地址</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="49" parent="12" name="lxdh">
+      <Position>12</Position>
+      <Comment>联系电话</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="50" parent="12" name="jtdh">
+      <Position>13</Position>
+      <Comment>家庭电话</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="51" parent="12" name="cyrq">
+      <Position>14</Position>
+      <Comment>出院日期</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="52" parent="12" name="zgqk">
+      <Position>15</Position>
+      <Comment>转归情况</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="53" parent="12" name="zd">
+      <Position>16</Position>
+      <Comment>诊断</Comment>
+      <DataType>varchar(500)|0</DataType>
+    </column>
+    <column id="54" parent="12" name="importDateStr">
+      <Position>17</Position>
+      <Comment>导入的出院日期</Comment>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="55" parent="12" name="createTime">
+      <Position>18</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="56" parent="12" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <!-- 输出到文件，按天或者超过80MB分割 -->
+        <RollingFile name="INFORollingFile" fileName="/sdeyfollowuplogs/sdeyfollowupINFO.log"
+                     filePattern="/sdeyfollowuplogs/$${date:yyyy-MM}/sdeyfollowupINFO-%d{yyyy-MM-dd}-%i.log.gz">
+            <!-- 需要记录的级别 -->
+            <!-- <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" /> -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="80 MB"/>
+            </Policies>
+        </RollingFile>
+        <!-- 配置日志输出文件名字 追加读写 -->
+        <RollingFile name="errorFile" fileName="/errorFile.log"
+                     filePattern="/sdeyfollowup/errorFile.%d{yyyy-MM-dd}.log" append="true">
+            <!-- 输出格式 -->
+            <PatternLayout
+                    pattern="[%l] [%t] [%-4r] [%d{yyyy-MM-dd HH:mm:ss,SSS}] [%p] \: %m%n"/>
+            <!-- 设置策略 -->
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="false"/>
+            </Policies>
+        </RollingFile>
+        <!-- 标准输出 -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%l] [%t] [%-4r] [%d{yyyy-MM-dd HH:mm:ss,SSS}] [%p] \: %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- 配置记录器级别 -->
+        <Root level="ERROR">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="errorFile"/>
+        </Root>
+        <!--level表示最小输出级别，低于这个级别不输出,这里输出com包下的所有日志-->
+        <Logger name="com.sdey.impl.service.SdeyFollowUpServiceImpl" level="DEBUG" additivity="false">
+            <AppenderRef ref="INFORollingFile"/>
+        </Logger>
+
+        <!-- 将业务dao接口填写进去,并用控制台输出即可-->
+        <logger name="com.sdey.impl.mapper" level="DEBUG" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
+    </Loggers>
+</Configuration> 
