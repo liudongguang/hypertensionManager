@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.impl.mapper.TUsersMapper">
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.TUsers">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="bindsn" jdbcType="VARCHAR" property="bindsn" />
+    <result column="bindimei" jdbcType="VARCHAR" property="bindimei" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="rongid" jdbcType="VARCHAR" property="rongid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <select id="selectUidByAcceptkkdata" parameterType="com.kangkang.api.po.Acceptkkdata" resultType="int">
+       select uid from t_users where bindsn=#{kksn} and bindimei=#{imei}
+  </select>
+</mapper>

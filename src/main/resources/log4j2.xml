@@ -15,7 +15,7 @@
         </RollingFile>
         <!-- 配置日志输出文件名字 追加读写 -->
         <RollingFile name="errorFile" fileName="/errorFile.log"
-                     filePattern="/sdeyfollowup/errorFile.%d{yyyy-MM-dd}.log" append="true">
+                     filePattern="/hypertensionManagerlogs/errorFile.%d{yyyy-MM-dd}.log" append="true">
             <!-- 输出格式 -->
             <PatternLayout
                     pattern="[%l] [%t] [%-4r] [%d{yyyy-MM-dd HH:mm:ss,SSS}] [%p] \: %m%n"/>
@@ -43,7 +43,7 @@
         </Logger>
 
         <!-- 将业务dao接口填写进去,并用控制台输出即可-->
-        <logger name="com.sdey.impl.mapper" level="DEBUG" additivity="false">
+        <logger name="com.kangkang.impl.mapper" level="DEBUG" additivity="false">
             <appender-ref ref="STDOUT"/>
         </logger>
     </Loggers>

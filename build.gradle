@@ -168,12 +168,17 @@ task copyWAR(dependsOn:delWAR) {
         ssh.run {
             session(remotes.depServer) {
                 println 'copyWAR run.....'+buildDir.toString()
-                put from: buildDir.toString() + '/libs/sdeyfollowup.war', into: '/opt/apache-tomcat-9.0.0.M18/webapps'
+                put from: buildDir.toString() + '/libs/hypertensionManager.war', into: '/opt/apache-tomcat-9.0.0.M18/webapps'
             }
         }
     }
 }
-task startServer(dependsOn:copyWAR) {
+task aaa(){
+    doLast {
+        println '3333333333333333 run.....'
+    }
+}
+task startServer111(dependsOn:copyWAR) {
     doLast {
         ssh.run {
             session(remotes.depServer) {
