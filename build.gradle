@@ -80,6 +80,10 @@ dependencies {
             "commons-io:commons-io:2.4",
             "com.fasterxml.jackson.core:jackson-databind:2.9.0.pr1"
     )
+    compile(
+            "redis.clients:jedis:2.9.0",
+            "org.springframework.data:spring-data-redis:1.8.1.RELEASE"
+    )
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'javax.servlet:jstl:1.2'
     compile 'com.belerweb:pinyin4j:2.5.1'
@@ -129,9 +133,11 @@ task mybatisGenerate << {
 }
 
 //////////////////////////////
+
 ssh.settings {
     knownHosts = allowAnyHosts
 }
+
 remotes {
     depServer {
         host = '124.128.194.115'
@@ -145,7 +151,7 @@ task shutdownServer(dependsOn:war) {
         ssh.run {
             session(remotes.depServer) {
                 println 'startServer run.....'
-                execute '/opt/apache-tomcat-9.0.0.M18/bin/shutdown.sh'
+                execute '/opt/apache-tomcat-8.0.43/bin/shutdown.sh'
             }
         }
     }
@@ -156,8 +162,8 @@ task delWAR (dependsOn:shutdownServer){
             session(remotes.depServer) {
                 println 'delWAR run.....'
                 execute '''#!/bin/sh  
-                        rm -rf /opt/apache-tomcat-9.0.0.M18/webapps/hypertensionManager  
-                        rm -f /opt/apache-tomcat-9.0.0.M18/webapps/hypertensionManager.war  
+                        rm -rf /opt/apache-tomcat-8.0.43/webapps/hypertensionManager  
+                        rm -f /opt/apache-tomcat-8.0.43/webapps/hypertensionManager.war  
                     '''
             }
         }
@@ -168,22 +174,18 @@ task copyWAR(dependsOn:delWAR) {
         ssh.run {
             session(remotes.depServer) {
                 println 'copyWAR run.....'+buildDir.toString()
-                put from: buildDir.toString() + '/libs/hypertensionManager.war', into: '/opt/apache-tomcat-9.0.0.M18/webapps'
+                put from: buildDir.toString() + '/libs/hypertensionManager.war', into: '/opt/apache-tomcat-8.0.43/webapps'
             }
         }
     }
 }
-task aaa(){
-    doLast {
-        println '3333333333333333 run.....'
-    }
-}
-task startServer111(dependsOn:copyWAR) {
+
+task startServerHypertensionManager(dependsOn:copyWAR) {
     doLast {
         ssh.run {
             session(remotes.depServer) {
                 println 'startServer run.....'
-                execute '/opt/apache-tomcat-9.0.0.M18/bin/startup.sh'
+                execute '/opt/apache-tomcat-8.0.43/bin/startup.sh'
             }
         }
     }

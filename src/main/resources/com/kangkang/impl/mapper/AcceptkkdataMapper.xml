@@ -18,4 +18,7 @@
     <result column="kkunique" jdbcType="VARCHAR" property="kkunique" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
   </resultMap>
+  <select id="selectAllForHypertensionList" resultMap="BaseResultMap">
+    select * from acceptkkdata order by uid desc
+  </select>
 </mapper>

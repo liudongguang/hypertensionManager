@@ -28,16 +28,16 @@ public class KKController {
     @RequestMapping(value = "/accept")
     @ResponseBody
     public AcceptResultVo accept(HttpServletRequest request, AcceptParamVo param) throws ParseException {
-        param.setSystolicpressure(33);
-        param.setDiastolicpressure(1);
-        param.setPulse(2);
-        param.setTime("20170330113155");
-        param.setLevel("Level");
-        param.setImei("Imei");
-        param.setMode("Mode");
-        param.setSn("Sn");
-        param.setKey("Key");
-        param.setUnique("Unique");
+//        param.setSystolicpressure(33);
+//        param.setDiastolicpressure(1);
+//        param.setPulse(2);
+//        param.setTime("20170330113155");
+//        param.setLevel("Level");
+//        param.setImei("868986026204884");
+//        param.setMode("Mode");
+//        param.setSn("YMA5206816387");
+//        param.setKey("Key");
+//        param.setUnique("Unique");
         int saveInt = kkService.saveKangkangData(param.getDBData());
         AcceptResultVo av = new AcceptResultVo();
         av.setCode(1);
@@ -45,5 +45,6 @@ public class KKController {
         av.setMsg("接受成功！！");
         return av;
     }
+
 
 }

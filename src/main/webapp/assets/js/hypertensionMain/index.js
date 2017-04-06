@@ -1,5 +1,6 @@
 jQuery(document).ready(function () {
     var menuA = $("ul[class=templatemo-sidebar-menu]").find("a[href!='javascript:;']");
+
     menuA.click(function () {
         var url = $(this).attr("href");
         var thisText = $(this).text();

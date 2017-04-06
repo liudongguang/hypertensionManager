@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-    <title>山大二院随访系统</title>
+    <title>血压系统</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width">
@@ -20,7 +20,7 @@
     <div id="darkbannerwrap"></div>
     <div class="login_content">
         <div style="text-align:center; margin:48px 0 15px 0"><img src="assets/images/L-header.png"></div>
-        <form action="sdeyfollowup/login" method="post">
+        <form action="hypertensionMain/index.jsp" method="post">
             ${requestScope.error}
             <label>用户名</label>
             <input name="username" required type="text" value="admin">

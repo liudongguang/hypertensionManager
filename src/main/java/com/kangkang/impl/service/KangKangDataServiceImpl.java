@@ -1,9 +1,12 @@
 package com.kangkang.impl.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
+import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +25,14 @@ public class KangKangDataServiceImpl implements KangKangDataService {
         //1.查询是否绑定了用户，绑定了就设置绑定的用户id
         Integer userId=usersMapper.selectUidByAcceptkkdata(accData);
         if(userId!=null){
-            accData.setUid(userId);
+            accData.setUserid(userId);
         }
         return acceptkkdataMapper.insertSelective(accData);
+    }
+
+    @Override
+    public PageInfo<Acceptkkdata> hypertensionListByUser(PageParam pageParam) {
+        PageInfo<Acceptkkdata> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> acceptkkdataMapper.selectAllForHypertensionList());
+        return pageInfo;
     }
 }

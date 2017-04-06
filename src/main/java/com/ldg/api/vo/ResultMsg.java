@@ -1,6 +1,8 @@
 package com.ldg.api.vo;
 
-public class ResultMsg {
+import java.io.Serializable;
+
+public class ResultMsg implements Serializable{
 	private int errorCode;
 	private String errorMsg;
 	private Object data;

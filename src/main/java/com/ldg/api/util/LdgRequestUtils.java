@@ -11,11 +11,12 @@ import java.util.Map;
  */
 public class LdgRequestUtils {
     public static final Logger logger = LoggerFactory.getLogger(LdgRequestUtils.class);
-    private void soutParams(HttpServletRequest request){
+    public static void soutParams(HttpServletRequest request){
+        System.out.println("---------------------------------------------------------");
         Map<String,String[]> m=request.getParameterMap();
         for(String key:m.keySet()){
-            logger.info(key+"    "+m.get(key)[0]);
+            System.out.println(key+"    "+m.get(key)[0]);
         }
-        logger.info("---------------------------------------------------------");
+        System.out.println("---------------------------------------------------------");
     }
 }

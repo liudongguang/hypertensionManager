@@ -1,9 +1,7 @@
 package com.ldg.controller;
 
-import com.sdey.api.service.SdeyFollowUpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/test")
 public class TestController {
     public final static Logger logger = LoggerFactory.getLogger(TestController.class);
-    @Autowired
-    private SdeyFollowUpService sdeySV;
-    @RequestMapping(value = "/ok")
-    public String ok() {
-        System.out.println("okkkkkkkkk11111122222333444----------->");
-        logger.info("333333333333333333333333322222222222222222222222");
-       // sdeySV.handlerOneMonthHisChuYuanPatient("201702");
-        return "/index.jsp";
-    }
+//    @Autowired
+//    private SdeyFollowUpService sdeySV;
+//    @RequestMapping(value = "/ok")
+//    public String ok() {
+//        System.out.println("okkkkkkkkk11111122222333444----------->");
+//        logger.info("333333333333333333333333322222222222222222222222");
+//       // sdeySV.handlerOneMonthHisChuYuanPatient("201702");
+//        return "/index.jsp";
+//    }
 }
