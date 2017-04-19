@@ -151,7 +151,7 @@ task shutdownServer(dependsOn:war) {
         ssh.run {
             session(remotes.depServer) {
                 println 'startServer run.....'
-                execute '/opt/apache-tomcat-8.0.43/bin/shutdown.sh'
+                execute '/opt/apache-tomcat-9.0.0.M19/bin/shutdown.sh'
             }
         }
     }
@@ -162,8 +162,8 @@ task delWAR (dependsOn:shutdownServer){
             session(remotes.depServer) {
                 println 'delWAR run.....'
                 execute '''#!/bin/sh  
-                        rm -rf /opt/apache-tomcat-8.0.43/webapps/hypertensionManager  
-                        rm -f /opt/apache-tomcat-8.0.43/webapps/hypertensionManager.war  
+                        rm -rf /opt/apache-tomcat-9.0.0.M19/webapps/hypertensionManager  
+                        rm -f /opt/apache-tomcat-9.0.0.M19/webapps/hypertensionManager.war  
                     '''
             }
         }
@@ -174,7 +174,7 @@ task copyWAR(dependsOn:delWAR) {
         ssh.run {
             session(remotes.depServer) {
                 println 'copyWAR run.....'+buildDir.toString()
-                put from: buildDir.toString() + '/libs/hypertensionManager.war', into: '/opt/apache-tomcat-8.0.43/webapps'
+                put from: buildDir.toString() + '/libs/hypertensionManager.war', into: '/opt/apache-tomcat-9.0.0.M19/webapps'
             }
         }
     }
@@ -185,7 +185,7 @@ task startServerHypertensionManager(dependsOn:copyWAR) {
         ssh.run {
             session(remotes.depServer) {
                 println 'startServer run.....'
-                execute '/opt/apache-tomcat-8.0.43/bin/startup.sh'
+                execute '/opt/apache-tomcat-9.0.0.M19/bin/startup.sh'
             }
         }
     }

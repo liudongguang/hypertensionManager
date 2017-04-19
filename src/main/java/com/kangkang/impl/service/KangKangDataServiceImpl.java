@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.service.KangKangDataService;
+import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
 import com.ldg.api.vo.PageParam;
@@ -34,5 +35,10 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     public PageInfo<Acceptkkdata> hypertensionListByUser(PageParam pageParam) {
         PageInfo<Acceptkkdata> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> acceptkkdataMapper.selectAllForHypertensionList());
         return pageInfo;
+    }
+
+    @Override
+    public Integer getUserByPhoneNumber(GetVerificationCodeParam param) {
+        return usersMapper.getUserByPhoneNumber(param);
     }
 }

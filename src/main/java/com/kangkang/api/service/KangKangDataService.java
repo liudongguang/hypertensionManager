@@ -2,6 +2,7 @@ package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.ldg.api.vo.PageParam;
 
 /**
@@ -20,4 +21,12 @@ public interface KangKangDataService {
      * @return
      */
     PageInfo<Acceptkkdata> hypertensionListByUser(PageParam pageParam);
+
+    /**
+     * 根据手机号获取用户id
+     * @param param
+     * @return
+     */
+
+    Integer getUserByPhoneNumber(GetVerificationCodeParam param);
 }

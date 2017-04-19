@@ -25,6 +25,13 @@ public class KKController {
     @Autowired
     private KangKangDataService kkService;
 
+    /**
+     * 接受康康数据并保存
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/accept")
     @ResponseBody
     public AcceptResultVo accept(HttpServletRequest request, AcceptParamVo param) throws ParseException {

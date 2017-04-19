@@ -4,7 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
+import com.kangkang.api.util.PeonyMessageUtil;
+import com.kangkang.api.vo.GetVerificationCodeParam;
+import com.kangkang.constant.SysConstant;
 import com.ldg.api.util.LdgRequestUtils;
+import com.ldg.api.vo.MsgResult;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +29,7 @@ public class AppController {
     @Autowired
     private RedisService redisService;
 
-    /**
-     * 接受康康数据并保存
-     *
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/accept")
-    @ResponseBody
-    public ResultMsg accept(HttpServletRequest request) throws Exception {
-        ResultMsg rs = new ResultMsg();
-        LdgRequestUtils.soutParams(request);
-        return rs;
-    }
+
 
     /**
      * 获取血压数据
@@ -55,6 +46,39 @@ public class AppController {
         return "/hypertensionMain/dishypertensionList.jsp";
     }
 
+
+
+    @RequestMapping(value = "/getVerificationCode")
+    @ResponseBody
+    public ResultMsg getVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        //1.判断是否注册
+        Integer userid=kkService.getUserByPhoneNumber(param);
+        if(null==userid){
+            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            rs.setErrmsg("该手机号已注册！");
+            return rs;
+        }
+        //2.未注册发送短信验证码
+        StringBuilder sendmsg=new StringBuilder("验证码为：");
+        sendmsg.append(param.getVerificationCode());
+        MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
+        if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
+            rs.setErrcode(msgrs.getCode());
+            rs.setErrmsg(msgrs.getMessage());
+            if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
+                rs.setErrmsg("手机号错误！");
+            }
+        }
+        return rs;
+    }
+
+    /**
+     * 注册
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/regist")
     @ResponseBody
     public ResultMsg regist(HttpServletRequest request) throws Exception {
