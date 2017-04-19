@@ -15,6 +15,7 @@
     <result column="rongid" jdbcType="VARCHAR" property="rongid" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="registphone" jdbcType="VARCHAR" property="registphone" />
+    <result column="rytoken" jdbcType="VARCHAR" property="rytoken" />
   </resultMap>
     <select id="selectUidByAcceptkkdata" parameterType="com.kangkang.api.po.Acceptkkdata" resultType="int">
        select uid from t_users where bindsn=#{kksn} and bindimei=#{imei}

@@ -5,7 +5,7 @@ package com.kangkang.api.vo;
  */
 public class GetVerificationCodeParam {
     private String mobile;
-    private String verificationCode;  //手机发来的验证码
+    private String verificationcode;  //手机发来的验证码
 
     public String getMobile() {
         return mobile;
@@ -15,19 +15,19 @@ public class GetVerificationCodeParam {
         this.mobile = mobile;
     }
 
-    public String getVerificationCode() {
-        return verificationCode;
+    public String getVerificationcode() {
+        return verificationcode;
     }
 
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
+    public void setVerificationcode(String verificationcode) {
+        this.verificationcode = verificationcode;
     }
 
     @Override
     public String toString() {
         return "GetVerificationCodeParam{" +
                 "mobile='" + mobile + '\'' +
-                ", verificationCode='" + verificationCode + '\'' +
+                ", verificationcode='" + verificationcode + '\'' +
                 '}';
     }
 }

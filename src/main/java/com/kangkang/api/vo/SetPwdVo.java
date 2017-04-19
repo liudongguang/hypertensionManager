@@ -5,7 +5,7 @@ package com.kangkang.api.vo;
  */
 public class SetPwdVo {
     private String getVerificationCode;
-    private String passWord;
+    private String password;
     private String mobile;
     private String name;//姓名
 
@@ -17,12 +17,12 @@ public class SetPwdVo {
         this.getVerificationCode = getVerificationCode;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMobile() {
@@ -45,7 +45,7 @@ public class SetPwdVo {
     public String toString() {
         return "SetPwdVo{" +
                 "getVerificationCode='" + getVerificationCode + '\'' +
-                ", passWord='" + passWord + '\'' +
+                ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", name='" + name + '\'' +
                 '}';

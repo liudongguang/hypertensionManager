@@ -1,5 +1,7 @@
 package com.kangkang.api.vo;
 
+import com.kangkang.api.po.TUsers;
+
 /**
  * Created by LiuDongguang on 2017/4/19.
  */
@@ -7,6 +9,7 @@ public class RongYunJsonRsInfo {
     private int code;
     private String userId;
     private String token;
+
 
     public int getCode() {
         return code;
@@ -31,6 +34,7 @@ public class RongYunJsonRsInfo {
     public void setToken(String token) {
         this.token = token;
     }
+
 
     @Override
     public String toString() {

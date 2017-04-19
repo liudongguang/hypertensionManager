@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "t_users")
 public class TUsers {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
 
     /**
@@ -52,6 +53,11 @@ public class TUsers {
      * 注册手机号
      */
     private String registphone;
+
+    /**
+     * 融云id
+     */
+    private String rytoken;
 
     /**
      * @return uid
@@ -227,5 +233,23 @@ public class TUsers {
      */
     public void setRegistphone(String registphone) {
         this.registphone = registphone;
+    }
+
+    /**
+     * 获取融云id
+     *
+     * @return rytoken - 融云id
+     */
+    public String getRytoken() {
+        return rytoken;
+    }
+
+    /**
+     * 设置融云id
+     *
+     * @param rytoken 融云id
+     */
+    public void setRytoken(String rytoken) {
+        this.rytoken = rytoken;
     }
 }

@@ -2,6 +2,7 @@ package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.util.PeonyMessageUtil;
@@ -56,14 +57,14 @@ public class AppController {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
         Integer userid=kkService.getUserByPhoneNumber(param);
-        if(null==userid){
+        if(null!=userid){
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("该手机号已注册！");
             return rs;
         }
         //2.未注册发送短信验证码
         StringBuilder sendmsg=new StringBuilder("验证码为：");
-        sendmsg.append(param.getVerificationCode());
+        sendmsg.append(param.getVerificationcode());
         MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
         if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
             rs.setErrcode(msgrs.getCode());
@@ -85,9 +86,9 @@ public class AppController {
     @ResponseBody
     public ResultMsg setPwd(HttpServletRequest request,SetPwdVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        RongYunJsonRsInfo ryRsObj=kkService.registerUser(param);
-        if(200==ryRsObj.getCode()){
-            rs.setData(ryRsObj.getToken());
+        TUsers user=kkService.registerUser(param);
+        if(user.getRytoken()!=null){
+            rs.setData(user);
         }else{
             rs.setErrcode(1);
             rs.setErrmsg("注册融云消息服务失败！");

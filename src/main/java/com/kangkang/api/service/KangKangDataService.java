@@ -2,6 +2,7 @@ package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.SetPwdVo;
@@ -38,5 +39,5 @@ public interface KangKangDataService {
      * @param param
      * @return
      */
-    RongYunJsonRsInfo registerUser(SetPwdVo param) throws AesException;
+    TUsers registerUser(SetPwdVo param) throws AesException;
 }

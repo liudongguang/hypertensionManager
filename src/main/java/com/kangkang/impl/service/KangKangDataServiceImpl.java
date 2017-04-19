@@ -58,7 +58,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     }
 
     @Override
-    public RongYunJsonRsInfo registerUser(SetPwdVo param) throws AesException {
+    public TUsers registerUser(SetPwdVo param) throws AesException {
         String phone=param.getMobile();
         String RongYunHeadImgURL = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_HEADIMGURL);
         String RongYunGetToken = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_GETTOKEN);
@@ -81,15 +81,17 @@ public class KangKangDataServiceImpl implements KangKangDataService {
         htcParam.put("portraitUri", RongYunHeadImgURL);
         String ts = htc.sendHttpPost(RongYunGetToken, htcHeader, htcParam);
         RongYunJsonRsInfo ryrsObj= JsonUtil.getObjectByJSON(ts,RongYunJsonRsInfo.class);
+        TUsers user=new TUsers();
         if(200==ryrsObj.getCode()){
-            TUsers user=new TUsers();
             user.setUsername(phone);
             user.setName(phone);
             user.setRegistphone(ryrsObj.getUserId());
             user.setCreatetime(new Date());
-            user.setPassword(param.getPassWord());
+            user.setPassword(param.getPassword());
+            user.setRytoken(ryrsObj.getToken());
             usersMapper.insertSelective(user);
+            user.setPassword(null);
         }
-        return ryrsObj;
+        return user;
     }
 }
