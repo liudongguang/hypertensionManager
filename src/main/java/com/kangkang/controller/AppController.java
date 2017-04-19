@@ -87,7 +87,7 @@ public class AppController {
         ResultMsg rs = new ResultMsg();
         RongYunJsonRsInfo ryRsObj=kkService.registerUser(param);
         if(200==ryRsObj.getCode()){
-
+            rs.setData(ryRsObj.getToken());
         }else{
             rs.setErrcode(1);
             rs.setErrmsg("注册融云消息服务失败！");

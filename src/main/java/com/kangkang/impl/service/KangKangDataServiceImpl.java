@@ -87,6 +87,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
             user.setName(phone);
             user.setRegistphone(ryrsObj.getUserId());
             user.setCreatetime(new Date());
+            user.setPassword(param.getPassWord());
             usersMapper.insertSelective(user);
         }
         return ryrsObj;
