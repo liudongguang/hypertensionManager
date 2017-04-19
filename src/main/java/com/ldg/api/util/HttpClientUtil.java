@@ -113,6 +113,30 @@ public class HttpClientUtil {
 	}
 
 	/**
+	 *
+	 * @param httpUrl  请求地址
+	 * @param header   头信息
+	 * @param maps   参数信息
+	 * @return
+	 */
+	public String sendHttpPost(String httpUrl, Map<String, String> header, Map<String, String> maps) {
+		HttpPost httpPost = new HttpPost(httpUrl);// 创建httpPost
+		// 创建参数队列
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		for (String key : maps.keySet()) {
+			nameValuePairs.add(new BasicNameValuePair(key, maps.get(key)));
+		}
+		try {
+			header.forEach((key,val)->{
+				httpPost.setHeader(key,val);
+			});
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sendHttpPost(httpPost);
+	}
+	/**
 	 * 发送 post请求（带文件）
 	 * 
 	 * @param httpUrl

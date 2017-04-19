@@ -6,6 +6,8 @@ import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.util.PeonyMessageUtil;
 import com.kangkang.api.vo.GetVerificationCodeParam;
+import com.kangkang.api.vo.RongYunJsonRsInfo;
+import com.kangkang.api.vo.SetPwdVo;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.util.LdgRequestUtils;
 import com.ldg.api.vo.MsgResult;
@@ -79,11 +81,17 @@ public class AppController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/regist")
+    @RequestMapping(value = "/setPwd")
     @ResponseBody
-    public ResultMsg regist(HttpServletRequest request) throws Exception {
+    public ResultMsg setPwd(HttpServletRequest request,SetPwdVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        LdgRequestUtils.soutParams(request);
+        RongYunJsonRsInfo ryRsObj=kkService.registerUser(param);
+        if(200==ryRsObj.getCode()){
+
+        }else{
+            rs.setErrcode(1);
+            rs.setErrmsg("注册融云消息服务失败！");
+        }
         return rs;
     }
 

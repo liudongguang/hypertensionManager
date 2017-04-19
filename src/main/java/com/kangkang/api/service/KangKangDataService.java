@@ -3,7 +3,10 @@ package com.kangkang.api.service;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.vo.GetVerificationCodeParam;
+import com.kangkang.api.vo.RongYunJsonRsInfo;
+import com.kangkang.api.vo.SetPwdVo;
 import com.ldg.api.vo.PageParam;
+import com.qq.weixin.mp.aes.AesException;
 
 /**
  * Created by liudo on 2017/3/30.
@@ -29,4 +32,11 @@ public interface KangKangDataService {
      */
 
     Integer getUserByPhoneNumber(GetVerificationCodeParam param);
+
+    /**
+     * 注册用户
+     * @param param
+     * @return
+     */
+    RongYunJsonRsInfo registerUser(SetPwdVo param) throws AesException;
 }

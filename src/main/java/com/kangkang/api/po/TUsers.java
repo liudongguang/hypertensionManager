@@ -49,6 +49,11 @@ public class TUsers {
     private Date createtime;
 
     /**
+     * 注册手机号
+     */
+    private String registphone;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -204,5 +209,23 @@ public class TUsers {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取注册手机号
+     *
+     * @return registphone - 注册手机号
+     */
+    public String getRegistphone() {
+        return registphone;
+    }
+
+    /**
+     * 设置注册手机号
+     *
+     * @param registphone 注册手机号
+     */
+    public void setRegistphone(String registphone) {
+        this.registphone = registphone;
     }
 }
