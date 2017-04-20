@@ -48,15 +48,15 @@ public class ManagerLoginInterceptor implements HandlerInterceptor {
         String redisAppToken = redisService.get(userid);
         if (redisAppToken == null) {
             ResultMsg errMsg = new ResultMsg();
-            errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
-            errMsg.setErrmsg("apptoken失效！");
+            errMsg.setErrcode(SysConstant.MANAGER_TOKENVALIDE);
+            errMsg.setErrmsg(SysConstant.MANAGER_TOKENVALIDE_MSG);
             ResponeUtils.sendJson(response, errMsg);
             return false;
         } else {
             if (!redisAppToken.equals(appToken)) {
                 ResultMsg errMsg = new ResultMsg();
-                errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
-                errMsg.setErrmsg("apptoken错误！");
+                errMsg.setErrcode(SysConstant.MANAGER_TOKENVALIDE);
+                errMsg.setErrmsg(SysConstant.MANAGER_TOKENVALIDE_MSG);
                 ResponeUtils.sendJson(response, errMsg);
                 return false;
             }

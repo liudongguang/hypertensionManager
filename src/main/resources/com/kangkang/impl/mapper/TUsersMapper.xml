@@ -6,8 +6,8 @@
       WARNING - @mbg.generated
     -->
     <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="bindsn" jdbcType="VARCHAR" property="bindsn" />
-    <result column="bindimei" jdbcType="VARCHAR" property="bindimei" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -20,14 +20,14 @@
     <select id="selectUidByAcceptkkdata" parameterType="com.kangkang.api.po.Acceptkkdata" resultType="int">
        select uid from t_users where bindsn=#{kksn} and bindimei=#{imei}
   </select>
-    <select id="getUserByPhoneNumber" parameterType="com.kangkang.api.vo.GetVerificationCodeParam" resultType="int">
+    <select id="getUserByPhoneNumber"  resultType="int">
        select uid from t_users where registphone=#{mobile}
     </select>
-  <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.GetVerificationCodeParam" resultType="com.kangkang.api.vo.TUsersExt">
-        select uid,bindsn,bindimei,username,name,rongid,rytoken,registphone,rongid from t_users WHERE
+  <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo" resultType="com.kangkang.api.vo.TUsersExt">
+        select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from t_users WHERE
         registphone=#{mobile} and password=#{password}
   </select>
-  <update id="resetPwd" parameterType="com.kangkang.api.vo.GetVerificationCodeParam">
+  <update id="resetPwd" parameterType="com.kangkang.api.vo.AppParamVo">
        update t_users set password=#{password} where registphone=#{mobile}
   </update>
 </mapper>

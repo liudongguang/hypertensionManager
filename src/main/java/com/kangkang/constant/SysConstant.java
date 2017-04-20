@@ -9,4 +9,7 @@ public interface SysConstant {
     int ResultMsg_FAIL_CODE=1;
     String ResultMsg_SUCCESS="success";
     String ResultMsg_FAIL="fail";
+
+    int MANAGER_TOKENVALIDE=100;//token失效
+    String MANAGER_TOKENVALIDE_MSG="请重新登陆！";
 }

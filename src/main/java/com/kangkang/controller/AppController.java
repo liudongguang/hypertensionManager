@@ -62,7 +62,7 @@ public class AppController {
     public ResultMsg getVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
-        Integer userid=kkService.getUserByPhoneNumber(param);
+        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
         if(null!=userid){
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("该手机号已注册！");
@@ -113,6 +113,12 @@ public class AppController {
     @ResponseBody
     public ResultMsg login(HttpServletRequest request,AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
+        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
+        if(userid==null){
+            rs.setErrcode(1);
+            rs.setErrmsg("用户未注册！");
+            return rs;
+        }
         TUsersExt user=kkService.login(param);
         if(user!=null){
             String uid=user.getUid().toString();

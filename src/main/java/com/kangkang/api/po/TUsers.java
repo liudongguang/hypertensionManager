@@ -12,12 +12,12 @@ public class TUsers {
     /**
      * 绑定的设备号
      */
-    private String bindsn;
+    private String sn;
 
     /**
      * 绑定的设备IMEI
      */
-    private String bindimei;
+    private String imei;
 
     /**
      * 用户名
@@ -55,7 +55,7 @@ public class TUsers {
     private String registphone;
 
     /**
-     * 融云id
+     * 融云token
      */
     private String rytoken;
 
@@ -76,37 +76,37 @@ public class TUsers {
     /**
      * 获取绑定的设备号
      *
-     * @return bindsn - 绑定的设备号
+     * @return sn - 绑定的设备号
      */
-    public String getBindsn() {
-        return bindsn;
+    public String getSn() {
+        return sn;
     }
 
     /**
      * 设置绑定的设备号
      *
-     * @param bindsn 绑定的设备号
+     * @param sn 绑定的设备号
      */
-    public void setBindsn(String bindsn) {
-        this.bindsn = bindsn;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 
     /**
      * 获取绑定的设备IMEI
      *
-     * @return bindimei - 绑定的设备IMEI
+     * @return imei - 绑定的设备IMEI
      */
-    public String getBindimei() {
-        return bindimei;
+    public String getImei() {
+        return imei;
     }
 
     /**
      * 设置绑定的设备IMEI
      *
-     * @param bindimei 绑定的设备IMEI
+     * @param imei 绑定的设备IMEI
      */
-    public void setBindimei(String bindimei) {
-        this.bindimei = bindimei;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     /**
@@ -236,18 +236,18 @@ public class TUsers {
     }
 
     /**
-     * 获取融云id
+     * 获取融云token
      *
-     * @return rytoken - 融云id
+     * @return rytoken - 融云token
      */
     public String getRytoken() {
         return rytoken;
     }
 
     /**
-     * 设置融云id
+     * 设置融云token
      *
-     * @param rytoken 融云id
+     * @param rytoken 融云token
      */
     public void setRytoken(String rytoken) {
         this.rytoken = rytoken;

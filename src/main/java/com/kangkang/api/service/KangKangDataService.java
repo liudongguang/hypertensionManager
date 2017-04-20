@@ -28,11 +28,10 @@ public interface KangKangDataService {
 
     /**
      * 根据手机号获取用户id
-     * @param param
      * @return
      */
 
-    Integer getUserByPhoneNumber(GetVerificationCodeParam param);
+    Integer getUserByPhoneNumber(String mobile);
 
     /**
      * 注册用户

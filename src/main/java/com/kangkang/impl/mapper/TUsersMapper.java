@@ -10,7 +10,7 @@ import tk.mybatis.mapper.common.Mapper;
 public interface TUsersMapper extends Mapper<TUsers> {
     Integer selectUidByAcceptkkdata(Acceptkkdata accData);
 
-    Integer getUserByPhoneNumber(GetVerificationCodeParam param);
+    Integer getUserByPhoneNumber(String mobile);
 
     TUsersExt selectUserByMobileAndPass(AppParamVo param);
 

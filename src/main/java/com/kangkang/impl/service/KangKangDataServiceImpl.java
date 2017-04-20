@@ -54,8 +54,8 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     }
 
     @Override
-    public Integer getUserByPhoneNumber(GetVerificationCodeParam param) {
-        return usersMapper.getUserByPhoneNumber(param);
+    public Integer getUserByPhoneNumber(String mobile) {
+        return usersMapper.getUserByPhoneNumber(mobile);
     }
 
     @Override
@@ -106,4 +106,6 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     public int resetPwd(AppParamVo param) {
         return usersMapper.resetPwd(param);
     }
+
+
 }
