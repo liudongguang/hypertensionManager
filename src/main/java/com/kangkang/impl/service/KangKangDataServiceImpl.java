@@ -107,5 +107,18 @@ public class KangKangDataServiceImpl implements KangKangDataService {
         return usersMapper.resetPwd(param);
     }
 
+    @Override
+    public int relevanceDevice(TUsers user) {
+        return usersMapper.relevanceDevice(user);
+    }
 
+    @Override
+    public TUsers isBindedBySN(TUsers user) {
+        return usersMapper.isBindedBySN(user);
+    }
+
+    @Override
+    public int unBindedDevice(TUsers user) {
+        return usersMapper.unBindedDevice(user);
+    }
 }

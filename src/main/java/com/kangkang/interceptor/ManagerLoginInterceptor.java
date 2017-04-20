@@ -29,7 +29,7 @@ public class ManagerLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-        String userid = request.getParameter("userid");
+        String userid = request.getParameter("uid");
         if (userid == null) {
             ResultMsg errMsg = new ResultMsg();
             errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);

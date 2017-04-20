@@ -137,6 +137,20 @@ public class AppController {
     }
 
     /**
+     * 退出登陆
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/loginout")
+    @ResponseBody
+    public ResultMsg loginout(HttpServletRequest request,AppParamVo param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        redisService.del(param.getUid().toString());
+        return rs;
+    }
+    /**
      * 忘记密码的发送验证码
      * @param request
      * @param param
@@ -152,8 +166,8 @@ public class AppController {
         sendmsg.append(param.getVerificationcode());
         MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
         if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
-            rs.setErrcode(msgrs.getCode());
             rs.setErrmsg(msgrs.getMessage());
+            rs.setErrcode(msgrs.getCode());
             if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
                 rs.setErrmsg("手机号错误！");
             }
@@ -179,6 +193,48 @@ public class AppController {
         return rs;
     }
 
+    /**
+     * 绑定设备
+     * @param request
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/relevanceDevice")
+    @ResponseBody
+    public ResultMsg relevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        TUsers bindUser=kkService.isBindedBySN(user);
+        if(bindUser!=null){
+            rs.setErrcode(1);
+            rs.setErrmsg("设备已经被绑定，绑定失败！");
+            return rs;
+        }
+        int updateNum=kkService.relevanceDevice(user);
+        if(updateNum==0){
+            rs.setErrcode(1);
+            rs.setErrmsg("绑定失败！");
+        }
+        return rs;
+    }
+    /**
+     * 绑定设备
+     * @param request
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/unrelevanceDevice")
+    @ResponseBody
+    public ResultMsg unrelevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int updateNum=kkService.unBindedDevice(user);
+        if(updateNum==0){
+            rs.setErrcode(1);
+            rs.setErrmsg("解绑失败！");
+        }
+        return rs;
+    }
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {

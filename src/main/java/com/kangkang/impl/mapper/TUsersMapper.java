@@ -15,4 +15,10 @@ public interface TUsersMapper extends Mapper<TUsers> {
     TUsersExt selectUserByMobileAndPass(AppParamVo param);
 
     int resetPwd(AppParamVo param);
+
+    int relevanceDevice(TUsers user);
+
+    TUsers isBindedBySN(TUsers user);
+
+    int unBindedDevice(TUsers user);
 }

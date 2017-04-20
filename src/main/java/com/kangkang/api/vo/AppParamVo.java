@@ -8,7 +8,7 @@ public class AppParamVo {
     private String password;//密码
     private String mobile;//手机号
     private String name;//姓名
-    private Integer userid;//用户id
+    private Integer uid;//用户id
 
     public String getGetVerificationCode() {
         return getVerificationCode;
@@ -42,12 +42,12 @@ public class AppParamVo {
         this.name = name;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     @Override
@@ -57,6 +57,7 @@ public class AppParamVo {
                 ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", name='" + name + '\'' +
+                ", uid=" + uid +
                 '}';
     }
 }

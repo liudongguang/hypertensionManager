@@ -53,4 +53,25 @@ public interface KangKangDataService {
      * @return
      */
     int resetPwd(AppParamVo param);
+
+    /**
+     * 绑定设备
+     * @param user
+     * @return
+     */
+    int relevanceDevice(TUsers user);
+
+    /**
+     * 获取绑定用户通过设备好
+     * @param user
+     * @return
+     */
+    TUsers isBindedBySN(TUsers user);
+
+    /**
+     * 解绑设备
+     * @param user
+     * @return
+     */
+    int unBindedDevice(TUsers user);
 }
