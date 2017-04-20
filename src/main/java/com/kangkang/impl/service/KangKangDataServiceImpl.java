@@ -7,9 +7,10 @@ import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.util.SysPropertiesUtil;
 import com.kangkang.api.util.rongyun.RongYunSHA1;
+import com.kangkang.api.vo.AppParamVo;
 import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
-import com.kangkang.api.vo.SetPwdVo;
+import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.constant.PropertiestConstant;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
@@ -58,7 +59,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     }
 
     @Override
-    public TUsers registerUser(SetPwdVo param) throws AesException {
+    public TUsers registerUser(AppParamVo param) throws AesException {
         String phone=param.getMobile();
         String RongYunHeadImgURL = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_HEADIMGURL);
         String RongYunGetToken = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_GETTOKEN);
@@ -89,9 +90,20 @@ public class KangKangDataServiceImpl implements KangKangDataService {
             user.setCreatetime(new Date());
             user.setPassword(param.getPassword());
             user.setRytoken(ryrsObj.getToken());
+            user.setRongid(phone);
             usersMapper.insertSelective(user);
             user.setPassword(null);
         }
         return user;
+    }
+
+    @Override
+    public TUsersExt login(AppParamVo param) {
+        return usersMapper.selectUserByMobileAndPass(param);
+    }
+
+    @Override
+    public int resetPwd(AppParamVo param) {
+        return usersMapper.resetPwd(param);
     }
 }

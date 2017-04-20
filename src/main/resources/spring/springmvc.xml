@@ -19,7 +19,7 @@
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper">
-					<bean class="com.kangkang.converter.JsonObjectMapper"></bean>
+					<bean class="com.ldg.converter.JsonObjectMapper"></bean>
 				</property>
 			</bean>
 		</mvc:message-converters>
@@ -33,7 +33,7 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="com.kangkang.converter.CustomDateConverter"></bean>
+				<bean class="com.ldg.converter.CustomDateConverter"></bean>
 			</list>
 		</property>
 	</bean>
@@ -73,9 +73,13 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-
-			<mvc:mapping path="/sdeyfollowup/**" />
-			<mvc:exclude-mapping path="/sdeyfollowup/login"/>
+			<mvc:mapping path="/appHandler/**" />
+			<mvc:exclude-mapping path="/appHandler/getVerificationCode"/>
+			<mvc:exclude-mapping path="/appHandler/setPwd"/>
+			<mvc:exclude-mapping path="/appHandler/login"/>
+			<mvc:exclude-mapping path="/appHandler/forgetPwd"/>
+			<mvc:exclude-mapping path="/appHandler/resetPwd"/>
+			<mvc:exclude-mapping path="/appHandler/testRedis"/>
 			<bean class="com.kangkang.interceptor.ManagerLoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -18,13 +18,19 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate redisTemplate;
 
     @Override
-    public <K,V> void add(K key, V value, int minute) {
+    public <K, V> void add(K key, V value, int minute) {
+        if (key == null) {
+            return;
+        }
         ValueOperations<K, V> valueops = redisTemplate.opsForValue();
         valueops.set(key, value, minute, TimeUnit.MINUTES);
     }
 
     @Override
-    public <K,V> V get(K key) {
+    public <K, V> V get(K key) {
+        if (key == null) {
+            return null;
+        }
         ValueOperations<K, V> valueops = redisTemplate.opsForValue();
         V val = valueops.get(key);
         return val;
@@ -32,6 +38,9 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public <K> void del(K key) {
+        if (key == null) {
+            return;
+        }
         redisTemplate.delete(key);
     }
 }

@@ -3,11 +3,12 @@ package com.kangkang.api.vo;
 /**
  * Created by LiuDongguang on 2017/4/19.
  */
-public class SetPwdVo {
+public class AppParamVo {
     private String getVerificationCode;
-    private String password;
-    private String mobile;
+    private String password;//密码
+    private String mobile;//手机号
     private String name;//姓名
+    private Integer userid;//用户id
 
     public String getGetVerificationCode() {
         return getVerificationCode;
@@ -41,9 +42,17 @@ public class SetPwdVo {
         this.name = name;
     }
 
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
     @Override
     public String toString() {
-        return "SetPwdVo{" +
+        return "AppParamVo{" +
                 "getVerificationCode='" + getVerificationCode + '\'' +
                 ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +

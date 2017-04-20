@@ -16,42 +16,33 @@ import com.ldg.api.vo.ResultMsg;
 
 //全局异常处理器
 public class CustomExceptionResolver implements HandlerExceptionResolver {
-	private Logger log = LoggerFactory.getLogger(CustomExceptionResolver.class);
+    private Logger log = LoggerFactory.getLogger(CustomExceptionResolver.class);
 
-	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-			Exception ex) {
-		StringPrintWriter strintPrintWriter = new StringPrintWriter();
-		ex.printStackTrace(strintPrintWriter);
-		ModelAndView mv = new ModelAndView();
-		String errorInfo = strintPrintWriter.getString();
-		log.error(errorInfo);
-		/////
-		String requestType = request.getHeader("X-Requested-With");
-		// 表示异步
-		if (requestType != null) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json; charset=utf-8");
-			PrintWriter out = null;
-			try {
-				out = response.getWriter();
-				ResultMsg rs=new ResultMsg();
-				rs.setErrcode(500);
-				rs.setErrmsg(errorInfo);
-				out.write(JsonUtil.parseToJson(rs));
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				if (out != null) {
-					out.flush();
-					out.close();
-				}
-			}
-			return null;
-		}
-		////
-		mv.addObject("message", errorInfo);
-		mv.setViewName("/error.jsp");
-		return mv;
-	}
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+                                         Exception ex) {
+        StringPrintWriter strintPrintWriter = new StringPrintWriter();
+        ex.printStackTrace(strintPrintWriter);
+        String errorInfo = strintPrintWriter.getString();
+        log.debug(errorInfo);
+        // 表示异步
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            ResultMsg rs = new ResultMsg();
+            rs.setErrcode(500);
+            rs.setErrmsg("服务器异常！");
+            out.write(JsonUtil.parseToJson(rs));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (out != null) {
+                out.flush();
+                out.close();
+            }
+        }
+        return null;
+    }
 }

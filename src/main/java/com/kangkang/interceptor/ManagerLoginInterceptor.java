@@ -1,5 +1,10 @@
 package com.kangkang.interceptor;
 
+import com.kangkang.api.service.RedisService;
+import com.kangkang.constant.SysConstant;
+import com.ldg.api.util.ResponeUtils;
+import com.ldg.api.vo.ResultMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -8,33 +13,55 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ManagerLoginInterceptor implements HandlerInterceptor {
+    @Autowired
+    private RedisService redisService;
 
-	@Override
-	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
-			throws Exception {
-	}
+    @Override
+    public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
+            throws Exception {
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
-			throws Exception {
+    @Override
+    public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
+            throws Exception {
 
-	}
+    }
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
-		HttpSession session = request.getSession();
-		Object manager = session.getAttribute("user");
-		if (manager != null) {
-			return true;
-		} else {
-			if (request.getHeader("x-requested-with") != null
-					&& request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) { // 如果是ajax请求响应头会有，x-requested-with
-				response.setHeader("sessionstatus", "timeout");// 在响应头设置session状态
-			} else {
-				response.sendRedirect(request.getContextPath() + "/index.jsp");
-			}
-			return false;
-		}
-	}
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
+        String userid = request.getParameter("userid");
+        if (userid == null) {
+            ResultMsg errMsg = new ResultMsg();
+            errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            errMsg.setErrmsg("缺少userid参数！");
+            ResponeUtils.sendJson(response, errMsg);
+            return false;
+        }
+        String appToken = request.getParameter("apptoken");
+        if (appToken == null) {
+            ResultMsg errMsg = new ResultMsg();
+            errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            errMsg.setErrmsg("缺少appToken参数！");
+            ResponeUtils.sendJson(response, errMsg);
+            return false;
+        }
+        String redisAppToken = redisService.get(userid);
+        if (redisAppToken == null) {
+            ResultMsg errMsg = new ResultMsg();
+            errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            errMsg.setErrmsg("apptoken失效！");
+            ResponeUtils.sendJson(response, errMsg);
+            return false;
+        } else {
+            if (!redisAppToken.equals(appToken)) {
+                ResultMsg errMsg = new ResultMsg();
+                errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+                errMsg.setErrmsg("apptoken错误！");
+                ResponeUtils.sendJson(response, errMsg);
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

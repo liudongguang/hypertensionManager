@@ -12,6 +12,8 @@ public interface RedisService {
      */
     <K, V> void add(K key, V value, int minute);
 
+
+
     /**
      * 获取元素根据key
      * @param key

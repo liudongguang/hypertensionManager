@@ -3,9 +3,9 @@ package com.kangkang.api.service;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.TUsers;
+import com.kangkang.api.vo.AppParamVo;
 import com.kangkang.api.vo.GetVerificationCodeParam;
-import com.kangkang.api.vo.RongYunJsonRsInfo;
-import com.kangkang.api.vo.SetPwdVo;
+import com.kangkang.api.vo.TUsersExt;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
 
@@ -39,5 +39,19 @@ public interface KangKangDataService {
      * @param param
      * @return
      */
-    TUsers registerUser(SetPwdVo param) throws AesException;
+    TUsers registerUser(AppParamVo param) throws AesException;
+
+    /**
+     * 登陆
+     * @param param
+     * @return
+     */
+    TUsersExt login(AppParamVo param);
+
+    /**
+     * 修改密码
+     * @param param
+     * @return
+     */
+    int resetPwd(AppParamVo param);
 }
