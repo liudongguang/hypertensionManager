@@ -40,4 +40,14 @@
     <update id="unBindedDevice" parameterType="com.kangkang.api.po.TUsers">
         update  t_users set sn=null,imei=null where uid=#{uid}
   </update>
+    <select id="isBindedByUid" parameterType="com.kangkang.api.po.TUsers" resultMap="BaseResultMap">
+          select uid,sn,imei from t_users where uid=#{uid}
+    </select>
+    <select id="getUserByUserName" resultMap="BaseResultMap">
+       select uid from t_users where username=#{username}
+    </select>
+    <select id="loginForWeb" parameterType="com.kangkang.api.vo.WebParamVo" resultMap="BaseResultMap">
+       select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from t_users WHERE
+        username=#{username} and password=#{password}
+    </select>
 </mapper>

@@ -53,7 +53,7 @@
                 <div class="pull-right tt"><span class="caret"></span></div>
                     </a>
                 <ul class="templatemo-submenu">
-                    <li><a id="cysfID" href="/appHandler/hypertensionListByUser"><span class="glyphicon glyphicon-list-alt"></span>血压记录</a>
+                    <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
                 </ul>
             </li>

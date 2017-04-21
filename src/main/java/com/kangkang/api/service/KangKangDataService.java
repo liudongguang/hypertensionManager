@@ -6,6 +6,7 @@ import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.AppParamVo;
 import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.TUsersExt;
+import com.kangkang.api.vo.WebParamVo;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
 
@@ -74,4 +75,11 @@ public interface KangKangDataService {
      * @return
      */
     int unBindedDevice(TUsers user);
+
+    /**
+     * 获取用户信息通过uid
+     * @param user
+     * @return
+     */
+    TUsers isBindedByUid(TUsers user);
 }

@@ -18,7 +18,7 @@ function jumpPageNoAuthorityForHandler(pageUrl, jq_container, excuteFUN) {
             var dataobj = isJson(data);
             if (dataobj) {// 是json格式
                 if (dataobj.errorCode != 0) {
-                    layer.alert(dataobj.errorMsg);
+                    layer.alert(dataobj.errmsg);
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ function jumpPageNoAuthority(pageUrl, jq_container) {
             var dataobj = isJson(data);
             if (dataobj) {// 是json格式
                 if (dataobj.errorCode != 0) {
-                    layer.alert(dataobj.errorMsg);
+                    layer.alert(dataobj.errmsg);
                     return false;
                 }
             }
@@ -65,7 +65,7 @@ function jumpPage(pageUrl, jq_container) {
             var dataobj = isJson(data);
             if (dataobj) {// 是json格式
                 if (dataobj.errorCode != 0) {
-                    layer.alert(dataobj.errorMsg);
+                    layer.alert(dataobj.errmsg);
                     return false;
                 }
             }
@@ -106,7 +106,7 @@ function layerWindow(pageUrl, title, width, height, frame) {
             var dataobj = isJson(data);
             if (dataobj) {// 是json格式
                 if (dataobj.errorCode != 0) {
-                    layer.alert(dataobj.errorMsg);
+                    layer.alert(dataobj.errmsg);
                     return false;
                 }
             }
@@ -149,7 +149,7 @@ function initAjaxForm(jq_form, jq_button, excuteResponse, validateState, validat
         if (data.errorCode && data.errorCode != 0) {
             layer.close(zzcid);
             layer.close(options.zzcid);
-            layer.alert(data.errorMsg);
+            layer.alert(data.errmsg);
             return false;
         } else {
             excuteResponse(data);
@@ -368,7 +368,7 @@ function initSelect() {
             dataType: 'json',
             callbackFun: function (data) {
                 if (data.errorCode != 0) {
-                    layer.alert(dataobj.errorMsg);
+                    layer.alert(dataobj.errmsg);
                     return false;
                 }
                 var list = data.data.list;

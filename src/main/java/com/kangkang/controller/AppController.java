@@ -31,25 +31,6 @@ public class AppController {
     private KangKangDataService kkService;
     @Autowired
     private RedisService redisService;
-
-
-
-    /**
-     * 获取血压数据
-     *
-     * @param request
-     * @param pageParam
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/hypertensionListByUser")
-    public String hypertensionListByUser(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<Acceptkkdata> page = kkService.hypertensionListByUser(pageParam);
-        request.setAttribute("page", page);
-        return "/hypertensionMain/dishypertensionList.jsp";
-    }
-
-
     /**
      * 注册获取验证码
      * @param request
@@ -235,6 +216,30 @@ public class AppController {
         }
         return rs;
     }
+
+    /**
+     * 判断是否关联设备
+     * @param request
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/judgeRelevanceDevice")
+    @ResponseBody
+    public ResultMsg judgeRelevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        TUsers bindUser=kkService.isBindedByUid(user);
+        if(bindUser==null){
+            rs.setErrcode(1);
+            rs.setErrmsg("未关联设备！");
+        }else{
+            rs.setData(bindUser);
+        }
+        return rs;
+    }
+
+
+
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {

@@ -121,4 +121,11 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     public int unBindedDevice(TUsers user) {
         return usersMapper.unBindedDevice(user);
     }
+
+    @Override
+    public TUsers isBindedByUid(TUsers user) {
+        return usersMapper.isBindedByUid(user);
+    }
+
+
 }
