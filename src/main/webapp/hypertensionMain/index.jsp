@@ -55,10 +55,12 @@
                 <ul class="templatemo-submenu">
                     <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
+                    <li><a id="lbtID" href="/webHandler/lunbotuList"><span class="glyphicon glyphicon-list-alt"></span>轮播图</a>
+                    </li>
                 </ul>
             </li>
             <c:if test="${sessionScope.user.name=='超级管理'}">
-                <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-th-list btn-lg"></span> 数据管理
+                <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-th-list btn-lg"></span>数据管理
                     <div class="pull-right tt"><span class="caret"></span></div>
                 </a>
                     <ul class="templatemo-submenu">

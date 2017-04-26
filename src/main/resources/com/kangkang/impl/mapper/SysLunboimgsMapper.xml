@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.impl.mapper.SysLunboimgsMapper">
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.SysLunboimgs">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="homeimage" jdbcType="VARCHAR" property="homeimage" />
+    <result column="homeimageurl" jdbcType="VARCHAR" property="homeimageurl" />
+    <result column="managerid" jdbcType="INTEGER" property="managerid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <select id="getUploadedImgs" resultType="com.kangkang.api.vo.fileinput.InitialPreviewImgVo">
+       select uid,homeimage as src from sys_lunboimgs order by uid;
+  </select>
+</mapper>

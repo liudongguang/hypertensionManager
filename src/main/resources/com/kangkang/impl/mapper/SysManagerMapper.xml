@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.impl.mapper.SysManagerMapper">
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.SysManager">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="qx" jdbcType="VARCHAR" property="qx" />
+  </resultMap>
+  <select id="getUserByUserName" resultMap="BaseResultMap">
+    select uid from sys_manager where username=#{username}
+  </select>
+  <select id="loginForWeb" parameterType="com.kangkang.api.vo.WebParamVo" resultMap="BaseResultMap">
+    select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from sys_manager WHERE
+    username=#{username} and password=#{password}
+  </select>
+</mapper>
