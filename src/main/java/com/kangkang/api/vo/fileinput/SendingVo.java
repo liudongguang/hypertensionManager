@@ -12,6 +12,26 @@ public class SendingVo {
     private List<InitialPreviewConfigVo> initialPreviewConfig=new ArrayList<>();
     private List<InitialPreviewThumbTagsVo> initialPreviewThumbTags=new ArrayList<>();
     private Boolean append;
+    //////////////////////////////////
+    private Integer uid;
+    private String imglink;
+    ///////////////////////////////////
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public String getImglink() {
+        return imglink;
+    }
+
+    public void setImglink(String imglink) {
+        this.imglink = imglink;
+    }
 
     public String getError() {
         return error;

@@ -2,6 +2,7 @@ package com.kangkang.api.service;
 
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
+import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
 
@@ -37,5 +38,12 @@ public interface WebManagerService {
 
      * @return
      */
-    SendingVo uploadLunBoTu(HttpServletRequest request, String homeimageurl) throws Exception;
+    SendingVo uploadLunBoTu(HttpServletRequest request,FileInputParam param) throws Exception;
+
+    /**
+     * 删除文件
+     * @param param
+     * @return
+     */
+    int delLunBoImgFile(HttpServletRequest request,FileInputParam param);
 }

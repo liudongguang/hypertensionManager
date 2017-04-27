@@ -7,9 +7,7 @@ import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
-import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
-import com.kangkang.api.vo.fileinput.SendingVo;
-import com.ldg.api.util.JsonUtil;
+import com.kangkang.api.vo.fileinput.*;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/webHandler")
@@ -89,25 +87,44 @@ public class WebPageController {
     public ResultMsg  getlunbotuData(HttpServletRequest request) throws Exception {
         ResultMsg rs=new ResultMsg();
         List<InitialPreviewImgVo> imgsList=webManagerService.getUploadedImgs();
-        List<String> disList=imgsList.stream().map(item->{
-            return item.toString();
-        }).collect(Collectors.toList());
-        rs.setData(disList);
+        List<SendingVo> datars=new ArrayList<>();
+        final int[] indexNum = {1};
+        imgsList.forEach(item->{
+            SendingVo sdv=new SendingVo();
+            InitialPreviewImgVo ipimg=new InitialPreviewImgVo();
+            ipimg.setSrc(item.getSrc());
+            sdv.getInitialPreview().add(ipimg.toString());
+            InitialPreviewConfigVo ipimgconfig=new InitialPreviewConfigVo();
+            ipimgconfig.setKey(item.getUid());
+            ipimgconfig.setCaption("轮播图"+String.valueOf(indexNum[0]++));
+            ipimgconfig.setUrl("webHandler/delLunBoImgFile?uid="+item.getUid()+"&filePath="+item.getSrc());
+            sdv.getInitialPreviewConfig().add(ipimgconfig);
+            InitialPreviewThumbTagsVo ipt=new InitialPreviewThumbTagsVo();
+            ipt.setCUSTOM_TAG_NEW("' '");
+            ipt.setCUSTOM_TAG_INIT("<span class=\\'custom-css\\'>CUSTOM MARKUP</span>");
+            sdv.getInitialPreviewThumbTags().add(ipt);
+            //////
+            sdv.setUid(item.getUid());
+            sdv.setImglink(item.getImglink());
+            /////
+            datars.add(sdv);
+        });
+        rs.setData(datars);
         return rs;
     }
 
     @RequestMapping(value = "/uploadLunBoTu")
     @ResponseBody
-    public SendingVo uploadLunBoTu(HttpServletRequest request, String homeimageurl) throws Exception {
-        SendingVo rs=webManagerService.uploadLunBoTu(request,homeimageurl);
-        System.out.println(JsonUtil.parseToJson(rs));
+    public SendingVo uploadLunBoTu(HttpServletRequest request,FileInputParam param) throws Exception {
+        System.out.println(param);
+        SendingVo rs=webManagerService.uploadLunBoTu(request,param);
         return rs;
     }
     @RequestMapping(value = "/delLunBoImgFile")
     @ResponseBody
-    public SendingVo delLunBoImgFile(HttpServletRequest request, Integer uid) throws Exception {
-        System.out.println("uid..............."+uid);
-        SendingVo rs=new SendingVo();
+    public ResultMsg delLunBoImgFile(HttpServletRequest request,FileInputParam param) throws Exception {
+        ResultMsg rs=new ResultMsg();
+        int delNum=webManagerService.delLunBoImgFile(request,param);
         return rs;
     }
 

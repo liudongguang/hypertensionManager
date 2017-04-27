@@ -9,6 +9,16 @@ public class InitialPreviewImgVo {
     private String alt;
     private String title;
 
+    private String imglink;
+
+    public String getImglink() {
+        return imglink;
+    }
+
+    public void setImglink(String imglink) {
+        this.imglink = imglink;
+    }
+
     public Integer getUid() {
         return uid;
     }

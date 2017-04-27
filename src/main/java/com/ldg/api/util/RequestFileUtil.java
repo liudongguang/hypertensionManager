@@ -93,7 +93,13 @@ public class RequestFileUtil {
             return sourceName;
         }
     }
-
+    public final static void delFileFromDisk(HttpServletRequest request,String filePath){
+        String path = request.getServletContext().getRealPath(filePath);
+        File file = new File(path);
+        if(file.exists()){
+            file.delete();
+        }
+    }
     public final static String getFileNameForBase64() {
         StringBuilder f = new StringBuilder();
         f.append(UUID.randomUUID().toString()).append(".jpg");

@@ -4,10 +4,7 @@ import com.kangkang.api.po.SysLunboimgs;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
-import com.kangkang.api.vo.fileinput.InitialPreviewConfigVo;
-import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
-import com.kangkang.api.vo.fileinput.InitialPreviewThumbTagsVo;
-import com.kangkang.api.vo.fileinput.SendingVo;
+import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
 import com.kangkang.impl.mapper.SysManagerMapper;
 import com.ldg.api.util.RequestFileUtil;
@@ -28,6 +25,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     private SysManagerMapper sysManagerMapper;
     @Autowired
     private SysLunboimgsMapper lunxunIMGDao;
+
     @Override
     public Integer getUserByUserName(String username) {
         return sysManagerMapper.getUserByUserName(username);
@@ -44,34 +42,47 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public SendingVo uploadLunBoTu(HttpServletRequest request, String homeimageurl) throws Exception{
-        SendingVo rs=new SendingVo();
-        List<MultipartFile> uploadFile= RequestFileUtil.getUploadFile(request);
-        if(uploadFile.size()==1){
-            String uploadedFilePath=RequestFileUtil.saveToComputer(uploadFile,request,"lunboimgs");
-            SysLunboimgs simg=new SysLunboimgs();
+    public SendingVo uploadLunBoTu(HttpServletRequest request, FileInputParam param) throws Exception {
+        SendingVo rs = new SendingVo();
+        List<MultipartFile> uploadFile = RequestFileUtil.getUploadFile(request);
+        if (uploadFile.size() == 1) {
+            String uploadedFilePath = RequestFileUtil.saveToComputer(uploadFile, request, "lunboimgs");
+            SysLunboimgs simg = new SysLunboimgs();
             simg.setCreatetime(new Date());
             simg.setHomeimage(uploadedFilePath);
-            simg.setHomeimageurl(homeimageurl);
+            simg.setHomeimageurl(param.getHomeimageurl());
             simg.setManagerid(1);
-            lunxunIMGDao.insertSelective(simg);
-           ////
-            InitialPreviewImgVo ipimg=new InitialPreviewImgVo();
+            if (param.getUid() == null) {
+                lunxunIMGDao.insertSelective(simg);
+            } else {
+                simg.setUid(param.getUid());
+                lunxunIMGDao.updateByPrimaryKeySelective(simg);
+            }
+            ////
+            InitialPreviewImgVo ipimg = new InitialPreviewImgVo();
             ipimg.setSrc(uploadedFilePath);
             rs.getInitialPreview().add(ipimg.toString());
-            InitialPreviewConfigVo ipimgconfig=new InitialPreviewConfigVo();
+            InitialPreviewConfigVo ipimgconfig = new InitialPreviewConfigVo();
             ipimgconfig.setKey(simg.getUid());
             ipimgconfig.setCaption("desert.jpg");
-            ipimgconfig.setUrl("webHandler/delLunBoImgFile?uid="+simg.getUid());
+            ipimgconfig.setUrl("webHandler/delLunBoImgFile?uid=" + simg.getUid() + "&filePath=" + simg.getHomeimage());
             rs.getInitialPreviewConfig().add(ipimgconfig);
-            InitialPreviewThumbTagsVo ipt=new InitialPreviewThumbTagsVo();
-            ipt.setCUSTOM_TAG_NEW("");
-            ipt.setCUSTOM_TAG_INIT("");
+            InitialPreviewThumbTagsVo ipt = new InitialPreviewThumbTagsVo();
+            ipt.setCUSTOM_TAG_NEW("' '");
+            ipt.setCUSTOM_TAG_INIT("<span class=\\'custom-css\\'>CUSTOM MARKUP</span>");
             rs.getInitialPreviewThumbTags().add(ipt);
             ///
-        }else{
+        } else {
             rs.setError("文件错误，上传失败！");
         }
         return rs;
+    }
+
+    @Override
+    public int delLunBoImgFile(HttpServletRequest request, FileInputParam param) {
+        int delNum = lunxunIMGDao.deleteByPrimaryKey(param.getUid());
+        String delFilePath = param.getFilePath();
+        RequestFileUtil.delFileFromDisk(request, delFilePath);
+        return delNum;
     }
 }
