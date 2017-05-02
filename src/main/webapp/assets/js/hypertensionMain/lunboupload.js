@@ -17,6 +17,9 @@ jQuery(document).ready(function () {
         dataType: 'json',
         callbackFun: function (data) {
             var Sendings=data.data;
+            if(!Sendings){
+                Sendings=new Array(3);
+            }
             var send1=Sendings[0];
             var file1OPT=null;
             var jq_file1_homeimageurl=$("input[name=file1_homeimageurl]");

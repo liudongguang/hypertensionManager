@@ -1,17 +1,16 @@
 package com.kangkang.controller;
 
-import com.github.pagehelper.PageInfo;
-import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.TUsers;
+import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.util.PeonyMessageUtil;
 import com.kangkang.api.vo.AppParamVo;
+import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.MsgResult;
-import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -29,6 +29,8 @@ import java.util.UUID;
 public class AppController {
     @Autowired
     private KangKangDataService kkService;
+    @Autowired
+    private AppPatientService appPatientService;
     @Autowired
     private RedisService redisService;
     /**
@@ -238,6 +240,20 @@ public class AppController {
         return rs;
     }
 
+    /**
+     * 获取轮播图
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getHomePhotoAddress")
+    @ResponseBody
+    public ResultMsg getHomePhotoAddress(HttpServletRequest request) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        List<GetHomePhotoAddressRs> rsList=appPatientService.getHomePhotoAddress();
+        rs.setData(rsList);
+        return rs;
+    }
 
 
     @RequestMapping(value = "/testRedis")
@@ -251,8 +267,6 @@ public class AppController {
         redisService.del("1");
         msg2 =redisService.get("1");
         System.out.println(msg2);
-
-
         return msg;
     }
 
