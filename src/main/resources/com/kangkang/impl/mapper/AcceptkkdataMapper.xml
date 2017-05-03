@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.AcceptkkdataMapper">
-  <resultMap id="BaseResultMap" type="com.kangkang.api.po.Acceptkkdata">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="systolicpressure" jdbcType="INTEGER" property="systolicpressure" />
-    <result column="diastolicpressure" jdbcType="INTEGER" property="diastolicpressure" />
-    <result column="pulse" jdbcType="INTEGER" property="pulse" />
-    <result column="kktime" jdbcType="TIMESTAMP" property="kktime" />
-    <result column="kklevel" jdbcType="VARCHAR" property="kklevel" />
-    <result column="imei" jdbcType="VARCHAR" property="imei" />
-    <result column="kkmode" jdbcType="VARCHAR" property="kkmode" />
-    <result column="kksn" jdbcType="VARCHAR" property="kksn" />
-    <result column="kkkey" jdbcType="VARCHAR" property="kkkey" />
-    <result column="kkunique" jdbcType="VARCHAR" property="kkunique" />
-    <result column="userid" jdbcType="INTEGER" property="userid" />
-  </resultMap>
-  <select id="selectAllForHypertensionList" resultMap="BaseResultMap">
+    <resultMap id="BaseResultMap" type="com.kangkang.api.po.Acceptkkdata">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="systolicpressure" jdbcType="INTEGER" property="systolicpressure"/>
+        <result column="diastolicpressure" jdbcType="INTEGER" property="diastolicpressure"/>
+        <result column="pulse" jdbcType="INTEGER" property="pulse"/>
+        <result column="kktime" jdbcType="TIMESTAMP" property="kktime"/>
+        <result column="kklevel" jdbcType="VARCHAR" property="kklevel"/>
+        <result column="imei" jdbcType="VARCHAR" property="imei"/>
+        <result column="kkmode" jdbcType="VARCHAR" property="kkmode"/>
+        <result column="kksn" jdbcType="VARCHAR" property="kksn"/>
+        <result column="kkkey" jdbcType="VARCHAR" property="kkkey"/>
+        <result column="kkunique" jdbcType="VARCHAR" property="kkunique"/>
+        <result column="userid" jdbcType="INTEGER" property="userid"/>
+    </resultMap>
+    <select id="selectAllForHypertensionList" resultMap="BaseResultMap">
     select * from acceptkkdata order by uid desc
+  </select>
+
+    <select id="getAsingleRecord" resultType="com.kangkang.api.vo.MyAsingleRecordRs">
+        SELECT usertb.uid as uid,usertb.name as name,kkdata.kktime as testtime,kkdata.systolicpressure as highPressureValue,
+        kkdata.diastolicpressure as lowVoltageValue,kkdata.pulse as heartrate,kkdata.kklevel as bloodPressureState
+        FROM hypertensionmanager.acceptkkdata kkdata left join hypertensionmanager.t_users usertb on kkdata.userid=usertb.uid
+        where kkdata.userid=#{uid}
   </select>
 </mapper>

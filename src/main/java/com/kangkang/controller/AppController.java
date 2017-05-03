@@ -5,10 +5,7 @@ import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.util.PeonyMessageUtil;
-import com.kangkang.api.vo.AppParamVo;
-import com.kangkang.api.vo.GetHomePhotoAddressRs;
-import com.kangkang.api.vo.GetVerificationCodeParam;
-import com.kangkang.api.vo.TUsersExt;
+import com.kangkang.api.vo.*;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.MsgResult;
 import com.ldg.api.vo.ResultMsg;
@@ -75,7 +72,14 @@ public class AppController {
     @ResponseBody
     public ResultMsg setPwd(HttpServletRequest request,AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        TUsers user=kkService.registerUser(param);
+        TUsersExt user=kkService.registerUser(param);
+        String uid=user.getUid().toString();
+        String appToken=redisService.get(uid);
+        if(appToken==null){
+            appToken=UUID.randomUUID().toString();
+            redisService.add(uid, appToken, 60*24*30);
+        }
+        user.setApptoken(appToken);
         if(user.getRytoken()!=null){
             rs.setData(user);
         }else{
@@ -255,7 +259,96 @@ public class AppController {
         return rs;
     }
 
+    /**
+     * 记录
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/myAsingleRecord")
+    @ResponseBody
+    public ResultMsg myAsingleRecord(HttpServletRequest request,Integer uid) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        List<MyAsingleRecordRs> rsList=appPatientService.getAsingleRecord(uid);
+        rs.setData(rsList);
+        return rs;
+    }
 
+    /**
+     * 获取个人信息
+     * @param request
+     * @param uid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/userInfo")
+    @ResponseBody
+    public ResultMsg userInfo(HttpServletRequest request,Integer uid) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        TUsers user=appPatientService.getPatientUserById(uid);
+        rs.setData(user);
+        return rs;
+    }
+
+    /**
+     * 修改个人用户信息
+     * @param request
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modifyUserInfo")
+    @ResponseBody
+    public ResultMsg modifyUserInfo(HttpServletRequest request,TUsers user) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        user=appPatientService.modifyUserInfo(request,user);
+        rs.setData(user);
+        return rs;
+    }
+
+    /**
+     * 修改手机号获取验证码
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modifyPhoneForVerificationCode")
+    @ResponseBody
+    public ResultMsg modifyPhoneForVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        //2.未注册发送短信验证码
+        StringBuilder sendmsg=new StringBuilder("验证码为：");
+        sendmsg.append(param.getVerificationcode());
+        MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
+        if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
+            rs.setErrcode(msgrs.getCode());
+            rs.setErrmsg(msgrs.getMessage());
+            if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
+                rs.setErrmsg(" 手机号错误！");
+            }
+        }
+        return rs;
+    }
+
+    /**
+     * 修改成新手机号
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/verificationCodeAccordModifyPhone")
+    @ResponseBody
+    public ResultMsg verificationCodeAccordModifyPhone(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int i=appPatientService.updateUserPhone(param);
+        if(i==0){
+            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            rs.setErrmsg("修改失败！");
+        }
+        return rs;
+    }
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {
@@ -269,5 +362,6 @@ public class AppController {
         System.out.println(msg2);
         return msg;
     }
+
 
 }

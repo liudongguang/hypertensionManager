@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.TUsersMapper">
-    <resultMap id="BaseResultMap" type="com.kangkang.api.po.TUsers">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="uid" jdbcType="INTEGER" property="uid"/>
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="imei" jdbcType="VARCHAR" property="imei"/>
-        <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="sex" jdbcType="VARCHAR" property="sex"/>
-        <result column="rongid" jdbcType="VARCHAR" property="rongid"/>
-        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
-        <result column="registphone" jdbcType="VARCHAR" property="registphone"/>
-        <result column="rytoken" jdbcType="VARCHAR" property="rytoken"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.TUsers">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="rongid" jdbcType="VARCHAR" property="rongid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="registphone" jdbcType="VARCHAR" property="registphone" />
+    <result column="rytoken" jdbcType="VARCHAR" property="rytoken" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="headimageurl" jdbcType="VARCHAR" property="headimageurl" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+  </resultMap>
     <select id="selectUidByAcceptkkdata" parameterType="com.kangkang.api.po.Acceptkkdata" resultType="int">
        select uid from t_users where bindsn=#{kksn} and bindimei=#{imei}
   </select>
     <select id="getUserByPhoneNumber" resultType="int">
        select uid from t_users where registphone=#{mobile}
     </select>
-    <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo"
-            resultType="com.kangkang.api.vo.TUsersExt">
+    <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo" resultType="com.kangkang.api.vo.TUsersExt">
         select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from t_users WHERE
         registphone=#{mobile} and password=#{password}
   </select>
@@ -50,4 +53,10 @@
        select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from t_users WHERE
         username=#{username} and password=#{password}
     </select>
+    <select id="getPatientUserById" resultMap="BaseResultMap">
+        select uid,name,sex,birthday,age,address,headimageurl from  t_users  where uid=#{uid}
+    </select>
+    <update id="updateUserPhone" parameterType="com.kangkang.api.vo.GetVerificationCodeParam">
+         update t_users set registphone=#{mobile} where uid=#{uid}
+    </update>
 </mapper>

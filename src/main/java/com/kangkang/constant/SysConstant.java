@@ -12,4 +12,5 @@ public interface SysConstant {
 
     int MANAGER_TOKENVALIDE=100;//token失效
     String MANAGER_TOKENVALIDE_MSG="请重新登陆！";
+    String UPLOADE_JPG_suffix=".jpg";
 }

@@ -4,8 +4,17 @@ package com.kangkang.api.vo;
  * Created by LiuDongguang on 2017/4/19.
  */
 public class GetVerificationCodeParam {
+    private Integer uid;//唯一标识
     private String mobile;
     private String verificationcode;  //手机发来的验证码
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
 
     public String getMobile() {
         return mobile;

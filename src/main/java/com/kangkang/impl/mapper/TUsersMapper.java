@@ -28,4 +28,8 @@ public interface TUsersMapper extends Mapper<TUsers> {
     Integer getUserByUserName(String username);
 
     TUsersExt loginForWeb(WebParamVo param);
+
+    TUsers getPatientUserById(Integer uid);
+
+    int updateUserPhone(GetVerificationCodeParam param);
 }

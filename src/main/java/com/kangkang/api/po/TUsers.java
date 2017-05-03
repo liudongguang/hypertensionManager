@@ -1,7 +1,10 @@
 package com.kangkang.api.po;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "t_users")
 public class TUsers {
@@ -58,6 +61,26 @@ public class TUsers {
      * 融云token
      */
     private String rytoken;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 头像
+     */
+    private String headimageurl;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 生日
+     */
+    private Date birthday;
 
     /**
      * @return uid
@@ -251,5 +274,98 @@ public class TUsers {
      */
     public void setRytoken(String rytoken) {
         this.rytoken = rytoken;
+    }
+
+    /**
+     * 获取年龄
+     *
+     * @return age - 年龄
+     */
+    public Integer getAge() {
+        return age;
+    }
+
+    /**
+     * 设置年龄
+     *
+     * @param age 年龄
+     */
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    /**
+     * 获取头像
+     *
+     * @return headimageurl - 头像
+     */
+    public String getHeadimageurl() {
+        return headimageurl;
+    }
+
+    /**
+     * 设置头像
+     *
+     * @param headimageurl 头像
+     */
+    public void setHeadimageurl(String headimageurl) {
+        this.headimageurl = headimageurl;
+    }
+
+    /**
+     * 获取地址
+     *
+     * @return address - 地址
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * 设置地址
+     *
+     * @param address 地址
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * 获取生日
+     *
+     * @return birthday - 生日
+     */
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * 设置生日
+     *
+     * @param birthday 生日
+     */
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "TUsers{" +
+                "uid=" + uid +
+                ", sn='" + sn + '\'' +
+                ", imei='" + imei + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", rongid='" + rongid + '\'' +
+                ", createtime=" + createtime +
+                ", registphone='" + registphone + '\'' +
+                ", rytoken='" + rytoken + '\'' +
+                ", age=" + age +
+                ", headimageurl='" + headimageurl + '\'' +
+                ", address='" + address + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

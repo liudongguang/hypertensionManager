@@ -1,5 +1,6 @@
 package com.ldg.api.util;
 
+import com.kangkang.constant.SysConstant;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -90,7 +91,9 @@ public class RequestFileUtil {
             f.append(UUID.randomUUID().toString()).append(sourceName.substring(dianIndex, sourceName.length()));
             return f.toString();
         } else {
-            return sourceName;
+            StringBuilder f = new StringBuilder();
+            f.append(UUID.randomUUID().toString()).append(SysConstant.UPLOADE_JPG_suffix);
+            return f.toString();
         }
     }
     public final static void delFileFromDisk(HttpServletRequest request,String filePath){

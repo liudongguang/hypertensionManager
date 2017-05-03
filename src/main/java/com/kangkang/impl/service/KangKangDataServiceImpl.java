@@ -8,7 +8,6 @@ import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.util.SysPropertiesUtil;
 import com.kangkang.api.util.rongyun.RongYunSHA1;
 import com.kangkang.api.vo.AppParamVo;
-import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.constant.PropertiestConstant;
@@ -59,7 +58,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
     }
 
     @Override
-    public TUsers registerUser(AppParamVo param) throws AesException {
+    public TUsersExt registerUser(AppParamVo param) throws AesException {
         String phone=param.getMobile();
         String RongYunHeadImgURL = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_HEADIMGURL);
         String RongYunGetToken = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_GETTOKEN);
@@ -82,7 +81,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
         htcParam.put("portraitUri", RongYunHeadImgURL);
         String ts = htc.sendHttpPost(RongYunGetToken, htcHeader, htcParam);
         RongYunJsonRsInfo ryrsObj= JsonUtil.getObjectByJSON(ts,RongYunJsonRsInfo.class);
-        TUsers user=new TUsers();
+        TUsersExt user=new TUsersExt();
         if(200==ryrsObj.getCode()){
             user.setUsername(phone);
             user.setName(phone);

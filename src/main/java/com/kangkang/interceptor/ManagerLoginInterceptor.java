@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class ManagerLoginInterceptor implements HandlerInterceptor {
     @Autowired
@@ -33,7 +32,7 @@ public class ManagerLoginInterceptor implements HandlerInterceptor {
         if (userid == null) {
             ResultMsg errMsg = new ResultMsg();
             errMsg.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
-            errMsg.setErrmsg("缺少userid参数！");
+            errMsg.setErrmsg("缺少uid参数！");
             ResponeUtils.sendJson(response, errMsg);
             return false;
         }
