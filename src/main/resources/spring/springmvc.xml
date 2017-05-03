@@ -15,7 +15,7 @@
 	<mvc:resources location="/assets/" mapping="/assets/**"></mvc:resources>
 	<mvc:resources location="/lunboimgs/" mapping="/lunboimgs/**"></mvc:resources>
 	<mvc:resources location="/patientsHeadimgs/" mapping="/patientsHeadimgs/**"></mvc:resources>
-
+	<mvc:resources location="/zixunimgs/" mapping="/zixunimgs/**"></mvc:resources>
 	<mvc:annotation-driven conversion-service="conversionService"
 		validator="validator">
 		<mvc:message-converters>

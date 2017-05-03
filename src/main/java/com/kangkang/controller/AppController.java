@@ -349,6 +349,8 @@ public class AppController {
         }
         return rs;
     }
+
+
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {

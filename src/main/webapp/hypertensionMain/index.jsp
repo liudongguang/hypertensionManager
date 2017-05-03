@@ -51,12 +51,28 @@
             <li class="active"><a href="javascript:;"><i class="fa fa-home"></i>首页</a></li>
             <li class="sub open"><a href="javascript:;"><span class="glyphicon glyphicon-calendar btn-lg"></span> 业务管理
                 <div class="pull-right tt"><span class="caret"></span></div>
-                    </a>
+            </a>
                 <ul class="templatemo-submenu">
-                    <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span class="glyphicon glyphicon-list-alt"></span>血压记录</a>
+                    <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span
+                            class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
+
+                </ul>
+            </li>
+            <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-th-list btn-lg"></span>资讯管理
+                <div class="pull-right tt"><span class="caret"></span></div>
+            </a>
+                <ul class="templatemo-submenu">
                     <li><a id="lbtID" href="/webHandler/lunbotuList"><span class="glyphicon glyphicon-list-alt"></span>轮播图</a>
                     </li>
+                    <li><a href="/webHandler/faq_list"><span
+                            class="glyphicon glyphicon-indent-left"></span>常见问题</a></li>
+                    <li><a href="/sdeyfollowup/getManagerList"><span class="glyphicon glyphicon-user"></span>健康咨询</a>
+                    </li>
+                    <li><a href="/sdeyfollowup/getNoPageManagerList"><span
+                            class="glyphicon glyphicon-th"></span>意见反馈</a></li>
+                    <li><a href="/sdeyfollowup/msgModelList"><span
+                            class="glyphicon glyphicon-th"></span>免责声明</a></li>
                 </ul>
             </li>
             <c:if test="${sessionScope.user.name=='超级管理'}">
@@ -81,11 +97,11 @@
 
     <div class="templatemo-content-wrapper">
         <div class="templatemo-content-title">
-         <ol id="titleBarID" class="breadcrumb">
-            <li><a href="javascript:;">首页</a></li>
-            <li><a href="javascript:;" id="v1ID"></a></li>
-            <li class="active" id="v2ID"></li>
-         </ol>
+            <ol id="titleBarID" class="breadcrumb">
+                <li><a href="javascript:;">首页</a></li>
+                <li><a href="javascript:;" id="v1ID"></a></li>
+                <li class="active" id="v2ID"></li>
+            </ol>
         </div>
         <div id="mainContent" class="templatemo-content" style="min-height:795px;">
 

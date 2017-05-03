@@ -8,12 +8,14 @@ import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
+import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -76,12 +78,23 @@ public class WebPageController {
         return "/hypertensionMain/dishypertensionList.jsp";
     }
 
-
+    /**
+     * 进入轮播图页面
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/lunbotuList")
     public String lunbotuList(HttpServletRequest request) throws Exception {
         return "/hypertensionMain/lunboupload.jsp";
     }
 
+    /**
+     * 获取轮播图数据
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/getlunbotuData")
     @ResponseBody
     public ResultMsg  getlunbotuData(HttpServletRequest request) throws Exception {
@@ -113,6 +126,13 @@ public class WebPageController {
         return rs;
     }
 
+    /**
+     * 更新轮播图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/uploadLunBoTu")
     @ResponseBody
     public SendingVo uploadLunBoTu(HttpServletRequest request,FileInputParam param) throws Exception {
@@ -120,6 +140,14 @@ public class WebPageController {
         SendingVo rs=webManagerService.uploadLunBoTu(request,param);
         return rs;
     }
+
+    /**
+     * 删除轮播图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/delLunBoImgFile")
     @ResponseBody
     public ResultMsg delLunBoImgFile(HttpServletRequest request,FileInputParam param) throws Exception {
@@ -128,5 +156,28 @@ public class WebPageController {
         return rs;
     }
 
+    /**
+     * 进入常见问题页面
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/faq_list")
+    public String faq_list(HttpServletRequest request,PageParam pageParam) throws Exception {
+        return "/zixun/faq/index.jsp";
+    }
 
+    @RequestMapping(value = "/uploadIMGForZx")
+    @ResponseBody
+    public String uploadIMGForZx(HttpServletRequest request) throws Exception {
+        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
+        String fileName=RequestFileUtil.saveToComputer(uploadFiles,request,"zixunimgs");
+        return fileName;
+    }
+    @RequestMapping(value = "/save_faq")
+    public String save_faq(HttpServletRequest request,String content) throws Exception {
+        System.out.println(content);
+        return "/zixun/faq/index.jsp";
+    }
 }
