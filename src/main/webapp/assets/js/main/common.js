@@ -324,6 +324,16 @@ function initTable(jq_ThisContent, jq_Table) {
         layerWindow(href, title, width, height);
         return false;
     });
+    $("[ajaxLayerWindowFrame]").click(function () {
+        var href = $(this).attr("href");
+        var title = $(this).attr("title");
+        var width = $(this).attr("width");
+        var height = $(this).attr("height");
+        href = getURLByParams(href, $(this));
+        layerWindow(href, title, width, height,true);
+        return false;
+    });
+
     // ///
     $("[ajaxdel]").click(function () {
         var hrefurl = $(this).attr("href");

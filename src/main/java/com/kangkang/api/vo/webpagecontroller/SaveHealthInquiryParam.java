@@ -3,11 +3,20 @@ package com.kangkang.api.vo.webpagecontroller;
 /**
  * Created by LiuDongguang on 2017/5/4.
  */
-public class SavefaqParam {
+public class SaveHealthInquiryParam {
     private Integer uid;
     private String title;
     private String content;
     private String pici;
+    private String smallimg;
+
+    public String getSmallimg() {
+        return smallimg;
+    }
+
+    public void setSmallimg(String smallimg) {
+        this.smallimg = smallimg;
+    }
 
     public Integer getUid() {
         return uid;

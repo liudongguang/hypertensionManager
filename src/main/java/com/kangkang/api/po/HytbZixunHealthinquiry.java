@@ -1,11 +1,10 @@
 package com.kangkang.api.po;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
+import javax.persistence.*;
 
-@Table(name = "hytb_zixun_faq")
-public class HytbZixunFaq {
+@Table(name = "hytb_zixun_healthinquiry")
+public class HytbZixunHealthinquiry {
     @Id
     private Integer uid;
 
@@ -20,14 +19,19 @@ public class HytbZixunFaq {
     private String content;
 
     /**
-     * 操作员id
+     * 创建时间
+     */
+    private Date createtime;
+
+    /**
+     * 管理员id
      */
     private Integer managerid;
 
     /**
-     * 创建时间
+     * 封面小图
      */
-    private Date createtime;
+    private String smallimg;
 
     /**
      * @return uid
@@ -80,24 +84,6 @@ public class HytbZixunFaq {
     }
 
     /**
-     * 获取操作员id
-     *
-     * @return managerid - 操作员id
-     */
-    public Integer getManagerid() {
-        return managerid;
-    }
-
-    /**
-     * 设置操作员id
-     *
-     * @param managerid 操作员id
-     */
-    public void setManagerid(Integer managerid) {
-        this.managerid = managerid;
-    }
-
-    /**
      * 获取创建时间
      *
      * @return createtime - 创建时间
@@ -113,5 +99,41 @@ public class HytbZixunFaq {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取管理员id
+     *
+     * @return managerid - 管理员id
+     */
+    public Integer getManagerid() {
+        return managerid;
+    }
+
+    /**
+     * 设置管理员id
+     *
+     * @param managerid 管理员id
+     */
+    public void setManagerid(Integer managerid) {
+        this.managerid = managerid;
+    }
+
+    /**
+     * 获取封面小图
+     *
+     * @return smallimg - 封面小图
+     */
+    public String getSmallimg() {
+        return smallimg;
+    }
+
+    /**
+     * 设置封面小图
+     *
+     * @param smallimg 封面小图
+     */
+    public void setSmallimg(String smallimg) {
+        this.smallimg = smallimg;
     }
 }

@@ -3,17 +3,16 @@ package com.kangkang.impl.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbZixunFaq;
+import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.po.SysLunboimgs;
 import com.kangkang.api.po.Tempimages;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
+import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
-import com.kangkang.impl.mapper.HytbZixunFaqMapper;
-import com.kangkang.impl.mapper.SysLunboimgsMapper;
-import com.kangkang.impl.mapper.SysManagerMapper;
-import com.kangkang.impl.mapper.TempimagesMapper;
+import com.kangkang.impl.mapper.*;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private TempimagesMapper tempimagesDao;
     @Autowired
     private HytbZixunFaqMapper faqDao;
-
+    @Autowired
+    private HytbZixunHealthinquiryMapper healthinquiryDao;
     @Override
     public Integer getUserByUserName(String username) {
         return sysManagerMapper.getUserByUserName(username);
@@ -126,10 +126,15 @@ public class WebManagerServiceImpl implements WebManagerService {
         HytbZixunFaq faq=new HytbZixunFaq();
         faq.setContent(param.getContent());
         faq.setTitle(param.getTitle());
-        faq.setCreatetime(new Date());
-        faq.setManagerid(1);
-        faq.setSmallimg("33");
-        faqDao.insertSelective(faq);
+        if(param.getUid()!=null){
+            faq.setUid(param.getUid());
+            faqDao.updateByPrimaryKeySelective(faq);
+        }else{
+            faq.setCreatetime(new Date());
+            faq.setManagerid(1);
+            faqDao.insertSelective(faq);
+        }
+
         return delNum[0];
     }
 
@@ -137,5 +142,37 @@ public class WebManagerServiceImpl implements WebManagerService {
     public PageInfo<HytbZixunFaq> faq_list(PageParam pageParam) {
         PageInfo<HytbZixunFaq> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> faqDao.faq_list());
         return pageInfo;
+    }
+
+    @Override
+    public int delfaqById(Integer uid) {
+        return faqDao.deleteByPrimaryKey(uid);
+    }
+
+    @Override
+    public HytbZixunFaq getFAQByID(Integer uid) {
+        return faqDao.selectByPrimaryKey(uid);
+    }
+    ////////////////////////
+
+    @Override
+    public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
+        PageInfo<HytbZixunHealthinquiry> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
+        return pageInfo;
+    }
+
+    @Override
+    public int saveHealthInquiry(SaveHealthInquiryParam param) {
+        return healthinquiryDao.insertSelective(null);
+    }
+
+    @Override
+    public int delHealthInquiryById(Integer uid) {
+        return healthinquiryDao.deleteByPrimaryKey(uid);
+    }
+
+    @Override
+    public HytbZixunHealthinquiry getHealthInquiryByID(Integer uid) {
+        return healthinquiryDao.selectByPrimaryKey(uid);
     }
 }

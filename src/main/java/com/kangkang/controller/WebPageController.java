@@ -3,12 +3,14 @@ package com.kangkang.controller;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbZixunFaq;
+import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
+import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
@@ -158,6 +160,18 @@ public class WebPageController {
     }
 
     /**
+     * 上传图片
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/uploadIMGForZx")
+    @ResponseBody
+    public String uploadIMGForZx(HttpServletRequest request,String pici) throws Exception {
+        String fileName= webManagerService.UploadedImg(request,pici);
+        return fileName;
+    }
+    /**
      * 进入常见问题页面
      * @param request
      * @param pageParam
@@ -174,18 +188,6 @@ public class WebPageController {
         return "/zixun/faq/index.jsp";
     }
 
-    /**
-     * 上传图片
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/uploadIMGForZx")
-    @ResponseBody
-    public String uploadIMGForZx(HttpServletRequest request,String pici) throws Exception {
-        String fileName= webManagerService.UploadedImg(request,pici);
-        return fileName;
-    }
 
     /**
      * 保存常见问题
@@ -196,6 +198,81 @@ public class WebPageController {
     @RequestMapping(value = "/save_faq")
     public String save_faq(HttpServletRequest request,SavefaqParam param) throws Exception {
        int i= webManagerService.savefaq(param);
+        return "/webHandler/faq_list";
+    }
+
+    @RequestMapping(value = "/delfaqById")
+    public String delfaqById(HttpServletRequest request,Integer uid) throws Exception {
+        int i= webManagerService.delfaqById(uid);
+        return "/webHandler/faq_list";
+    }
+
+
+    @RequestMapping(value = "/displayFAQ")
+    public String displayFAQ(HttpServletRequest request,Integer uid) throws Exception {
+        HytbZixunFaq faq=webManagerService.getFAQByID(uid);
+        request.setAttribute("obj",faq);
+        return "/zixun/faq/disfaq.jsp";
+    }
+
+
+    @RequestMapping(value = "/editFAQ")
+    public String editFAQ(HttpServletRequest request,Integer uid) throws Exception {
+        HytbZixunFaq faq=webManagerService.getFAQByID(uid);
+        request.setAttribute("obj",faq);
+        return "/zixun/faq/addafq.jsp";
+    }
+    ////////////////////////////////////////////健康资讯   start
+    /**
+     * 进入健康资讯
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/healthInquiry_list")
+    public String healthInquiry_list(HttpServletRequest request,PageParam pageParam) throws Exception {
+        request.setAttribute("pici",UUID.randomUUID().toString());
+        /////
+        PageInfo<HytbZixunHealthinquiry> faqpageInfo=webManagerService.healthInquiry_list(pageParam);
+        request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
+        /////
         return "/zixun/faq/index.jsp";
     }
+
+
+    /**
+     * 保存健康资讯
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/save_healthInquiry")
+    public String save_healthInquiry(HttpServletRequest request,SaveHealthInquiryParam param) throws Exception {
+        int i= webManagerService.saveHealthInquiry(param);
+        return "/webHandler/faq_list";
+    }
+
+    @RequestMapping(value = "/delhealthInquiryById")
+    public String delhealthInquiryById(HttpServletRequest request,Integer uid) throws Exception {
+        int i= webManagerService.delHealthInquiryById(uid);
+        return "/webHandler/faq_list";
+    }
+
+
+    @RequestMapping(value = "/displayhealthInquiry")
+    public String displayhealthInquiry(HttpServletRequest request,Integer uid) throws Exception {
+        HytbZixunHealthinquiry faq=webManagerService.getHealthInquiryByID(uid);
+        request.setAttribute("obj",faq);
+        return "/zixun/faq/disfaq.jsp";
+    }
+
+
+    @RequestMapping(value = "/edithealthInquiry")
+    public String edithealthInquiry(HttpServletRequest request,Integer uid) throws Exception {
+        HytbZixunHealthinquiry faq=webManagerService.getHealthInquiryByID(uid);
+        request.setAttribute("obj",faq);
+        return "/zixun/faq/addafq.jsp";
+    }
+    ////////////////////////////////////////////健康资讯   end
 }

@@ -67,7 +67,7 @@
                     </li>
                     <li><a href="/webHandler/faq_list"><span
                             class="glyphicon glyphicon-indent-left"></span>常见问题</a></li>
-                    <li><a href="/sdeyfollowup/getManagerList"><span class="glyphicon glyphicon-user"></span>健康咨询</a>
+                    <li><a href="/webHandler/healthInquiryList"><span class="glyphicon glyphicon-user"></span>健康资讯</a>
                     </li>
                     <li><a href="/sdeyfollowup/getNoPageManagerList"><span
                             class="glyphicon glyphicon-th"></span>意见反馈</a></li>
@@ -75,22 +75,6 @@
                             class="glyphicon glyphicon-th"></span>免责声明</a></li>
                 </ul>
             </li>
-            <c:if test="${sessionScope.user.name=='超级管理'}">
-                <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-th-list btn-lg"></span>数据管理
-                    <div class="pull-right tt"><span class="caret"></span></div>
-                </a>
-                    <ul class="templatemo-submenu">
-                        <li><a href="/sdeyfollowup/enterOneMonthHisChuYuanPatient"><span
-                                class="glyphicon glyphicon-indent-left"></span>数据获取</a></li>
-                        <li><a href="/sdeyfollowup/getManagerList"><span class="glyphicon glyphicon-user"></span>管理员</a>
-                        </li>
-                        <li><a href="/sdeyfollowup/getNoPageManagerList"><span
-                                class="glyphicon glyphicon-th"></span>工作分配</a></li>
-                        <li><a href="/sdeyfollowup/msgModelList"><span
-                                class="glyphicon glyphicon-th"></span>短信模版</a></li>
-                    </ul>
-                </li>
-            </c:if>
         </ul>
     </div>
     <!--/.navbar-collapse -->

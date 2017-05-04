@@ -2,11 +2,13 @@ package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbZixunFaq;
+import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
+import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
 import com.ldg.api.vo.PageParam;
 
@@ -72,4 +74,47 @@ public interface WebManagerService {
      * @return
      */
     PageInfo<HytbZixunFaq> faq_list(PageParam pageParam);
+
+    /**
+     * 删除常见问题
+     * @param uid
+     * @return
+     */
+    int delfaqById(Integer uid);
+
+    /**
+     * 获取单个常见问题详情
+     * @param uid
+     * @return
+     */
+    HytbZixunFaq getFAQByID(Integer uid);
+
+
+    /**
+     * 获取健康资讯列表
+     * @param pageParam
+     * @return
+     */
+    PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam);
+
+    /**
+     * 保存健康资讯
+     * @param param
+     * @return
+     */
+    int saveHealthInquiry(SaveHealthInquiryParam param);
+
+    /**
+     * 删除健康资讯
+     * @param uid
+     * @return
+     */
+    int delHealthInquiryById(Integer uid);
+
+    /**
+     * 通过id获取单条咨询
+     * @param uid
+     * @return
+     */
+    HytbZixunHealthinquiry getHealthInquiryByID(Integer uid);
 }
