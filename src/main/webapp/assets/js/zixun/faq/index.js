@@ -1,5 +1,7 @@
 jQuery(document).ready(function () {
     $("#addfaq").click(function () {
-        jumpPageNoAuthority("/zixun/faq/addafq.jsp",$("#mainContent"));
+        var piciVal=$(this).attr("pici");
+        var url="/zixun/faq/addafq.jsp?pici="+piciVal;
+        jumpPageNoAuthority(url,$("#mainContent"));
     });
 });

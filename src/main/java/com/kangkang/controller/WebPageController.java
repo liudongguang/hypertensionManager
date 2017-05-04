@@ -8,14 +8,13 @@ import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.ldg.api.util.RequestFileUtil;
+import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -165,19 +164,32 @@ public class WebPageController {
      */
     @RequestMapping(value = "/faq_list")
     public String faq_list(HttpServletRequest request,PageParam pageParam) throws Exception {
+        request.setAttribute("pici",UUID.randomUUID().toString());
         return "/zixun/faq/index.jsp";
     }
 
+    /**
+     * 上传图片
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/uploadIMGForZx")
     @ResponseBody
-    public String uploadIMGForZx(HttpServletRequest request) throws Exception {
-        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
-        String fileName=RequestFileUtil.saveToComputer(uploadFiles,request,"zixunimgs");
+    public String uploadIMGForZx(HttpServletRequest request,String pici) throws Exception {
+        String fileName= webManagerService.UploadedImg(request,pici);
         return fileName;
     }
+
+    /**
+     * 保存常见问题
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/save_faq")
-    public String save_faq(HttpServletRequest request,String content) throws Exception {
-        System.out.println(content);
+    public String save_faq(HttpServletRequest request,SavefaqParam param) throws Exception {
+       int i= webManagerService.savefaq(param);
         return "/zixun/faq/index.jsp";
     }
 }

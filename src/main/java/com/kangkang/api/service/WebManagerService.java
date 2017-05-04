@@ -5,6 +5,7 @@ import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
+import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -46,4 +47,19 @@ public interface WebManagerService {
      * @return
      */
     int delLunBoImgFile(HttpServletRequest request,FileInputParam param);
+
+    /**
+     * 上传图片
+     * @param request
+     * @param pici
+     * @return
+     */
+    String UploadedImg(HttpServletRequest request, String pici) throws Exception;
+
+    /**
+     * 保存常见问题
+     * @param param
+     * @return
+     */
+    int savefaq(SavefaqParam param);
 }

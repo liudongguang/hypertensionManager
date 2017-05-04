@@ -1,12 +1,15 @@
 package com.kangkang.impl.service;
 
 import com.kangkang.api.po.SysLunboimgs;
+import com.kangkang.api.po.Tempimages;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
+import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
 import com.kangkang.impl.mapper.SysManagerMapper;
+import com.kangkang.impl.mapper.TempimagesMapper;
 import com.ldg.api.util.RequestFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private SysManagerMapper sysManagerMapper;
     @Autowired
     private SysLunboimgsMapper lunxunIMGDao;
+    @Autowired
+    private TempimagesMapper tempimagesDao;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -84,5 +89,23 @@ public class WebManagerServiceImpl implements WebManagerService {
         String delFilePath = param.getFilePath();
         RequestFileUtil.delFileFromDisk(request, delFilePath);
         return delNum;
+    }
+
+    @Override
+    public String UploadedImg(HttpServletRequest request, String pici) throws Exception {
+        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
+        String fileName=RequestFileUtil.saveToComputer(uploadFiles,request,"zixunimgs");
+        Tempimages tempimg=new Tempimages();
+        tempimg.setImagepath(fileName);
+        tempimg.setPici(pici);
+        tempimagesDao.insertSelective(tempimg);
+        return fileName;
+    }
+
+    @Override
+    public int savefaq(SavefaqParam param) {
+        //1.对比文章中存在的图片，有的删除暂存图片表的信息，没有的标记删除状态为1
+
+        return 0;
     }
 }

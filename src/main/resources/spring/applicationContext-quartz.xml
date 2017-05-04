@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="Access_token" class="com.weixin.util.Access_token"></bean>
+	<bean id="Access_token" class="com.kangkang.impl.service.TaskServiceImpl"></bean>
 	<!-- 配置方法映射工厂类 -->
 	<bean id="jobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="Access_token"></property>
-		<property name="targetMethod" value="init_Access_token"></property>
+		<property name="targetMethod" value="delImgs"></property>
 		<property name="concurrent" value="false"></property>
 		<!-- concurrent : false表示等上一个任务执行完后再开启新的任务 -->
 	</bean>
@@ -17,8 +17,11 @@
 	<bean id="getTokenJobTrigger" 
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDetail"></property>
-		<!-- 每隔一小时55分30秒执行一次： -->
-		<property name="cronExpression" value="30 55 */1 * * ?"></property>
+		<!-- 每30秒执行：
+		<property name="cronExpression" value="0/30 * * * * ?"></property>
+		-->
+		<!--每天中文12点执行-->
+		<property name="cronExpression" value="0 0 12 * * ?"></property>
 		<!-- 延时几毫秒后执行
 		<property name="startDelay" value="1000"></property>
 		 -->

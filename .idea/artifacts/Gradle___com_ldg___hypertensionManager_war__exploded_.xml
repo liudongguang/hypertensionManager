@@ -17,24 +17,17 @@
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-orm:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-jdbc:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-instrument-tomcat:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-instrument:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-aspects:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc-portlet:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.quartz-scheduler:quartz:2.3.0" />
+          <element id="library" level="project" name="Gradle: asm:asm:3.3.1" />
+          <element id="library" level="project" name="Gradle: org.apache.commons:commons-dbcp2:2.1.1" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-test:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.3.1" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.7.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc-portlet:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: cglib:cglib:3.2.1" />
-          <element id="library" level="project" name="Gradle: asm:asm:3.3.1" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: org.aspectj:aspectjrt:1.8.9" />
           <element id="library" level="project" name="Gradle: org.aspectj:aspectjweaver:1.8.9" />
           <element id="library" level="project" name="Gradle: aopalliance:aopalliance:1.0" />
@@ -48,12 +41,12 @@
           <element id="library" level="project" name="Gradle: org.mybatis:mybatis-spring:1.3.1" />
           <element id="library" level="project" name="Gradle: tk.mybatis:mapper:3.4.0" />
           <element id="library" level="project" name="Gradle: javax.persistence:persistence-api:1.0.2" />
-          <element id="library" level="project" name="Gradle: com.github.pagehelper:pagehelper:5.0.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-instrument-tomcat:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: org.hibernate:hibernate-validator:5.1.3.Final" />
-          <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:5.1.39" />
-          <element id="library" level="project" name="Gradle: org.apache.commons:commons-dbcp2:2.1.1" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-aspects:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: org.apache.commons:commons-lang3:3.4" />
-          <element id="library" level="project" name="Gradle: commons-fileupload:commons-fileupload:1.3.1" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: commons-io:commons-io:2.4" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.9.0.pr1" />
           <element id="library" level="project" name="Gradle: redis.clients:jedis:2.9.0" />
@@ -79,7 +72,19 @@
           <element id="library" level="project" name="Gradle: org.apache.httpcomponents:httpcore:4.4.6" />
           <element id="library" level="project" name="Gradle: commons-codec:commons-codec:1.9" />
           <element id="library" level="project" name="Gradle: org.apache.ant:ant-launcher:1.9.4" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-orm:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-jdbc:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-instrument:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-core:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.github.pagehelper:pagehelper:5.0.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.7.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.data:spring-data-commons:1.13.1.RELEASE" />
+          <element id="library" level="project" name="Gradle: com.mchange:c3p0:0.9.5.2" />
+          <element id="library" level="project" name="Gradle: mysql:mysql-connector-java:5.1.39" />
+          <element id="library" level="project" name="Gradle: com.zaxxer:HikariCP-java6:2.3.13" />
+          <element id="library" level="project" name="Gradle: com.mchange:mchange-commons-java:0.2.11" />
+          <element id="file-copy" path="F:/ideaTools/gradleServiceDirectory/caches/modules-2/files-2.1/org.quartz-scheduler/quartz-jobs/2.3.0/6649dc473708cece6f7e1923baafedd0d7128ebe/quartz-jobs-2.3.0.jar" />
         </element>
       </element>
     </root>

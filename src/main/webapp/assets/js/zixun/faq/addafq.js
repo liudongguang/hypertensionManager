@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+    var PiCiIDVal=$("#PiCiID").val();
     $('#contents').summernote({
         height: 200,
         lang: 'zh-CN',
@@ -8,14 +9,13 @@ jQuery(document).ready(function () {
                 var formData = new FormData();
                 formData.append('file',files[0]);
                 $.ajax({
-                    url : basePath+'webHandler/uploadIMGForZx',//后台文件上传接口
+                    url : basePath+'webHandler/uploadIMGForZx?pici='+$("#piciID").val(),//后台文件上传接口
                     type : 'POST',
                     data : formData,
                     processData : false,
                     contentType : false,
                     success : function(data) {
-                        $('#contents').summernote('insertImage',data,data);
-                        $("img[src^=zixunimgs]")
+                        $('#contents').summernote('insertImage',data,"img");
                     }
                 });
             }
