@@ -9,8 +9,15 @@
     <result column="imagepath" jdbcType="VARCHAR" property="imagepath" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="pici" jdbcType="VARCHAR" property="pici" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
-  <select id="getDelImages" resultType="int">
-    select uid from tempimages where state=1
+  <select id="getDelImages" resultMap="BaseResultMap">
+    select uid,imagepath from tempimages where state=1 OR TIMESTAMPDIFF(DAY,createtime,now())>0
   </select>
+  <select id="getImgesPathByPici" resultMap="BaseResultMap" parameterType="string">
+      select uid,imagepath from tempimages where pici=#{pici}
+  </select>
+  <update id="setDelState" parameterType="int">
+      update tempimages set state=1 where uid=#{uid}
+  </update>
 </mapper>

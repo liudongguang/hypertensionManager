@@ -1,6 +1,8 @@
 package com.kangkang.api.po;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Table(name = "tempimages")
 public class Tempimages {
@@ -21,6 +23,8 @@ public class Tempimages {
      * 批次
      */
     private String pici;
+
+    private Date createtime;
 
     /**
      * @return uid
@@ -88,5 +92,19 @@ public class Tempimages {
      */
     public void setPici(String pici) {
         this.pici = pici;
+    }
+
+    /**
+     * @return createtime
+     */
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    /**
+     * @param createtime
+     */
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

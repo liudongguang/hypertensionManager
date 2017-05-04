@@ -98,6 +98,7 @@ public class WebManagerServiceImpl implements WebManagerService {
         Tempimages tempimg=new Tempimages();
         tempimg.setImagepath(fileName);
         tempimg.setPici(pici);
+        tempimg.setCreatetime(new Date());
         tempimagesDao.insertSelective(tempimg);
         return fileName;
     }
@@ -105,7 +106,15 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public int savefaq(SavefaqParam param) {
         //1.对比文章中存在的图片，有的删除暂存图片表的信息，没有的标记删除状态为1
-
+        List<Tempimages> imgpathList=tempimagesDao.getImgesPathByPici(param.getPici());
+        imgpathList.forEach(item->{
+            //不存在的时候标识删除图片
+            if(param.getContent().indexOf(item.getImagepath())==-1){
+                int delNum=tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
+            }else{
+                tempimagesDao.deleteByPrimaryKey(item.getUid());//删除暂时记录
+            }
+        });
         return 0;
     }
 }

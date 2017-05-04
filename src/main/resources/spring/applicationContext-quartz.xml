@@ -19,9 +19,10 @@
 		<property name="jobDetail" ref="jobDetail"></property>
 		<!-- 每30秒执行：
 		<property name="cronExpression" value="0/30 * * * * ?"></property>
-		-->
+         -->
 		<!--每天中文12点执行-->
 		<property name="cronExpression" value="0 0 12 * * ?"></property>
+
 		<!-- 延时几毫秒后执行
 		<property name="startDelay" value="1000"></property>
 		 -->
