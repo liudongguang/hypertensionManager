@@ -2,6 +2,7 @@ package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
@@ -9,6 +10,7 @@ import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +167,10 @@ public class WebPageController {
     @RequestMapping(value = "/faq_list")
     public String faq_list(HttpServletRequest request,PageParam pageParam) throws Exception {
         request.setAttribute("pici",UUID.randomUUID().toString());
+        /////
+        PageInfo<HytbZixunFaq> faqpageInfo=webManagerService.faq_list(pageParam);
+        request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
+        /////
         return "/zixun/faq/index.jsp";
     }
 

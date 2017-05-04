@@ -1,11 +1,14 @@
 package com.kangkang.api.service;
 
+import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -62,4 +65,11 @@ public interface WebManagerService {
      * @return
      */
     int savefaq(SavefaqParam param);
+
+    /**
+     * 获取常见问题
+     * @param pageParam
+     * @return
+     */
+    PageInfo<HytbZixunFaq> faq_list(PageParam pageParam);
 }

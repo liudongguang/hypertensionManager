@@ -1,5 +1,8 @@
 package com.kangkang.impl.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.SysLunboimgs;
 import com.kangkang.api.po.Tempimages;
 import com.kangkang.api.service.WebManagerService;
@@ -7,10 +10,12 @@ import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.kangkang.impl.mapper.HytbZixunFaqMapper;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
 import com.kangkang.impl.mapper.SysManagerMapper;
 import com.kangkang.impl.mapper.TempimagesMapper;
 import com.ldg.api.util.RequestFileUtil;
+import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +35,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private SysLunboimgsMapper lunxunIMGDao;
     @Autowired
     private TempimagesMapper tempimagesDao;
+    @Autowired
+    private HytbZixunFaqMapper faqDao;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -107,14 +114,28 @@ public class WebManagerServiceImpl implements WebManagerService {
     public int savefaq(SavefaqParam param) {
         //1.对比文章中存在的图片，有的删除暂存图片表的信息，没有的标记删除状态为1
         List<Tempimages> imgpathList=tempimagesDao.getImgesPathByPici(param.getPici());
+        final int[] delNum = {0};
         imgpathList.forEach(item->{
             //不存在的时候标识删除图片
             if(param.getContent().indexOf(item.getImagepath())==-1){
-                int delNum=tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
+                 delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
             }else{
-                tempimagesDao.deleteByPrimaryKey(item.getUid());//删除暂时记录
+                delNum[0] =tempimagesDao.deleteByPrimaryKey(item.getUid());//删除暂时记录
             }
         });
-        return 0;
+        HytbZixunFaq faq=new HytbZixunFaq();
+        faq.setContent(param.getContent());
+        faq.setTitle(param.getTitle());
+        faq.setCreatetime(new Date());
+        faq.setManagerid(1);
+        faq.setSmallimg("33");
+        faqDao.insertSelective(faq);
+        return delNum[0];
+    }
+
+    @Override
+    public PageInfo<HytbZixunFaq> faq_list(PageParam pageParam) {
+        PageInfo<HytbZixunFaq> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> faqDao.faq_list());
+        return pageInfo;
     }
 }

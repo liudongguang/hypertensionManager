@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
     var PiCiIDVal=$("#PiCiID").val();
     $('#contents').summernote({
-        height: 200,
+        height: 500,
         lang: 'zh-CN',
         callbacks: {
             onImageUpload: function(files) {
