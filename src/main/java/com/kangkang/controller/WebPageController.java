@@ -13,6 +13,7 @@ import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
 import com.kangkang.constant.SysConstant;
+import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -242,7 +244,9 @@ public class WebPageController {
     @RequestMapping(value = "/uploadCropperImage",method = RequestMethod.POST, produces="text/html;charset=utf-8")
     @ResponseBody
     public String uploadCropper(
-            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request) {
+            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request) throws IOException {
+        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
+        System.out.println(uploadFiles);
         System.out.println(avatar_file);
         return  "111";
     }
