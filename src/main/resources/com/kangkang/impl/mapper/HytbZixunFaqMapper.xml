@@ -10,8 +10,9 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="managerid" jdbcType="INTEGER" property="managerid" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="imgpici" jdbcType="VARCHAR" property="imgpici" />
   </resultMap>
   <select id="faq_list" resultMap="BaseResultMap">
-       select uid,title,createtime from hytb_zixun_faq order by uid desc
+       select uid,title,createtime,imgpici from hytb_zixun_faq order by uid desc
   </select>
 </mapper>

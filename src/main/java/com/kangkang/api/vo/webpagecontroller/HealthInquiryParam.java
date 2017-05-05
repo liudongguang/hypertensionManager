@@ -1,14 +1,25 @@
 package com.kangkang.api.vo.webpagecontroller;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by LiuDongguang on 2017/5/4.
  */
-public class SaveHealthInquiryParam {
+public class HealthInquiryParam {
     private Integer uid;
     private String title;
     private String content;
     private String pici;
     private String smallimg;
+    private HttpServletRequest request;
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     public String getSmallimg() {
         return smallimg;
@@ -52,7 +63,7 @@ public class SaveHealthInquiryParam {
 
     @Override
     public String toString() {
-        return "SavefaqParam{" +
+        return "FaqParam{" +
                 "content='" + content + '\'' +
                 ", pici='" + pici + '\'' +
                 '}';

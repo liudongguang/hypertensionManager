@@ -19,4 +19,4 @@
 <script language="javascript" type="text/javascript" src="assets/js/main/ajaxForm.js"></script>
 <script language="javascript" type="text/javascript" src="assets/summernote/summernote.js"></script>
 <script language="javascript" type="text/javascript" src="assets/summernote/lang/summernote-zh-CN.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/zixun/faq/addafq.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/healthInquiry/add.js"></script>

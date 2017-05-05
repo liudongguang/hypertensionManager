@@ -10,8 +10,8 @@ import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
@@ -34,8 +34,10 @@ public class WebPageController {
     private WebManagerService webManagerService;
     @Autowired
     private RedisService redisService;
+
     /**
      * 登陆
+     *
      * @param request
      * @return
      * @throws Exception
@@ -44,28 +46,29 @@ public class WebPageController {
     @ResponseBody
     public ResultMsg weblogin(HttpServletRequest request, WebParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        Integer userid=webManagerService.getUserByUserName(param.getUsername());
-        if(userid==null){
+        Integer userid = webManagerService.getUserByUserName(param.getUsername());
+        if (userid == null) {
             rs.setErrcode(1);
             rs.setErrmsg("用户未注册！");
             return rs;
         }
-        TUsersExt user=webManagerService.loginForWeb(param);
-        if(user!=null){
-            String uid=user.getUid().toString();
-            String appToken=redisService.get(uid);
-            if(appToken==null){
-                appToken= UUID.randomUUID().toString();
+        TUsersExt user = webManagerService.loginForWeb(param);
+        if (user != null) {
+            String uid = user.getUid().toString();
+            String appToken = redisService.get(uid);
+            if (appToken == null) {
+                appToken = UUID.randomUUID().toString();
                 redisService.add(uid, appToken, 60);
             }
             user.setApptoken(appToken);
             rs.setData(user);
-        }else{
+        } else {
             rs.setErrcode(1);
             rs.setErrmsg("用户名或密码错误！");
         }
         return rs;
     }
+
     /**
      * 获取血压数据
      *
@@ -83,6 +86,7 @@ public class WebPageController {
 
     /**
      * 进入轮播图页面
+     *
      * @param request
      * @return
      * @throws Exception
@@ -94,28 +98,29 @@ public class WebPageController {
 
     /**
      * 获取轮播图数据
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/getlunbotuData")
     @ResponseBody
-    public ResultMsg  getlunbotuData(HttpServletRequest request) throws Exception {
-        ResultMsg rs=new ResultMsg();
-        List<InitialPreviewImgVo> imgsList=webManagerService.getUploadedImgs();
-        List<SendingVo> datars=new ArrayList<>();
+    public ResultMsg getlunbotuData(HttpServletRequest request) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        List<InitialPreviewImgVo> imgsList = webManagerService.getUploadedImgs();
+        List<SendingVo> datars = new ArrayList<>();
         final int[] indexNum = {1};
-        imgsList.forEach(item->{
-            SendingVo sdv=new SendingVo();
-            InitialPreviewImgVo ipimg=new InitialPreviewImgVo();
+        imgsList.forEach(item -> {
+            SendingVo sdv = new SendingVo();
+            InitialPreviewImgVo ipimg = new InitialPreviewImgVo();
             ipimg.setSrc(item.getSrc());
             sdv.getInitialPreview().add(ipimg.toString());
-            InitialPreviewConfigVo ipimgconfig=new InitialPreviewConfigVo();
+            InitialPreviewConfigVo ipimgconfig = new InitialPreviewConfigVo();
             ipimgconfig.setKey(item.getUid());
-            ipimgconfig.setCaption("轮播图"+String.valueOf(indexNum[0]++));
-            ipimgconfig.setUrl("webHandler/delLunBoImgFile?uid="+item.getUid()+"&filePath="+item.getSrc());
+            ipimgconfig.setCaption("轮播图" + String.valueOf(indexNum[0]++));
+            ipimgconfig.setUrl("webHandler/delLunBoImgFile?uid=" + item.getUid() + "&filePath=" + item.getSrc());
             sdv.getInitialPreviewConfig().add(ipimgconfig);
-            InitialPreviewThumbTagsVo ipt=new InitialPreviewThumbTagsVo();
+            InitialPreviewThumbTagsVo ipt = new InitialPreviewThumbTagsVo();
             ipt.setCUSTOM_TAG_NEW("' '");
             ipt.setCUSTOM_TAG_INIT("<span class=\\'custom-css\\'>CUSTOM MARKUP</span>");
             sdv.getInitialPreviewThumbTags().add(ipt);
@@ -131,6 +136,7 @@ public class WebPageController {
 
     /**
      * 更新轮播图
+     *
      * @param request
      * @param param
      * @return
@@ -138,14 +144,15 @@ public class WebPageController {
      */
     @RequestMapping(value = "/uploadLunBoTu")
     @ResponseBody
-    public SendingVo uploadLunBoTu(HttpServletRequest request,FileInputParam param) throws Exception {
+    public SendingVo uploadLunBoTu(HttpServletRequest request, FileInputParam param) throws Exception {
         System.out.println(param);
-        SendingVo rs=webManagerService.uploadLunBoTu(request,param);
+        SendingVo rs = webManagerService.uploadLunBoTu(request, param);
         return rs;
     }
 
     /**
      * 删除轮播图
+     *
      * @param request
      * @param param
      * @return
@@ -153,36 +160,39 @@ public class WebPageController {
      */
     @RequestMapping(value = "/delLunBoImgFile")
     @ResponseBody
-    public ResultMsg delLunBoImgFile(HttpServletRequest request,FileInputParam param) throws Exception {
-        ResultMsg rs=new ResultMsg();
-        int delNum=webManagerService.delLunBoImgFile(request,param);
+    public ResultMsg delLunBoImgFile(HttpServletRequest request, FileInputParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int delNum = webManagerService.delLunBoImgFile(request, param);
         return rs;
     }
 
     /**
      * 上传图片
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/uploadIMGForZx")
     @ResponseBody
-    public String uploadIMGForZx(HttpServletRequest request,String pici) throws Exception {
-        String fileName= webManagerService.UploadedImg(request,pici);
+    public String uploadIMGForZx(HttpServletRequest request, String pici) throws Exception {
+        String fileName = webManagerService.UploadedImg(request, pici);
         return fileName;
     }
+
     /**
      * 进入常见问题页面
+     *
      * @param request
      * @param pageParam
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/faq_list")
-    public String faq_list(HttpServletRequest request,PageParam pageParam) throws Exception {
-        request.setAttribute("pici",UUID.randomUUID().toString());
+    public String faq_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+        request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunFaq> faqpageInfo=webManagerService.faq_list(pageParam);
+        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
         return "/zixun/faq/index.jsp";
@@ -191,88 +201,95 @@ public class WebPageController {
 
     /**
      * 保存常见问题
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/save_faq")
-    public String save_faq(HttpServletRequest request,SavefaqParam param) throws Exception {
-       int i= webManagerService.savefaq(param);
+    public String save_faq(HttpServletRequest request, FaqParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.savefaq(param);
         return "/webHandler/faq_list";
     }
 
     @RequestMapping(value = "/delfaqById")
-    public String delfaqById(HttpServletRequest request,Integer uid) throws Exception {
-        int i= webManagerService.delfaqById(uid);
+    public String delfaqById(HttpServletRequest request, FaqParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.delfaqById(param);
         return "/webHandler/faq_list";
     }
 
 
     @RequestMapping(value = "/displayFAQ")
-    public String displayFAQ(HttpServletRequest request,Integer uid) throws Exception {
-        HytbZixunFaq faq=webManagerService.getFAQByID(uid);
-        request.setAttribute("obj",faq);
+    public String displayFAQ(HttpServletRequest request, Integer uid) throws Exception {
+        HytbZixunFaq faq = webManagerService.getFAQByID(uid);
+        request.setAttribute("obj", faq);
         return "/zixun/faq/disfaq.jsp";
     }
 
 
     @RequestMapping(value = "/editFAQ")
-    public String editFAQ(HttpServletRequest request,Integer uid) throws Exception {
-        HytbZixunFaq faq=webManagerService.getFAQByID(uid);
-        request.setAttribute("obj",faq);
+    public String editFAQ(HttpServletRequest request, Integer uid) throws Exception {
+        HytbZixunFaq faq = webManagerService.getFAQByID(uid);
+        request.setAttribute("obj", faq);
         return "/zixun/faq/addafq.jsp";
     }
     ////////////////////////////////////////////健康资讯   start
+
     /**
      * 进入健康资讯
+     *
      * @param request
      * @param pageParam
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/healthInquiry_list")
-    public String healthInquiry_list(HttpServletRequest request,PageParam pageParam) throws Exception {
-        request.setAttribute("pici",UUID.randomUUID().toString());
+    public String healthInquiry_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+        request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunHealthinquiry> faqpageInfo=webManagerService.healthInquiry_list(pageParam);
+        PageInfo<HytbZixunHealthinquiry> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
-        return "/zixun/faq/index.jsp";
+        return "/zixun/healthInquiry/index.jsp";
     }
-
 
     /**
      * 保存健康资讯
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/save_healthInquiry")
-    public String save_healthInquiry(HttpServletRequest request,SaveHealthInquiryParam param) throws Exception {
-        int i= webManagerService.saveHealthInquiry(param);
+    public String save_healthInquiry(HttpServletRequest request, HealthInquiryParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.saveHealthInquiry(param);
         return "/webHandler/faq_list";
     }
 
     @RequestMapping(value = "/delhealthInquiryById")
-    public String delhealthInquiryById(HttpServletRequest request,Integer uid) throws Exception {
-        int i= webManagerService.delHealthInquiryById(uid);
+    public String delhealthInquiryById(HttpServletRequest request, HealthInquiryParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.delHealthInquiryById(param);
         return "/webHandler/faq_list";
     }
 
 
     @RequestMapping(value = "/displayhealthInquiry")
-    public String displayhealthInquiry(HttpServletRequest request,Integer uid) throws Exception {
-        HytbZixunHealthinquiry faq=webManagerService.getHealthInquiryByID(uid);
-        request.setAttribute("obj",faq);
-        return "/zixun/faq/disfaq.jsp";
+    public String displayhealthInquiry(HttpServletRequest request, Integer uid) throws Exception {
+        HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uid);
+        request.setAttribute("obj", faq);
+        return "/zixun/healthInquiry/disfaq.jsp";
     }
 
 
     @RequestMapping(value = "/edithealthInquiry")
-    public String edithealthInquiry(HttpServletRequest request,Integer uid) throws Exception {
-        HytbZixunHealthinquiry faq=webManagerService.getHealthInquiryByID(uid);
-        request.setAttribute("obj",faq);
-        return "/zixun/faq/addafq.jsp";
+    public String edithealthInquiry(HttpServletRequest request, Integer uid) throws Exception {
+        HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uid);
+        request.setAttribute("obj", faq);
+        return "/zixun/healthInquiry/addafq.jsp";
     }
     ////////////////////////////////////////////健康资讯   end
 }

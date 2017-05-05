@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-    <button class="btn btn-primary" id="addfaq" type="button" pici="${pici}">新增</button>
+    <button class="btn btn-primary" id="addhealthInquiryID" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -41,4 +41,4 @@
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/jPageExt.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/zixun/faq/index.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/healthInquiry/index.js"></script>

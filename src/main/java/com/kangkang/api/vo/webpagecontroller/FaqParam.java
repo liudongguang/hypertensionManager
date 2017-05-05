@@ -1,13 +1,24 @@
 package com.kangkang.api.vo.webpagecontroller;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by LiuDongguang on 2017/5/4.
  */
-public class SavefaqParam {
+public class FaqParam {
     private Integer uid;
     private String title;
     private String content;
     private String pici;
+    private HttpServletRequest request;
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     public Integer getUid() {
         return uid;
@@ -43,7 +54,7 @@ public class SavefaqParam {
 
     @Override
     public String toString() {
-        return "SavefaqParam{" +
+        return "FaqParam{" +
                 "content='" + content + '\'' +
                 ", pici='" + pici + '\'' +
                 '}';

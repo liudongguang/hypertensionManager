@@ -10,8 +10,8 @@ import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.impl.mapper.*;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
@@ -38,6 +38,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     private HytbZixunFaqMapper faqDao;
     @Autowired
     private HytbZixunHealthinquiryMapper healthinquiryDao;
+
     @Override
     public Integer getUserByUserName(String username) {
         return sysManagerMapper.getUserByUserName(username);
@@ -101,8 +102,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public String UploadedImg(HttpServletRequest request, String pici) throws Exception {
         List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
-        String fileName=RequestFileUtil.saveToComputer(uploadFiles,request,"zixunimgs");
-        Tempimages tempimg=new Tempimages();
+        String fileName = RequestFileUtil.saveToComputer(uploadFiles, request, "zixunimgs");
+        Tempimages tempimg = new Tempimages();
         tempimg.setImagepath(fileName);
         tempimg.setPici(pici);
         tempimg.setCreatetime(new Date());
@@ -110,31 +111,35 @@ public class WebManagerServiceImpl implements WebManagerService {
         return fileName;
     }
 
+    private int deleteImgeFile(HttpServletRequest request, String filePath, Integer imguid) {
+        RequestFileUtil.delFileFromDisk(request, filePath);
+        return tempimagesDao.deleteByPrimaryKey(imguid);
+    }
+
     @Override
-    public int savefaq(SavefaqParam param) {
+    public int savefaq(FaqParam param) {
         //1.对比文章中存在的图片，有的删除暂存图片表的信息，没有的标记删除状态为1
-        List<Tempimages> imgpathList=tempimagesDao.getImgesPathByPici(param.getPici());
-        final int[] delNum = {0};
-        imgpathList.forEach(item->{
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(param.getPici());
+        imgpathList.forEach(item -> {
             //不存在的时候标识删除图片
-            if(param.getContent().indexOf(item.getImagepath())==-1){
-                 delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
-            }else{
-                delNum[0] =tempimagesDao.deleteByPrimaryKey(item.getUid());//删除暂时记录
+            if (param.getContent().indexOf(item.getImagepath()) == -1) {
+                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
+                deleteImgeFile(param.getRequest(), item.getImagepath(), item.getUid());
             }
         });
-        HytbZixunFaq faq=new HytbZixunFaq();
+        final int[] delNum = {0};
+        HytbZixunFaq faq = new HytbZixunFaq();
         faq.setContent(param.getContent());
         faq.setTitle(param.getTitle());
-        if(param.getUid()!=null){
+        if (param.getUid() != null) {
             faq.setUid(param.getUid());
             faqDao.updateByPrimaryKeySelective(faq);
-        }else{
+        } else {
             faq.setCreatetime(new Date());
             faq.setManagerid(1);
+            faq.setImgpici(param.getPici());//保存批次，在删除时，查找暂存图片表信息从而删除本地图片
             faqDao.insertSelective(faq);
         }
-
         return delNum[0];
     }
 
@@ -145,34 +150,46 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public int delfaqById(Integer uid) {
-        return faqDao.deleteByPrimaryKey(uid);
+    public int delfaqById(FaqParam param) {
+        //1.查找关联这个常见问题的所有图片
+        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
+        imgesPathByPici.forEach(img -> {
+            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
+        });
+        return faqDao.deleteByPrimaryKey(param.getUid());
     }
 
     @Override
     public HytbZixunFaq getFAQByID(Integer uid) {
         return faqDao.selectByPrimaryKey(uid);
     }
-    ////////////////////////
-
+    ////////////////////////////////////////////////健康资讯 start
     @Override
     public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
         PageInfo<HytbZixunHealthinquiry> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
         return pageInfo;
     }
 
+
     @Override
-    public int saveHealthInquiry(SaveHealthInquiryParam param) {
-        return healthinquiryDao.insertSelective(null);
+    public int saveHealthInquiry(HealthInquiryParam param) {
+      //  healthinquiryDao.insertSelective(null)
+        return 0;
     }
 
     @Override
-    public int delHealthInquiryById(Integer uid) {
-        return healthinquiryDao.deleteByPrimaryKey(uid);
+    public int delHealthInquiryById(HealthInquiryParam param) {
+        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
+        imgesPathByPici.forEach(img -> {
+            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
+        });
+        return healthinquiryDao.deleteByPrimaryKey(param.getUid());
     }
 
     @Override
     public HytbZixunHealthinquiry getHealthInquiryByID(Integer uid) {
         return healthinquiryDao.selectByPrimaryKey(uid);
     }
+
+    ////////////////////////////////////////////////健康资讯 end
 }

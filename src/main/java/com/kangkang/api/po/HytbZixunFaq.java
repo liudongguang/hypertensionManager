@@ -1,8 +1,7 @@
 package com.kangkang.api.po;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
+import javax.persistence.*;
 
 @Table(name = "hytb_zixun_faq")
 public class HytbZixunFaq {
@@ -28,6 +27,11 @@ public class HytbZixunFaq {
      * 创建时间
      */
     private Date createtime;
+
+    /**
+     * 图片批次，在删除文章时会根据批次找到记录，删除本地图片文件
+     */
+    private String imgpici;
 
     /**
      * @return uid
@@ -113,5 +117,23 @@ public class HytbZixunFaq {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取图片批次，在删除文章时会根据批次找到记录，删除本地图片文件
+     *
+     * @return imgpici - 图片批次，在删除文章时会根据批次找到记录，删除本地图片文件
+     */
+    public String getImgpici() {
+        return imgpici;
+    }
+
+    /**
+     * 设置图片批次，在删除文章时会根据批次找到记录，删除本地图片文件
+     *
+     * @param imgpici 图片批次，在删除文章时会根据批次找到记录，删除本地图片文件
+     */
+    public void setImgpici(String imgpici) {
+        this.imgpici = imgpici;
     }
 }

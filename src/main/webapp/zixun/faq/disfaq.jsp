@@ -32,10 +32,12 @@
             </div>
         </div>
     </div>
-    <div style="background-color: white;padding:0 15px; text-indent:2em;font-size: 14px">
+    <div style="background-color: white;padding:0 15px;font-size: 14px">
         ${obj.content}
     </div>
 </div>
 </body>
 <script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/amazeui.min.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/faq/disfaq.js"></script>
 </html>

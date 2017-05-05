@@ -38,4 +38,5 @@
 </div>
 </body>
 <script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/healthInquiry/dis.js"></script>
 </html>

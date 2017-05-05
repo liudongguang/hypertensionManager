@@ -8,8 +8,8 @@ import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
-import com.kangkang.api.vo.webpagecontroller.SaveHealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.SavefaqParam;
+import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +66,7 @@ public interface WebManagerService {
      * @param param
      * @return
      */
-    int savefaq(SavefaqParam param);
+    int savefaq(FaqParam param);
 
     /**
      * 获取常见问题
@@ -77,10 +77,9 @@ public interface WebManagerService {
 
     /**
      * 删除常见问题
-     * @param uid
      * @return
      */
-    int delfaqById(Integer uid);
+    int delfaqById(FaqParam param);
 
     /**
      * 获取单个常见问题详情
@@ -102,14 +101,13 @@ public interface WebManagerService {
      * @param param
      * @return
      */
-    int saveHealthInquiry(SaveHealthInquiryParam param);
+    int saveHealthInquiry(HealthInquiryParam param);
 
     /**
      * 删除健康资讯
-     * @param uid
      * @return
      */
-    int delHealthInquiryById(Integer uid);
+    int delHealthInquiryById(HealthInquiryParam param);
 
     /**
      * 通过id获取单条咨询
