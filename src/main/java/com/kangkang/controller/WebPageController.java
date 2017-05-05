@@ -18,7 +18,10 @@ import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -236,6 +239,13 @@ public class WebPageController {
         return "/zixun/faq/addafq.jsp";
     }
     ////////////////////////////////////////////健康资讯   start
+    @RequestMapping(value = "/uploadCropperImage",method = RequestMethod.POST, produces="text/html;charset=utf-8")
+    @ResponseBody
+    public String uploadCropper(
+            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request) {
+        System.out.println(avatar_file);
+        return  "111";
+    }
 
     /**
      * 进入健康资讯

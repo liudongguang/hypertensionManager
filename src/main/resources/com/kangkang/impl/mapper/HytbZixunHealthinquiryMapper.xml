@@ -11,8 +11,9 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="managerid" jdbcType="INTEGER" property="managerid" />
     <result column="smallimg" jdbcType="VARCHAR" property="smallimg" />
+    <result column="imgpici" jdbcType="VARCHAR" property="imgpici" />
   </resultMap>
   <select id="healthInquiry_list" resultMap="BaseResultMap">
-        select uid,title,createtime,smallimg from hytb_zixun_faq order by uid desc
+        select uid,title,createtime,smallimg,imgpici from hytb_zixun_faq order by uid desc
   </select>
 </mapper>

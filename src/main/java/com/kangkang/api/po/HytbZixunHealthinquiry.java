@@ -34,6 +34,11 @@ public class HytbZixunHealthinquiry {
     private String smallimg;
 
     /**
+     * 图片批次，删除时使用
+     */
+    private String imgpici;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -135,5 +140,23 @@ public class HytbZixunHealthinquiry {
      */
     public void setSmallimg(String smallimg) {
         this.smallimg = smallimg;
+    }
+
+    /**
+     * 获取图片批次，删除时使用
+     *
+     * @return imgpici - 图片批次，删除时使用
+     */
+    public String getImgpici() {
+        return imgpici;
+    }
+
+    /**
+     * 设置图片批次，删除时使用
+     *
+     * @param imgpici 图片批次，删除时使用
+     */
+    public void setImgpici(String imgpici) {
+        this.imgpici = imgpici;
     }
 }
