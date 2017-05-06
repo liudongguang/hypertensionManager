@@ -228,13 +228,13 @@ $(function () {
                 file = files[0];
 
                 if (/^image\/\w+$/.test(file.type)) {
+
                     if (uploadedImageURL) {
                         URL.revokeObjectURL(uploadedImageURL);
                     }
-
                     uploadedImageURL = URL.createObjectURL(file);
                     $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
-                    $inputImage.val('');
+                    //$inputImage.val('');
                 } else {
                     window.alert('Please choose an image file.');
                 }

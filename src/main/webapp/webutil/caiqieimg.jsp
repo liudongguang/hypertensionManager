@@ -83,6 +83,7 @@
             </span>
                 </label>
             </div><!-- /.docs-buttons -->
+
         </form>
         <div class="btn-group">
             <button id="subBT" type="button" class="btn btn-primary" style="margin-left: 10px">提交图片
