@@ -1,5 +1,7 @@
 package com.ldg.api.util;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -95,6 +97,32 @@ public class ImgeUtils {
             param.setSourceRegion(rect);
             BufferedImage bi = reader.read(0,param);
             ImageIO.write(bi, "jpg", new File(dest));
+            return true;
+        }catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean cutImage(MultipartFile avatar_file, String dest, int x, int y, int w, int h) {
+        try{
+            Iterator iterator = ImageIO.getImageReadersByMIMEType(avatar_file.getContentType());
+            ImageReader reader = (ImageReader)iterator.next();
+            ImageInputStream iis = ImageIO.createImageInputStream(avatar_file.getInputStream());
+            reader.setInput(iis, true);
+            ImageReadParam param = reader.getDefaultReadParam();
+            x=(x>0?x:0);
+            y=(y>0?y:0);
+            Rectangle rect = new Rectangle(x, y, w,h);
+            param.setSourceRegion(rect);
+            BufferedImage bi = reader.read(0,param);
+            if("image/png".equals(avatar_file.getContentType())){
+                ImageIO.write(bi, "png", new File(dest));
+            }else{
+                ImageIO.write(bi, "jpg", new File(dest));
+            }
+
+
             return true;
         }catch (Exception e) {
             // TODO: handle exception

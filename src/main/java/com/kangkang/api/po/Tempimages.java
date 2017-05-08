@@ -1,7 +1,8 @@
 package com.kangkang.api.po;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "tempimages")
 public class Tempimages {

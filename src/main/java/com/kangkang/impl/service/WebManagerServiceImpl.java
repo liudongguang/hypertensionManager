@@ -219,9 +219,9 @@ public class WebManagerServiceImpl implements WebManagerService {
      */
     @Override
     public String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException {
-        handleruploadCropperIMG(param.getPici(),request);//只允许一个切图，若有则删除之前的
         FullSaveFileNameRs fileRs=RequestFileUtil.getFullSaveFileName(request, SysConstant.UPLOADE_FOLDER_zixunimgs);
-        ImgeUtils.cutImage(avatar_file.getInputStream(),fileRs.getFullImgPath(),param.getCut_x(),param.getCut_y(),param.getCut_width(),param.getCut_height());
+        System.out.println(avatar_file.getContentType());
+        ImgeUtils.cutImage(avatar_file,fileRs.getFullImgPath(),param.getCut_x(),param.getCut_y(),param.getCut_width(),param.getCut_height());
         Tempimages tme=new Tempimages();
         tme.setCreatetime(new Date());
         tme.setPici(param.getPici());
@@ -242,6 +242,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public int saveHealthInquiry(HealthInquiryParam param) {
         handlerimgpiciForHealthInquiry(param.getPici(),param.getContent(),param.getRequest(),param.getSmallimg());
+        handleruploadCropperIMG(param.getPici(),param.getRequest());//只允许一个切图，若有则删除之前的
         final int[] delNum = {0};
         HytbZixunHealthinquiry healthinquiry = new HytbZixunHealthinquiry();
         healthinquiry.setContent(param.getContent());
