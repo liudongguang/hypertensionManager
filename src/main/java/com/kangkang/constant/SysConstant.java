@@ -17,6 +17,7 @@ public interface SysConstant {
     String UPLOADE_FOLDER_zixunimgs="zixunimgs";
 
     String UPLOADE_JPG_Name="myjpg";
+    int UPLOADE_fmtpstate=1; //封面图状态
     int Tempimages_STATE_TEMP=0;//图片暂存状态，只存1天
     int Tempimages_STATE_CUT=2;//裁剪状态
 }

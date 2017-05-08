@@ -31,7 +31,7 @@
             <div class="col-md-9">
                 <!-- <h3>Demo:</h3> -->
                 <div class="img-container">
-                    <img id="image" src="assets/images/Lg_bg.jpg" alt="Picture">
+                    <img id="image" src="assets/images/cutbg.jpg" alt="Picture">
                 </div>
             </div>
 
@@ -46,30 +46,14 @@
 
                 <!-- <h3>Data:</h3> -->
                 <div class="docs-data">
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataX">X</label>
-                        <input type="hidden" class="form-control" id="dataX" placeholder="x" readonly="readonly"
-                               name="cut_x">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataY">Y</label>
-                        <input type="hidden" class="form-control" id="dataY" placeholder="y" readonly="readonly"
-                               name="cut_y">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataWidth">Width</label>
-                        <input type="hidden" class="form-control" id="dataWidth" placeholder="width" readonly="readonly"
-                               name="cut_width">
-                        <span class="input-group-addon">px</span>
-                    </div>
-                    <div class="input-group input-group-sm">
-                        <label class="input-group-addon" for="dataHeight">Height</label>
-                        <input type="hidden" class="form-control" id="dataHeight" placeholder="height" readonly="readonly"
-                               name="cut_height">
-                        <span class="input-group-addon">px</span>
-                    </div>
+                    <input type="hidden" class="form-control" id="dataX" placeholder="x" readonly="readonly"
+                           name="cut_x">
+                    <input type="hidden" class="form-control" id="dataY" placeholder="y" readonly="readonly"
+                           name="cut_y">
+                    <input type="hidden" class="form-control" id="dataWidth" placeholder="width" readonly="readonly"
+                           name="cut_width">
+                    <input type="hidden" class="form-control" id="dataHeight" placeholder="height" readonly="readonly"
+                           name="cut_height">
                 </div>
             </div>
         </div>

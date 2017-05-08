@@ -1,8 +1,7 @@
 package com.kangkang.api.po;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
+import javax.persistence.*;
 
 @Table(name = "tempimages")
 public class Tempimages {
@@ -15,7 +14,7 @@ public class Tempimages {
     private String imagepath;
 
     /**
-     * 1 表示待删除
+     * 1 表示永久保存在删除这条记录前   0表示暂存文章图片  2表示封面暂存标识
      */
     private Integer state;
 
@@ -25,6 +24,11 @@ public class Tempimages {
     private String pici;
 
     private Date createtime;
+
+    /**
+     * 如果是封面图，则为1
+     */
+    private Integer fmtpstate;
 
     /**
      * @return uid
@@ -59,18 +63,18 @@ public class Tempimages {
     }
 
     /**
-     * 获取1 表示待删除
+     * 获取1 表示永久保存在删除这条记录前   0表示暂存文章图片  2表示封面暂存标识
      *
-     * @return state - 1 表示待删除
+     * @return state - 1 表示永久保存在删除这条记录前   0表示暂存文章图片  2表示封面暂存标识
      */
     public Integer getState() {
         return state;
     }
 
     /**
-     * 设置1 表示待删除
+     * 设置1 表示永久保存在删除这条记录前   0表示暂存文章图片  2表示封面暂存标识
      *
-     * @param state 1 表示待删除
+     * @param state 1 表示永久保存在删除这条记录前   0表示暂存文章图片  2表示封面暂存标识
      */
     public void setState(Integer state) {
         this.state = state;
@@ -106,5 +110,23 @@ public class Tempimages {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取如果是封面图，则为1
+     *
+     * @return fmtpstate - 如果是封面图，则为1
+     */
+    public Integer getFmtpstate() {
+        return fmtpstate;
+    }
+
+    /**
+     * 设置如果是封面图，则为1
+     *
+     * @param fmtpstate 如果是封面图，则为1
+     */
+    public void setFmtpstate(Integer fmtpstate) {
+        this.fmtpstate = fmtpstate;
     }
 }

@@ -227,6 +227,7 @@ public class WebManagerServiceImpl implements WebManagerService {
         tme.setPici(param.getPici());
         tme.setImagepath(fileRs.getSaveDBPath());
         tme.setState(SysConstant.Tempimages_STATE_CUT);
+        tme.setFmtpstate(SysConstant.UPLOADE_fmtpstate);
         tempimagesDao.insertSelective(tme);
         return fileRs.getSaveDBPath();
     }
@@ -247,6 +248,7 @@ public class WebManagerServiceImpl implements WebManagerService {
         healthinquiry.setTitle(param.getTitle());
         if (param.getUid() != null) {
             healthinquiry.setUid(param.getUid());
+            healthinquiry.setSmallimg(param.getSmallimg());
             healthinquiryDao.updateByPrimaryKeySelective(healthinquiry);
         } else {
             healthinquiry.setManagerid(1);

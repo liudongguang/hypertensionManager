@@ -6,7 +6,7 @@
 <div >
     <form class="form-horizontal" action="webHandler/save_healthInquiry" novalidate id="subForm" method="post">
         <input type="hidden" name="uid" value="${obj.uid}"/>
-        <input type="text" required errInfo="封面图未上传！" name="smallimg" value="${obj.smallimg}" id="smallimgID"/>
+        <input type="hidden" required errInfo="封面图未上传！" name="smallimg" value="${obj.smallimg}" id="smallimgID"/>
         <div class="form-group">
             <label class="col-md-2 control-label">封面图：</label>
             <div class="col-md-8">

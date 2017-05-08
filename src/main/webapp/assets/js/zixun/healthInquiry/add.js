@@ -30,7 +30,8 @@ jQuery(document).ready(function () {
 
 });
 function disImg(imgpath){
-    $("#checkfmID").attr("src",imgpath);
+    var imgPath=imgpath+"?t="+new Date().getTime();
+    $("#checkfmID").attr("src",imgPath);
     $("#smallimgID").val(imgpath);
     layer.close(jumpPageLayerNum);
 }

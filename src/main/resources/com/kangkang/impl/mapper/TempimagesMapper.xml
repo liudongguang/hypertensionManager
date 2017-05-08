@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.TempimagesMapper">
-    <resultMap id="BaseResultMap" type="com.kangkang.api.po.Tempimages">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="uid" jdbcType="INTEGER" property="uid"/>
-        <result column="imagepath" jdbcType="VARCHAR" property="imagepath"/>
-        <result column="state" jdbcType="INTEGER" property="state"/>
-        <result column="pici" jdbcType="VARCHAR" property="pici"/>
-        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.Tempimages">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="imagepath" jdbcType="VARCHAR" property="imagepath" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="pici" jdbcType="VARCHAR" property="pici" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="fmtpstate" jdbcType="INTEGER" property="fmtpstate" />
+  </resultMap>
     <select id="getDelImages" resultMap="BaseResultMap">
-    select uid,imagepath from tempimages where state!=1 and TIMESTAMPDIFF(DAY,createtime,now())>0
+    select uid,imagepath from tempimages where state!=1 and TIMESTAMPDIFF(DAY,createtime,now())&gt;0
   </select>
-    <select id="getImgesPathByPici" resultMap="BaseResultMap" parameterType="string">
+    <select id="getImgesPathByPici" parameterType="string" resultMap="BaseResultMap">
       select uid,imagepath from tempimages where pici=#{pici}
     </select>
     <update id="setDelState" parameterType="int">
@@ -24,10 +25,10 @@
     update tempimages set state=1 where uid=#{uid}
   </update>
     <select id="getImgesPathByPiciForHealthInquiry" resultMap="BaseResultMap">
-         select uid,imagepath from tempimages where pici=#{pici} and state!=1
+         select uid,imagepath from tempimages where pici=#{pici} and fmtpstate is null
     </select>
     <select id="getFengMianImgesPathByPici" resultMap="BaseResultMap">
-        select uid,imagepath from tempimages where pici=#{pici} and state=2
+        select uid,imagepath from tempimages where pici=#{pici} and fmtpstate=1
     </select>
     <update id="setSaveStateByFmpath">
          update tempimages set state=1 where pici=#{pici} and imagepath=#{fmimgpath} and state=2
