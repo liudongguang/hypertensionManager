@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">标题：</label>
             <div class="col-md-8">
-                <input type="text" name="title" class="form-control" required errInfo="标题名不能为空" value="${obj.title}" maxlength="10" placeholder="十字以内"></div>
+                <input type="text" name="title" class="form-control" required errInfo="标题名不能为空" value="${obj.title}" maxlength="14" placeholder="14字以内"></div>
         </div>
         <input type="hidden" name="pici" value="${param.pici}" id="piciID">
         <textarea  maxlength="4000" required errInfo="内容不能为空" name="content" class="summernote" id="contents" title="Contents">${obj.content}</textarea>

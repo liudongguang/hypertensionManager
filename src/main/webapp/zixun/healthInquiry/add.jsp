@@ -6,7 +6,7 @@
 <div >
     <form class="form-horizontal" action="webHandler/save_healthInquiry" novalidate id="subForm" method="post">
         <input type="hidden" name="uid" value="${obj.uid}"/>
-        <input type="hidden" name="smallimg" value="${obj.smallimg}" id="smallimgID"/>
+        <input type="text" required errInfo="封面图未上传！" name="smallimg" value="${obj.smallimg}" id="smallimgID"/>
         <div class="form-group">
             <label class="col-md-2 control-label">封面图：</label>
             <div class="col-md-8">
@@ -17,10 +17,10 @@
         <div class="form-group">
             <label class="col-md-2 control-label">健康资讯标题：</label>
             <div class="col-md-8">
-                <input type="text" name="title" class="form-control" required errInfo="标题名不能为空" value="${obj.title}"></div>
+                <input type="text" name="title" class="form-control" required errInfo="标题名不能为空" value="${obj.title}" maxlength="14" placeholder="14字以内"></div>
         </div>
         <input type="hidden" name="pici" value="${param.pici}" id="piciID">
-        <textarea required errInfo="内容不能为空" name="content" class="summernote" id="contents" title="Contents">${obj.content}</textarea>
+        <textarea maxlength="4000" required errInfo="内容不能为空" name="content" class="summernote" id="contents" title="Contents">${obj.content}</textarea>
         <button id="subBT" type="submit" class="btn btn-default">保存</button>
     </form>
 </div>

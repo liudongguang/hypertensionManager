@@ -195,6 +195,15 @@ function initAjaxForm(jq_form, jq_button, excuteResponse, validateState, validat
                         return false;
                     }
                 }
+                if (jq_this.is("input[type=hidden]")) {
+                    if (jq_this.val()) {
+                        flag = true;
+                    } else {
+                        handlerError(jq_this);
+                        flag = false;
+                        return false;
+                    }
+                }
             });
             return flag;
         }

@@ -24,7 +24,7 @@
     update tempimages set state=1 where uid=#{uid}
   </update>
     <select id="getImgesPathByPiciForHealthInquiry" resultMap="BaseResultMap">
-         select uid,imagepath from tempimages where pici=#{pici} and state!=2
+         select uid,imagepath from tempimages where pici=#{pici} and state!=1
     </select>
     <select id="getFengMianImgesPathByPici" resultMap="BaseResultMap">
         select uid,imagepath from tempimages where pici=#{pici} and state=2

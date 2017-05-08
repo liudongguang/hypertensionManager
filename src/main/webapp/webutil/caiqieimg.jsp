@@ -48,25 +48,25 @@
                 <div class="docs-data">
                     <div class="input-group input-group-sm">
                         <label class="input-group-addon" for="dataX">X</label>
-                        <input type="text" class="form-control" id="dataX" placeholder="x" readonly="readonly"
+                        <input type="hidden" class="form-control" id="dataX" placeholder="x" readonly="readonly"
                                name="cut_x">
                         <span class="input-group-addon">px</span>
                     </div>
                     <div class="input-group input-group-sm">
                         <label class="input-group-addon" for="dataY">Y</label>
-                        <input type="text" class="form-control" id="dataY" placeholder="y" readonly="readonly"
+                        <input type="hidden" class="form-control" id="dataY" placeholder="y" readonly="readonly"
                                name="cut_y">
                         <span class="input-group-addon">px</span>
                     </div>
                     <div class="input-group input-group-sm">
                         <label class="input-group-addon" for="dataWidth">Width</label>
-                        <input type="text" class="form-control" id="dataWidth" placeholder="width" readonly="readonly"
+                        <input type="hidden" class="form-control" id="dataWidth" placeholder="width" readonly="readonly"
                                name="cut_width">
                         <span class="input-group-addon">px</span>
                     </div>
                     <div class="input-group input-group-sm">
                         <label class="input-group-addon" for="dataHeight">Height</label>
-                        <input type="text" class="form-control" id="dataHeight" placeholder="height" readonly="readonly"
+                        <input type="hidden" class="form-control" id="dataHeight" placeholder="height" readonly="readonly"
                                name="cut_height">
                         <span class="input-group-addon">px</span>
                     </div>

@@ -17,12 +17,12 @@
             <tbody>
             <c:forEach items="${page.list}" var="obj">
                 <tr>
-                    <td>${obj.title}</td>
+                    <td  style="vertical-align:middle">${obj.title}</td>
                     <td><img style="height: 50px;width: 50px;" src="${obj.smallimg}"/></td>
-                    <td><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
-                    <td>
+                    <td style="vertical-align:middle"><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                    <td style="vertical-align:middle">
                         <a class="label label-info" ajaxthispage
-                           href="/webHandler/edithealthInquiry?uid=${obj.uid}">编辑</a>
+                           href="/webHandler/edithealthInquiry?uid=${obj.uid}&pici=${obj.imgpici}">编辑</a>
                         <a class="label label-warning" ajaxdel
                            href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
                         <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
