@@ -13,7 +13,7 @@
     <result column="fmtpstate" jdbcType="INTEGER" property="fmtpstate" />
   </resultMap>
     <select id="getDelImages" resultMap="BaseResultMap">
-    select uid,imagepath from tempimages where state!=1 and TIMESTAMPDIFF(DAY,createtime,now())&gt;0
+    select uid,imagepath from tempimages where state=0 and TIMESTAMPDIFF(DAY,createtime,now())&gt;0
   </select>
     <select id="getImgesPathByPici" parameterType="string" resultMap="BaseResultMap">
       select uid,imagepath from tempimages where pici=#{pici}
@@ -28,9 +28,9 @@
          select uid,imagepath from tempimages where pici=#{pici} and fmtpstate is null
     </select>
     <select id="getFengMianImgesPathByPici" resultMap="BaseResultMap">
-        select uid,imagepath from tempimages where pici=#{pici} and fmtpstate=1
+        select uid,imagepath from tempimages where pici=#{pici} and fmtpstate=1 and imagepath!=#{thisSmallImg}
     </select>
     <update id="setSaveStateByFmpath">
-         update tempimages set state=1 where pici=#{pici} and imagepath=#{fmimgpath} and state=2
+         update tempimages set state=1 where pici=#{pici} and imagepath=#{fmimgpath} and fmtpstate=1
     </update>
 </mapper>

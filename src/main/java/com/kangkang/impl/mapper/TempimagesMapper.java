@@ -23,11 +23,11 @@ public interface TempimagesMapper extends Mapper<Tempimages> {
     List<Tempimages> getImgesPathByPiciForHealthInquiry(String pici);
 
     /**
-     * 获取2类型的图片
+     * 获取封面图片不包含即将要保存的
      * @param pici
      * @return
      */
-    List<Tempimages> getFengMianImgesPathByPici(String pici);
+    List<Tempimages> getFengMianImgesPathByPici(@Param("pici") String pici,@Param("thisSmallImg") String thisSmallImg);
 
     /**
      * 封面图片长期保存标识设定

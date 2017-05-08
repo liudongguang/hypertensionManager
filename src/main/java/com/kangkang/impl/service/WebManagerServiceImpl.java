@@ -162,8 +162,8 @@ public class WebManagerServiceImpl implements WebManagerService {
      * @param pici
      * @param request
      */
-   private void handleruploadCropperIMG(String pici,HttpServletRequest request){
-       List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici);
+   private void handleruploadCropperIMG(String pici,HttpServletRequest request,String thisSmallImg){
+       List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici,thisSmallImg);
        imgpathList.forEach(item -> {
            deleteImgeFile(request, item.getImagepath(), item.getUid());
        });
@@ -220,13 +220,12 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException {
         FullSaveFileNameRs fileRs=RequestFileUtil.getFullSaveFileName(request, SysConstant.UPLOADE_FOLDER_zixunimgs);
-        System.out.println(avatar_file.getContentType());
         ImgeUtils.cutImage(avatar_file,fileRs.getFullImgPath(),param.getCut_x(),param.getCut_y(),param.getCut_width(),param.getCut_height());
         Tempimages tme=new Tempimages();
         tme.setCreatetime(new Date());
         tme.setPici(param.getPici());
         tme.setImagepath(fileRs.getSaveDBPath());
-        tme.setState(SysConstant.Tempimages_STATE_CUT);
+        tme.setState(SysConstant.Tempimages_STATE_TEMP);
         tme.setFmtpstate(SysConstant.UPLOADE_fmtpstate);
         tempimagesDao.insertSelective(tme);
         return fileRs.getSaveDBPath();
@@ -242,7 +241,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public int saveHealthInquiry(HealthInquiryParam param) {
         handlerimgpiciForHealthInquiry(param.getPici(),param.getContent(),param.getRequest(),param.getSmallimg());
-        handleruploadCropperIMG(param.getPici(),param.getRequest());//只允许一个切图，若有则删除之前的
+        handleruploadCropperIMG(param.getPici(),param.getRequest(),param.getSmallimg());//只允许一个切图，若有则删除之前的
         final int[] delNum = {0};
         HytbZixunHealthinquiry healthinquiry = new HytbZixunHealthinquiry();
         healthinquiry.setContent(param.getContent());
