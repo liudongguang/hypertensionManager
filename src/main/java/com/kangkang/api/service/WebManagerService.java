@@ -10,9 +10,12 @@ import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
 import com.ldg.api.vo.PageParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -115,4 +118,13 @@ public interface WebManagerService {
      * @return
      */
     HytbZixunHealthinquiry getHealthInquiryByID(Integer uid);
+
+    /**
+     * 裁切图片
+     * @param avatar_file
+     * @param request
+     * @param param
+     * @return
+     */
+    String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException;
 }

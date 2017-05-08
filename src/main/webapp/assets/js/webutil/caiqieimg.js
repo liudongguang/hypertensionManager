@@ -14,7 +14,8 @@ $(function () {
     var $dataScaleX = $('#dataScaleX');
     var $dataScaleY = $('#dataScaleY');
     var options = {
-        aspectRatio: 16 / 9,
+        aspectRatio: 1 / 1,
+        viewMode:2,
         preview: '.img-preview',
         crop: function (e) {
             $dataX.val(Math.round(e.x));
@@ -245,6 +246,13 @@ $(function () {
     }
 //////
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {
-        console.log(data);
-    }, true);
+        parent.disImg(data);
+    }, true,function (form,options) {
+        var imgVal=$inputImage.val();
+        if(imgVal){
+            form.ajaxSubmit(options);
+        }else{
+            layer.alert("请选择裁切图片！");
+        }
+    });
 });

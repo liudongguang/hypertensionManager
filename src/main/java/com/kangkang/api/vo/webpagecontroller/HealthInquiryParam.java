@@ -63,9 +63,13 @@ public class HealthInquiryParam {
 
     @Override
     public String toString() {
-        return "FaqParam{" +
-                "content='" + content + '\'' +
+        return "HealthInquiryParam{" +
+                "uid=" + uid +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
                 ", pici='" + pici + '\'' +
+                ", smallimg='" + smallimg + '\'' +
+                ", request=" + request +
                 '}';
     }
 }

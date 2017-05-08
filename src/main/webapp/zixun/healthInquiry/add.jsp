@@ -4,10 +4,18 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link type="text/css" rel="stylesheet" href="assets/summernote/summernote.css">
 <div >
-    <form class="form-horizontal" action="webHandler/save_faq" novalidate id="subForm" method="post">
+    <form class="form-horizontal" action="webHandler/save_healthInquiry" novalidate id="subForm" method="post">
         <input type="hidden" name="uid" value="${obj.uid}"/>
+        <input type="hidden" name="smallimg" value="${obj.smallimg}" id="smallimgID"/>
         <div class="form-group">
-            <label class="col-md-2 control-label">标题：</label>
+            <label class="col-md-2 control-label">封面图：</label>
+            <div class="col-md-8">
+
+               <img id="checkfmID" style="width: 100px;height: 100px;" src="<c:if test="${obj.smallimg==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj.smallimg!=null}">${obj.smallimg}</c:if>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">健康资讯标题：</label>
             <div class="col-md-8">
                 <input type="text" name="title" class="form-control" required errInfo="标题名不能为空" value="${obj.title}"></div>
         </div>

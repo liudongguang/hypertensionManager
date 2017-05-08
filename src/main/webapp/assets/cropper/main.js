@@ -14,7 +14,8 @@ $(function () {
     var $dataScaleX = $('#dataScaleX');
     var $dataScaleY = $('#dataScaleY');
     var options = {
-        aspectRatio: 16 / 9,
+        aspectRatio: 1 / 1,
+        viewMode:2,
         preview: '.img-preview',
         crop: function (e) {
             $dataX.val(Math.round(e.x));
@@ -81,7 +82,6 @@ $(function () {
         var type = $this.prop('type');
         var cropBoxData;
         var canvasData;
-
         if (!$image.data('cropper')) {
             return;
         }
@@ -98,7 +98,6 @@ $(function () {
         } else if (type === 'radio') {
             options[name] = $this.val();
         }
-
         $image.cropper('destroy').cropper(options);
     });
 

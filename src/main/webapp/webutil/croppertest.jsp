@@ -359,8 +359,8 @@
                 <label class="btn btn-primary">
                     <input type="radio" class="sr-only" id="viewMode3" name="viewMode" value="3">
                     <span class="docs-tooltip" data-toggle="tooltip" data-animation="false" title="View Mode 3">
-              VM3
-            </span>
+                      VM3
+                  </span>
                 </label>
             </div>
 

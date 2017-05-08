@@ -9,6 +9,7 @@
             <thead>
             <tr>
                 <th>标题</th>
+                <th>封面</th>
                 <th>创建时间</th>
                 <th>操作</th>
             </tr>
@@ -17,14 +18,15 @@
             <c:forEach items="${page.list}" var="obj">
                 <tr>
                     <td>${obj.title}</td>
+                    <td><img style="height: 50px;width: 50px;" src="${obj.smallimg}"/></td>
                     <td><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                     <td>
                         <a class="label label-info" ajaxthispage
-                           href="/webHandler/editFAQ?uid=${obj.uid}">编辑</a>
+                           href="/webHandler/edithealthInquiry?uid=${obj.uid}">编辑</a>
                         <a class="label label-warning" ajaxdel
-                           href="/webHandler/delfaqById?uid=${obj.uid}">删除</a>
+                           href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
                         <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
-                           href="/webHandler/displayFAQ?uid=${obj.uid}">预览</a></td>
+                           href="/webHandler/displayhealthInquiry?uid=${obj.uid}">预览</a></td>
                 </tr>
             </c:forEach>
             </tbody>

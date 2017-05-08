@@ -2,6 +2,7 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.FullSaveFileNameRs;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.po.SysLunboimgs;
@@ -10,9 +11,12 @@ import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
+import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.*;
+import com.ldg.api.util.ImgeUtils;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -107,8 +112,44 @@ public class WebManagerServiceImpl implements WebManagerService {
         tempimg.setImagepath(fileName);
         tempimg.setPici(pici);
         tempimg.setCreatetime(new Date());
+        tempimg.setState(SysConstant.Tempimages_STATE_TEMP);//0为暂存状态
         tempimagesDao.insertSelective(tempimg);
         return fileName;
+    }
+    private void handlerimgpici(String pici,String content,HttpServletRequest request){
+        //1.对比文章中存在的图片，本批次中没有的直接删除数据库记录同时删除文件，有的修改状态为1 进行保留
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(pici);
+        imgpathList.forEach(item -> {
+            //不存在的时候标识删除图片
+            if (content.indexOf(item.getImagepath()) == -1) {
+                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
+                deleteImgeFile(request, item.getImagepath(), item.getUid());
+            }else{
+                tempimagesDao.setSaveState(item.getUid());//设置保留状态
+            }
+        });
+    }
+
+    /**
+     *
+     * @param pici
+     * @param content
+     * @param request
+     */
+    private void handlerimgpiciForHealthInquiry(String pici,String content,HttpServletRequest request,String fmimgpath){
+        //1.对比文章中存在的图片，这里不包含封面图图片
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(pici);
+        imgpathList.forEach(item -> {
+            //不存在的时候标识删除图片
+            if (content.indexOf(item.getImagepath()) == -1) {
+                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
+                deleteImgeFile(request, item.getImagepath(), item.getUid());
+            }else{
+                tempimagesDao.setSaveState(item.getUid());//设置保留状态
+            }
+        });
+        //2.对封面的切图进行修改状态，针对上传后直接离开的情况，这里将2修改为1，进行长期保存
+        tempimagesDao.setSaveStateByFmpath(pici,fmimgpath);
     }
 
     private int deleteImgeFile(HttpServletRequest request, String filePath, Integer imguid) {
@@ -116,17 +157,20 @@ public class WebManagerServiceImpl implements WebManagerService {
         return tempimagesDao.deleteByPrimaryKey(imguid);
     }
 
+    /**
+     * 因为只需要一张封面图，所以之前的封面图删掉
+     * @param pici
+     * @param request
+     */
+   private void handleruploadCropperIMG(String pici,HttpServletRequest request){
+       List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici);
+       imgpathList.forEach(item -> {
+           deleteImgeFile(request, item.getImagepath(), item.getUid());
+       });
+   }
     @Override
     public int savefaq(FaqParam param) {
-        //1.对比文章中存在的图片，有的删除暂存图片表的信息，没有的标记删除状态为1
-        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(param.getPici());
-        imgpathList.forEach(item -> {
-            //不存在的时候标识删除图片
-            if (param.getContent().indexOf(item.getImagepath()) == -1) {
-                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
-                deleteImgeFile(param.getRequest(), item.getImagepath(), item.getUid());
-            }
-        });
+        handlerimgpici(param.getPici(),param.getContent(),param.getRequest());
         final int[] delNum = {0};
         HytbZixunFaq faq = new HytbZixunFaq();
         faq.setContent(param.getContent());
@@ -164,6 +208,29 @@ public class WebManagerServiceImpl implements WebManagerService {
         return faqDao.selectByPrimaryKey(uid);
     }
     ////////////////////////////////////////////////健康资讯 start
+
+    /**
+     * 上传切图
+     * @param avatar_file
+     * @param request
+     * @param param
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException {
+        handleruploadCropperIMG(param.getPici(),request);//只允许一个切图，若有则删除之前的
+        FullSaveFileNameRs fileRs=RequestFileUtil.getFullSaveFileName(request, SysConstant.UPLOADE_FOLDER_zixunimgs);
+        ImgeUtils.cutImage(avatar_file.getInputStream(),fileRs.getFullImgPath(),param.getCut_x(),param.getCut_y(),param.getCut_width(),param.getCut_height());
+        Tempimages tme=new Tempimages();
+        tme.setCreatetime(new Date());
+        tme.setPici(param.getPici());
+        tme.setImagepath(fileRs.getSaveDBPath());
+        tme.setState(SysConstant.Tempimages_STATE_CUT);
+        tempimagesDao.insertSelective(tme);
+        return fileRs.getSaveDBPath();
+    }
+
     @Override
     public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
         PageInfo<HytbZixunHealthinquiry> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
@@ -173,8 +240,22 @@ public class WebManagerServiceImpl implements WebManagerService {
 
     @Override
     public int saveHealthInquiry(HealthInquiryParam param) {
-      //  healthinquiryDao.insertSelective(null)
-        return 0;
+        handlerimgpiciForHealthInquiry(param.getPici(),param.getContent(),param.getRequest(),param.getSmallimg());
+        final int[] delNum = {0};
+        HytbZixunHealthinquiry healthinquiry = new HytbZixunHealthinquiry();
+        healthinquiry.setContent(param.getContent());
+        healthinquiry.setTitle(param.getTitle());
+        if (param.getUid() != null) {
+            healthinquiry.setUid(param.getUid());
+            healthinquiryDao.updateByPrimaryKeySelective(healthinquiry);
+        } else {
+            healthinquiry.setManagerid(1);
+            healthinquiry.setCreatetime(new Date());
+            healthinquiry.setImgpici(param.getPici());//保存批次，在删除时，查找暂存图片表信息从而删除本地图片
+            healthinquiry.setSmallimg(param.getSmallimg());
+            healthinquiryDao.insertSelective(healthinquiry);
+        }
+        return delNum[0];
     }
 
     @Override

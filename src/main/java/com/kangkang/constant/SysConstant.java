@@ -14,4 +14,9 @@ public interface SysConstant {
     int MANAGER_TOKENVALIDE=100;//token失效
     String MANAGER_TOKENVALIDE_MSG="请重新登陆！";
     String UPLOADE_JPG_suffix=".jpg";
+    String UPLOADE_FOLDER_zixunimgs="zixunimgs";
+
+    String UPLOADE_JPG_Name="myjpg";
+    int Tempimages_STATE_TEMP=0;//图片暂存状态，只存1天
+    int Tempimages_STATE_CUT=2;//裁剪状态
 }

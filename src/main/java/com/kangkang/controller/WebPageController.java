@@ -12,8 +12,8 @@ import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
 import com.kangkang.constant.SysConstant;
-import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,11 +244,9 @@ public class WebPageController {
     @RequestMapping(value = "/uploadCropperImage",method = RequestMethod.POST, produces="text/html;charset=utf-8")
     @ResponseBody
     public String uploadCropper(
-            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request) throws IOException {
-        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
-        System.out.println(uploadFiles);
-        System.out.println(avatar_file);
-        return  "111";
+            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request,UploadCropperImageParam param) throws IOException {
+        String cutImgPath=webManagerService.uploadCropper(avatar_file,request,param);
+        return  cutImgPath;
     }
 
     /**
@@ -280,14 +278,14 @@ public class WebPageController {
     public String save_healthInquiry(HttpServletRequest request, HealthInquiryParam param) throws Exception {
         param.setRequest(request);
         int i = webManagerService.saveHealthInquiry(param);
-        return "/webHandler/faq_list";
+        return "/webHandler/healthInquiry_list";
     }
 
     @RequestMapping(value = "/delhealthInquiryById")
     public String delhealthInquiryById(HttpServletRequest request, HealthInquiryParam param) throws Exception {
         param.setRequest(request);
         int i = webManagerService.delHealthInquiryById(param);
-        return "/webHandler/faq_list";
+        return "/webHandler/healthInquiry_list";
     }
 
 
@@ -295,7 +293,7 @@ public class WebPageController {
     public String displayhealthInquiry(HttpServletRequest request, Integer uid) throws Exception {
         HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uid);
         request.setAttribute("obj", faq);
-        return "/zixun/healthInquiry/disfaq.jsp";
+        return "/zixun/healthInquiry/dis.jsp";
     }
 
 
@@ -303,7 +301,7 @@ public class WebPageController {
     public String edithealthInquiry(HttpServletRequest request, Integer uid) throws Exception {
         HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uid);
         request.setAttribute("obj", faq);
-        return "/zixun/healthInquiry/addafq.jsp";
+        return "/zixun/healthInquiry/add.jsp";
     }
     ////////////////////////////////////////////健康资讯   end
 }

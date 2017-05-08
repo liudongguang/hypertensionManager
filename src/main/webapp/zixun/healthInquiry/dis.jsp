@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div style="background-color: white;padding:0 15px; text-indent:2em;font-size: 14px">
+    <div style="background-color: white;padding:0 15px;font-size: 14px">
         ${obj.content}
     </div>
 </div>

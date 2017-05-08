@@ -1,5 +1,6 @@
 package com.ldg.api.util;
 
+import com.kangkang.api.bo.FullSaveFileNameRs;
 import com.kangkang.constant.SysConstant;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -107,5 +108,22 @@ public class RequestFileUtil {
         StringBuilder f = new StringBuilder();
         f.append(UUID.randomUUID().toString()).append(".jpg");
         return f.toString();
+    }
+
+    public static FullSaveFileNameRs getFullSaveFileName(HttpServletRequest request, String dirName) {
+        String path = request.getServletContext().getRealPath(dirName);
+        File parentFile = new File(path);
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+        StringBuilder savedbFileName = new StringBuilder(dirName);
+        StringBuilder fileAllPath = new StringBuilder(path);
+        String saveFileName = RequestFileUtil.getSaveFileName(SysConstant.UPLOADE_JPG_Name);
+        fileAllPath.append("/").append(saveFileName);
+        savedbFileName.append("/").append(saveFileName);
+        FullSaveFileNameRs rs=new FullSaveFileNameRs();
+        rs.setFullImgPath(fileAllPath.toString());
+        rs.setSaveDBPath(savedbFileName.toString());
+        return rs;// 文件夹名加文件名
     }
 }
