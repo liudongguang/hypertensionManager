@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
                 var formData = new FormData();
                 formData.append('file',files[0]);
                 $.ajax({
-                    url : basePath+'webHandler/uploadIMGForZx?pici='+$("#piciID").val(),//后台文件上传接口
+                    url : basePath+'fileUpload/uploadIMGForZx?pici='+$("#piciID").val(),//后台文件上传接口
                     type : 'POST',
                     data : formData,
                     processData : false,

@@ -3,19 +3,18 @@ package com.kangkang.api.service;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
+import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
 import com.ldg.api.vo.PageParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -56,13 +55,7 @@ public interface WebManagerService {
      */
     int delLunBoImgFile(HttpServletRequest request,FileInputParam param);
 
-    /**
-     * 上传图片
-     * @param request
-     * @param pici
-     * @return
-     */
-    String UploadedImg(HttpServletRequest request, String pici) throws Exception;
+
 
     /**
      * 保存常见问题
@@ -119,12 +112,23 @@ public interface WebManagerService {
      */
     HytbZixunHealthinquiry getHealthInquiryByID(Integer uid);
 
+
+
     /**
-     * 裁切图片
-     * @param avatar_file
-     * @param request
+     * 获取意见反馈列表
+     * @param pageParam
+     * @return
+     */
+    PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam);
+
+    /**
+     * 保存意见反馈
      * @param param
      * @return
      */
-    String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException;
+    int saveFeedback(FeedbackParam param);
+
+
+
+
 }

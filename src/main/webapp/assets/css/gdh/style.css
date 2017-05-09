@@ -1,4 +1,5 @@
-/*loadingÑùÊ½¿ªÊ¼*/
+@charset "utf-8";
+/*loadingæ ·å¼å¼€å§‹*/
 .load5 {
     margin: -100% auto !important;
     width: 90px;
@@ -64,7 +65,7 @@
 }
 
 
-/*loadingÑùÊ½½áÊø*/
+/*loadingæ ·å¼ç»“æŸ*/
 .header {
     text-align: center;
 }

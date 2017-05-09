@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-    <button class="btn btn-primary" id="addfaq" type="button" pici="${pici}">新增</button>
+    <button class="btn btn-primary ldgbtmarginbottom5" id="addfaq" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead>

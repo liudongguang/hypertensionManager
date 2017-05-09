@@ -69,7 +69,7 @@
                             class="glyphicon glyphicon-indent-left"></span>常见问题</a></li>
                     <li><a href="/webHandler/healthInquiry_list"><span class="glyphicon glyphicon-user"></span>健康资讯</a>
                     </li>
-                    <li><a href="/sdeyfollowup/getNoPageManagerList"><span
+                    <li><a href="/webHandler/feedback_list"><span
                             class="glyphicon glyphicon-th"></span>意见反馈</a></li>
                     <li><a href="/sdeyfollowup/msgModelList"><span
                             class="glyphicon glyphicon-th"></span>免责声明</a></li>

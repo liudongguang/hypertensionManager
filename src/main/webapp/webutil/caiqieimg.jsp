@@ -25,7 +25,7 @@
 <body>
 <!-- Content -->
 <div class="container">
-    <form id="subForm" action="webHandler/uploadCropperImage" enctype="multipart/form-data" method="post">
+    <form id="subForm" action="fileUpload/uploadCropperImage" enctype="multipart/form-data" method="post">
         <input type="hidden" name="pici" value="${param.pici}" id="piciID">
         <div class="row">
             <div class="col-md-9">

@@ -7,25 +7,22 @@ import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
+import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -150,7 +147,6 @@ public class WebPageController {
     @RequestMapping(value = "/uploadLunBoTu")
     @ResponseBody
     public SendingVo uploadLunBoTu(HttpServletRequest request, FileInputParam param) throws Exception {
-        System.out.println(param);
         SendingVo rs = webManagerService.uploadLunBoTu(request, param);
         return rs;
     }
@@ -169,20 +165,6 @@ public class WebPageController {
         ResultMsg rs = new ResultMsg();
         int delNum = webManagerService.delLunBoImgFile(request, param);
         return rs;
-    }
-
-    /**
-     * 上传图片
-     *
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/uploadIMGForZx")
-    @ResponseBody
-    public String uploadIMGForZx(HttpServletRequest request, String pici) throws Exception {
-        String fileName = webManagerService.UploadedImg(request, pici);
-        return fileName;
     }
 
     /**
@@ -241,14 +223,6 @@ public class WebPageController {
         return "/zixun/faq/addafq.jsp";
     }
     ////////////////////////////////////////////健康资讯   start
-    @RequestMapping(value = "/uploadCropperImage",method = RequestMethod.POST, produces="text/html;charset=utf-8")
-    @ResponseBody
-    public String uploadCropper(
-            @RequestParam(value = "avatar_file",required=false) MultipartFile avatar_file,HttpServletRequest request,UploadCropperImageParam param) throws IOException {
-        String cutImgPath=webManagerService.uploadCropper(avatar_file,request,param);
-        return  cutImgPath;
-    }
-
     /**
      * 进入健康资讯
      *
@@ -304,4 +278,37 @@ public class WebPageController {
         return "/zixun/healthInquiry/add.jsp";
     }
     ////////////////////////////////////////////健康资讯   end
+
+    ////////////////////////////////////////////意见反馈   start
+    /**
+     * 进入意见反馈
+     *
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/feedback_list")
+    public String feedback_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+        request.setAttribute("pici", UUID.randomUUID().toString());
+        /////
+        PageInfo<HytbZixunFeedbackExt> pageInfo = webManagerService.feedback_list(pageParam);
+        request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, pageInfo);
+        /////
+        return "/zixun/feedback/index.jsp";
+    }
+    /**
+     * 保存意见反馈
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/save_feedback")
+    public String save_feedback(HttpServletRequest request, FeedbackParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.saveFeedback(param);
+        return "/webHandler/feedback_list";
+    }
+    ////////////////////////////////////////////意见反馈   end
 }

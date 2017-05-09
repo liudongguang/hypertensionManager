@@ -16,7 +16,7 @@ public interface TempimagesMapper extends Mapper<Tempimages> {
     int setSaveState(Integer uid);
 
     /**
-     * 获取state不是2的，不是封面图片的所有图
+     * 获取不是封面图片的所有图
      * @param pici
      * @return
      */
@@ -35,4 +35,11 @@ public interface TempimagesMapper extends Mapper<Tempimages> {
      * @param fmimgpath
      */
     int setSaveStateByFmpath(@Param("pici") String pici,@Param("fmimgpath") String fmimgpath);
+
+    /**
+     * 根据图片路径删除记录
+     * @param filePath
+     * @return
+     */
+    int deleteByFilePath(String filePath);
 }

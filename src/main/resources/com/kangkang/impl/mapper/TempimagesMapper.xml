@@ -33,4 +33,7 @@
     <update id="setSaveStateByFmpath">
          update tempimages set state=1 where pici=#{pici} and imagepath=#{fmimgpath} and fmtpstate=1
     </update>
+  <delete id="deleteByFilePath" parameterType="string">
+     DELETE from tempimages where imagepath=#{filePath}
+  </delete>
 </mapper>

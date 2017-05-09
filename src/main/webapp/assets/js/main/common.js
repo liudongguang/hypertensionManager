@@ -435,12 +435,59 @@ function ajaxRun(param) {
     var paramdata = param.paramdata;
     var callbackFun = param.callbackFun;
     var serverDataType = param.serverDataType;
+    var otherParam=param.otherParam;
     // /////////////////////////
     var request = $.ajax({
         url: paramurl,
         data: paramdata,
         method: "POST",
         dataType: serverDataType,
+        statusCode: {
+            404: function () {
+                layer.alert("无此页面");
+            },
+            500: function (error) {
+                layer.open({
+                    type: 1,
+                    title: '错误页面',
+                    skin: 'layui-layer-rim', // 加上边框
+                    area: ['1000px', '500px'], // 宽高
+                    content: error.responseText,
+                    success: function (index, layero) {
+                        // do something
+                        // layer.close(index); // 如果设定了yes回调，需进行手工关闭
+                        // layer.close(ii);
+                    }
+                });
+            }
+        }
+    });
+    request.done(function (data) {
+        callbackFun(data,otherParam);
+        layer.close(ii);
+    });
+    request.fail(function (jqXHR, textStatus) {
+        //layer.alert("Request failed: " + textStatus);
+        layer.close(ii);
+    });
+    // ///////////////
+}
+// ajax方式请求
+function ajaxRunForUpload(param) {
+    var ii = layer.load(0, {
+        shade: [0.8, '#fff']
+        // 0.1透明度的白色背景
+    });
+    var paramurl = param.paramurl;
+    var paramdata = param.paramdata;
+    var callbackFun = param.callbackFun;
+    // /////////////////////////
+    var request = $.ajax({
+        url: paramurl,
+        data: paramdata,
+        method: "POST",
+        processData: false,
+        contentType: false,
         statusCode: {
             404: function () {
                 layer.alert("无此页面");

@@ -3,13 +3,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-    <button class="btn btn-primary ldgbtmarginbottom5" id="addhealthInquiryID" type="button" pici="${pici}">新增</button>
+    <button class="btn btn-primary ldgbtmarginbottom5" id="addfeedbackID" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead>
             <tr>
-                <th>标题</th>
-                <th>封面</th>
+                <th>注册手机号</th>
+                <th>内容</th>
+                <th>图片</th>
+                <th>联系方式</th>
                 <th>创建时间</th>
                 <th>操作</th>
             </tr>
@@ -17,14 +19,29 @@
             <tbody>
             <c:forEach items="${page.list}" var="obj">
                 <tr>
-                    <td  style="vertical-align:middle">${obj.title}</td>
-                    <td><img style="height: 50px;width: 50px;" src="${obj.smallimg}"/></td>
-                    <td style="vertical-align:middle"><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                    <td  style="vertical-align:middle">${obj.userregistphone}</td>
+                    <td style="vertical-align:middle">
+                        <c:choose>
+                            <c:when test="${fn:length(obj.content) > 10}">
+                                <c:out value="${fn:substring(obj.content, 0, 10)}......" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="${obj.content}" />
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td style="vertical-align:middle">
+                <c:forEach items="${obj.contentimgsList}" var="img">
+                      <img src="${img}" style="width: 70px;height: 70px;border-radius:5px;"/>
+                </c:forEach>
+                           </td>
+                    <td  style="vertical-align:middle">${obj.lxfs}</td>
+                    <td  style="vertical-align:middle"><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                     <td style="vertical-align:middle">
                         <a class="label label-info" ajaxthispage
-                           href="/webHandler/edithealthInquiry?uid=${obj.uid}&pici=${obj.imgpici}">编辑</a>
+                           href="/webHandler/edithealthInquiry?uid=${obj.uid}&pici=${obj.pici}">编辑</a>
                         <a class="label label-warning" ajaxdel
-                           href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
+                           href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.pici}">删除</a>
                         <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
                            href="/webHandler/displayhealthInquiry?uid=${obj.uid}">预览</a></td>
                 </tr>
@@ -43,4 +60,4 @@
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/jPageExt.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/zixun/healthInquiry/index.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/feedback/index.js"></script>

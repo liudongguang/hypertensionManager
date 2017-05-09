@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.impl.mapper.HytbZixunFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbZixunFeedback">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="userregistphone" jdbcType="VARCHAR" property="userregistphone" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="lxfs" jdbcType="VARCHAR" property="lxfs" />
+    <result column="contentimgs" jdbcType="VARCHAR" property="contentimgs" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="pici" jdbcType="VARCHAR" property="pici" />
+  </resultMap>
+  <select id="feedback_list" resultType="com.kangkang.api.vo.HytbZixunFeedbackExt">
+    select * from hytb_zixun_feedback order by uid desc
+  </select>
+</mapper>

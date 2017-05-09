@@ -1,4 +1,6 @@
-package com.kangkang.api.vo.webpagecontroller;
+package com.kangkang.api.bo;
+
+import com.kangkang.constant.SysConstant;
 
 /**
  * Created by LiuDongguang on 2017/5/8.
@@ -9,6 +11,15 @@ public class UploadCropperImageParam {
     private Integer cut_width;
     private Integer cut_height;
     private String pici;
+    private String folder= SysConstant.UPLOADE_FOLDER_zixunimgs;//上传的文件夹
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
 
     public String getPici() {
         return pici;

@@ -1,0 +1,263 @@
+@charset "utf-8";
+/* Write your styles */
+.plt {
+    padding-left: 10px;
+}
+.tab_style2{
+    border-radius: 20px 5px 5px 20px;
+    /*background-color: #d4d4d4;*/
+}
+.tab_style1{
+    border-radius: 5px 20px 20px 5px;
+    /*background-color: #d4d4d4 !important;*/
+
+}
+.font-color{
+    color: #000;
+}
+.clearfix {
+    clear: both;
+}
+
+.f_s_12 {
+    font-size: 1.2em;
+}
+
+.f_c_gary {
+    color: #999
+}
+
+.changer {
+    cursor: pointer
+}
+
+.mt3e {
+    margin-top: 3em;
+}
+
+.text_main {
+    margin: 10px;
+    font-size: 1.4rem;
+}
+
+.time_list li {
+    border: none !important;
+    float: left;
+    margin: 3px 3px
+}
+
+.time_list li a {
+    display: block;
+    background: #f5f5f5;
+    padding: 2px 2px;
+}
+
+.doc_img img {
+    min-width: 60px;
+    min-height: 60px;
+}
+.bgall{
+    background-color: #fff!important;
+    border: solid 1px #fff!important;
+    color: #000!important;
+}
+.zhuce{
+    background-color: #ea6e0c;
+    border: solid 1px #ea6e0c;
+    color: white;
+    margin-right: 35px!important;
+    border-radius: 5px;
+}
+.str_clor {
+    color: #dfa323;
+    margin-right: 5px !important;
+}
+
+.str_num {
+    padding: 5px;
+}
+
+.in_fo {
+    line-height: 26px;
+}
+
+.about_info {
+    text-indent: 1em;
+}
+.rule-font-color{
+    color: #00a497;
+}
+.rule-font-color2{
+    color: #697080;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.date_block:hover {
+    background: #009cda;
+    color: #fff
+}
+.login_bg{
+    background-color: #0fde9b;
+    border: solid 1px #0fde9b;
+    margin-bottom: 3px!important;
+}
+.hd2 {
+    background: #f2f2f2 !important;
+    border-bottom: 1px solid #dedede
+}
+
+.hd2 .header_left, .header_right, .am-header-title {
+    color: #333 !important;
+}
+.btn_bg{
+    background-color: #00a497;
+    border: solid 1px #00a497;
+}
+.charg_nb li {
+    border: none !important;
+}
+
+.pd_lar {
+    padding: 0 10px !important;
+}
+
+.doc_date {
+    border-top: 1px solid #ddd;
+    padding: 0px !important;
+    text-align: center
+}
+.mgn{
+    margin: 0!important;
+}
+.l_h42 {
+    line-height: 42px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mt50 {
+    margin-top: 50px;
+}
+
+.txt_center {
+    text-align: center
+}
+
+. fl_f_cl {
+    color: firebrick
+}
+
+/*loading样式开始*/
+.load5 {
+    margin: 200px auto;
+    width: 90px;
+    height: 90px;
+    position: relative;
+    text-align: center;
+    -webkit-animation: rotate 2.0s infinite linear;
+    animation: rotate 2.0s infinite linear;
+}
+
+.dot1, .dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: #67CF22;
+    border-radius: 100%;
+    -webkit-animation: bounce 2.0s infinite ease-in-out;
+    animation: bounce 2.0s infinite ease-in-out;
+}
+
+.dot2 {
+    top: auto;
+    bottom: 0px;
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+@-webkit-keyframes rotate {
+    100% {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes bounce {
+    0%, 100% {
+        -webkit-transform: scale(0.0)
+    }
+    50% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}
+
+.msg_label {
+    /*background: #e6e6e6;*/
+    padding: 5px 10px;
+}
+
+/*loading样式结束*/
+/*温馨提示*/
+.login_info_txt {
+    margin-top: 20px;
+    color: #989696;
+    font-size: 0.7em;
+    width: 100%;
+}
+
+.login_info_txt ol {
+    margin-top: 0px;
+}
+
+.login_info_txt li {
+    line-height: 22px;
+}
+
+.info_top_title {
+    line-height: 30px;
+}
+
+.login_info_Bni {
+    text-align: center;
+    margin-right: 25px;
+}
+.f_cl_red{ color: #dd514c}
+/*温馨提示*/
+.sy_hospital_center{
+    background-color: #fff;
+    margin-top: 10px!important;
+    padding:1px 0 0 0;
+    border-radius: 5px;
+}
+.sy_small_icon{
+    width:25px;
+    height: 25px;
+    /*margin-top: 6px;*/
+    margin-left: 8px!important;
+}
+.sy_hospital_center_son{
+    border-bottom: none!important;
+    background-color: #fff;
+    /*padding:0 10px;*/
+}

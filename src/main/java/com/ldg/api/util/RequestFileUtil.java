@@ -69,7 +69,7 @@ public class RequestFileUtil {
             return savedbFileName.toString();// 文件夹名加文件名
         }
         if (files != null && files.size() > 0) {
-            StringBuilder savedbFileNames = new StringBuilder(dirName);
+            StringBuilder savedbFileNames = new StringBuilder();
             for (MultipartFile mfile : files) {
                 StringBuilder savedbFileName = new StringBuilder(dirName);
                 StringBuilder fileAllPath = new StringBuilder(path);
@@ -78,7 +78,7 @@ public class RequestFileUtil {
                 File saveFile = new File(fileAllPath.toString());
                 mfile.transferTo(saveFile);
                 savedbFileName.append("/").append(saveFileName);
-                savedbFileNames.append(savedbFileName).append(";");
+                savedbFileNames.append(savedbFileName).append(SysConstant.SYS_semicolon);
             }
             return savedbFileNames.toString();
         }

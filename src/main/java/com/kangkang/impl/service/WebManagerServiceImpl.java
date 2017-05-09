@@ -2,21 +2,16 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.kangkang.api.bo.FullSaveFileNameRs;
-import com.kangkang.api.po.HytbZixunFaq;
-import com.kangkang.api.po.HytbZixunHealthinquiry;
-import com.kangkang.api.po.SysLunboimgs;
-import com.kangkang.api.po.Tempimages;
+import com.kangkang.api.po.*;
 import com.kangkang.api.service.WebManagerService;
+import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
+import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.UploadCropperImageParam;
-import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.*;
-import com.ldg.api.util.ImgeUtils;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +37,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private HytbZixunFaqMapper faqDao;
     @Autowired
     private HytbZixunHealthinquiryMapper healthinquiryDao;
+    @Autowired
+    private HytbZixunFeedbackMapper feedbackDao;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -104,19 +100,9 @@ public class WebManagerServiceImpl implements WebManagerService {
         return delNum;
     }
 
-    @Override
-    public String UploadedImg(HttpServletRequest request, String pici) throws Exception {
-        List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
-        String fileName = RequestFileUtil.saveToComputer(uploadFiles, request, "zixunimgs");
-        Tempimages tempimg = new Tempimages();
-        tempimg.setImagepath(fileName);
-        tempimg.setPici(pici);
-        tempimg.setCreatetime(new Date());
-        tempimg.setState(SysConstant.Tempimages_STATE_TEMP);//0为暂存状态
-        tempimagesDao.insertSelective(tempimg);
-        return fileName;
-    }
-    private void handlerimgpici(String pici,String content,HttpServletRequest request){
+
+
+    private void handlerimgpici(String pici, String content, HttpServletRequest request) {
         //1.对比文章中存在的图片，本批次中没有的直接删除数据库记录同时删除文件，有的修改状态为1 进行保留
         List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(pici);
         imgpathList.forEach(item -> {
@@ -124,19 +110,12 @@ public class WebManagerServiceImpl implements WebManagerService {
             if (content.indexOf(item.getImagepath()) == -1) {
                 // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
                 deleteImgeFile(request, item.getImagepath(), item.getUid());
-            }else{
+            } else {
                 tempimagesDao.setSaveState(item.getUid());//设置保留状态
             }
         });
     }
-
-    /**
-     *
-     * @param pici
-     * @param content
-     * @param request
-     */
-    private void handlerimgpiciForHealthInquiry(String pici,String content,HttpServletRequest request,String fmimgpath){
+    private void handlerimgpiciForHealthInquiry(String pici, String content, HttpServletRequest request, String fmimgpath) {
         //1.对比文章中存在的图片，这里不包含封面图图片
         List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(pici);
         imgpathList.forEach(item -> {
@@ -144,33 +123,34 @@ public class WebManagerServiceImpl implements WebManagerService {
             if (content.indexOf(item.getImagepath()) == -1) {
                 // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
                 deleteImgeFile(request, item.getImagepath(), item.getUid());
-            }else{
+            } else {
                 tempimagesDao.setSaveState(item.getUid());//设置保留状态
             }
         });
         //2.对封面的切图进行修改状态，针对上传后直接离开的情况，这里将2修改为1，进行长期保存
-        tempimagesDao.setSaveStateByFmpath(pici,fmimgpath);
+        tempimagesDao.setSaveStateByFmpath(pici, fmimgpath);
     }
 
     private int deleteImgeFile(HttpServletRequest request, String filePath, Integer imguid) {
         RequestFileUtil.delFileFromDisk(request, filePath);
         return tempimagesDao.deleteByPrimaryKey(imguid);
     }
-
     /**
      * 因为只需要一张封面图，所以之前的封面图删掉
+     *
      * @param pici
      * @param request
      */
-   private void handleruploadCropperIMG(String pici,HttpServletRequest request,String thisSmallImg){
-       List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici,thisSmallImg);
-       imgpathList.forEach(item -> {
-           deleteImgeFile(request, item.getImagepath(), item.getUid());
-       });
-   }
+    private void handleruploadCropperIMG(String pici, HttpServletRequest request, String thisSmallImg) {
+        List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici, thisSmallImg);
+        imgpathList.forEach(item -> {
+            deleteImgeFile(request, item.getImagepath(), item.getUid());
+        });
+    }
+
     @Override
     public int savefaq(FaqParam param) {
-        handlerimgpici(param.getPici(),param.getContent(),param.getRequest());
+        handlerimgpici(param.getPici(), param.getContent(), param.getRequest());
         final int[] delNum = {0};
         HytbZixunFaq faq = new HytbZixunFaq();
         faq.setContent(param.getContent());
@@ -209,27 +189,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
     ////////////////////////////////////////////////健康资讯 start
 
-    /**
-     * 上传切图
-     * @param avatar_file
-     * @param request
-     * @param param
-     * @return
-     * @throws IOException
-     */
-    @Override
-    public String uploadCropper(MultipartFile avatar_file, HttpServletRequest request, UploadCropperImageParam param) throws IOException {
-        FullSaveFileNameRs fileRs=RequestFileUtil.getFullSaveFileName(request, SysConstant.UPLOADE_FOLDER_zixunimgs);
-        ImgeUtils.cutImage(avatar_file,fileRs.getFullImgPath(),param.getCut_x(),param.getCut_y(),param.getCut_width(),param.getCut_height());
-        Tempimages tme=new Tempimages();
-        tme.setCreatetime(new Date());
-        tme.setPici(param.getPici());
-        tme.setImagepath(fileRs.getSaveDBPath());
-        tme.setState(SysConstant.Tempimages_STATE_TEMP);
-        tme.setFmtpstate(SysConstant.UPLOADE_fmtpstate);
-        tempimagesDao.insertSelective(tme);
-        return fileRs.getSaveDBPath();
-    }
+
 
     @Override
     public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
@@ -240,8 +200,8 @@ public class WebManagerServiceImpl implements WebManagerService {
 
     @Override
     public int saveHealthInquiry(HealthInquiryParam param) {
-        handlerimgpiciForHealthInquiry(param.getPici(),param.getContent(),param.getRequest(),param.getSmallimg());
-        handleruploadCropperIMG(param.getPici(),param.getRequest(),param.getSmallimg());//只允许一个切图，若有则删除之前的
+        handlerimgpiciForHealthInquiry(param.getPici(), param.getContent(), param.getRequest(), param.getSmallimg());
+        handleruploadCropperIMG(param.getPici(), param.getRequest(), param.getSmallimg());//只允许一个切图，若有则删除之前的
         final int[] delNum = {0};
         HytbZixunHealthinquiry healthinquiry = new HytbZixunHealthinquiry();
         healthinquiry.setContent(param.getContent());
@@ -275,4 +235,24 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     ////////////////////////////////////////////////健康资讯 end
+
+    @Override
+    public PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam) {
+        PageInfo<HytbZixunFeedbackExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> feedbackDao.feedback_list());
+        return pageInfo;
+    }
+
+    @Override
+    public int saveFeedback(FeedbackParam param) {
+        HytbZixunFeedback fb=new HytbZixunFeedback();
+        fb.setContent(param.getTextContent());
+        fb.setContentimgs(param.getImgsContent());
+        fb.setCreatetime(new Date());
+        fb.setLxfs(param.getLxfs());
+        fb.setPici(param.getPici());
+        fb.setUserregistphone(param.getRegistphone());
+        feedbackDao.insertSelective(fb);
+        return 0;
+    }
+
 }
