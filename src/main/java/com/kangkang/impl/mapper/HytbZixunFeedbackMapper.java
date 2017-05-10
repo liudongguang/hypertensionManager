@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface HytbZixunFeedbackMapper extends Mapper<HytbZixunFeedback> {
     List<HytbZixunFeedbackExt> feedback_list();
+
+    HytbZixunFeedbackExt selectByPrimaryKeyForExt(Integer uid);
 }

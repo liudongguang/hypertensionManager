@@ -2,6 +2,7 @@ package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.HytbZixunDisclaimer;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.service.KangKangDataService;
@@ -307,8 +308,48 @@ public class WebPageController {
     @RequestMapping(value = "/save_feedback")
     public String save_feedback(HttpServletRequest request, FeedbackParam param) throws Exception {
         param.setRequest(request);
-        int i = webManagerService.saveFeedback(param);
+        int i = webManagerService.saveFeedback(request,param);
         return "/webHandler/feedback_list";
     }
+    @RequestMapping(value = "/delFeedBackById")
+    public String delFeedBackById(HttpServletRequest request, HealthInquiryParam param) throws Exception {
+        param.setRequest(request);
+        int i = webManagerService.delFeedBackById(param);
+        return "/webHandler/feedback_list";
+    }
+
+
+    @RequestMapping(value = "/displayFeedBackById")
+    public String displayFeedBackById(HttpServletRequest request, Integer uid) throws Exception {
+        HytbZixunFeedbackExt obj = webManagerService.getFeedBackById(uid);
+        request.setAttribute("obj", obj);
+        return "/zixun/feedback/dis.jsp";
+    }
     ////////////////////////////////////////////意见反馈   end
+    ////////////////////////////////////////////免责声明   start
+    /**
+     * 进入免责声明
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/enterDisclaimer")
+    public String enterDisclaimer(HttpServletRequest request) throws Exception {
+        HytbZixunDisclaimer obj=webManagerService.getDisclaimer();
+        if(obj==null){
+            obj=new HytbZixunDisclaimer();
+            obj.setPici(UUID.randomUUID().toString());
+        }
+        request.setAttribute("obj",obj);
+        return "/zixun/disclaimer/add.jsp";
+    }
+
+    @RequestMapping(value = "/saveDisclaimer")
+    public String saveDisclaimer(HttpServletRequest request,HytbZixunDisclaimer param) throws Exception {
+        request.setAttribute("pici", UUID.randomUUID().toString());
+        webManagerService.saveDisclaimer(request,param);
+        return "/webHandler/enterDisclaimer";
+    }
+    ////////////////////////////////////////////免责声明   end
 }

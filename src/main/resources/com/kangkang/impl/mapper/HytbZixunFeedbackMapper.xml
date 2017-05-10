@@ -17,4 +17,7 @@
   <select id="feedback_list" resultType="com.kangkang.api.vo.HytbZixunFeedbackExt">
     select * from hytb_zixun_feedback order by uid desc
   </select>
+  <select id="selectByPrimaryKeyForExt" resultType="com.kangkang.api.vo.HytbZixunFeedbackExt">
+      select * from hytb_zixun_feedback where uid=#{uid}
+  </select>
 </mapper>

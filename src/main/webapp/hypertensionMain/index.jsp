@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-    <title>随访管理</title>
+    <title>高血压管理</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width">
@@ -71,7 +71,7 @@
                     </li>
                     <li><a href="/webHandler/feedback_list"><span
                             class="glyphicon glyphicon-th"></span>意见反馈</a></li>
-                    <li><a href="/sdeyfollowup/msgModelList"><span
+                    <li><a href="/webHandler/enterDisclaimer"><span
                             class="glyphicon glyphicon-th"></span>免责声明</a></li>
                 </ul>
             </li>

@@ -25,7 +25,7 @@
                            href="/webHandler/edithealthInquiry?uid=${obj.uid}&pici=${obj.imgpici}">编辑</a>
                         <a class="label label-warning" ajaxdel
                            href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
-                        <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
+                        <a class="label label-success" ajaxLayerWindowFrame title="健康资讯"  width="500" height="600"
                            href="/webHandler/displayhealthInquiry?uid=${obj.uid}">预览</a></td>
                 </tr>
             </c:forEach>
@@ -38,7 +38,7 @@
     <input id="pageSize" type="hidden" value="${page.pageSize}"/>
     <input id="pages" type="hidden" value="${page.pages}"/>
     <input id="total" type="hidden" value="${page.total}"/>
-    <input id="loadDataURL" type="hidden" value="/webHandler/faq_list"/>
+    <input id="loadDataURL" type="hidden" value="/webHandler/healthInquiry_list"/>
     <input id="searFormID" type="hidden" value="subForm"/>
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>

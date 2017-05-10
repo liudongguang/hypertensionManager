@@ -39,6 +39,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private HytbZixunHealthinquiryMapper healthinquiryDao;
     @Autowired
     private HytbZixunFeedbackMapper feedbackDao;
+    @Autowired
+    private HytbZixunDisclaimerMapper disclaimerDao;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -101,7 +103,6 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
 
-
     private void handlerimgpici(String pici, String content, HttpServletRequest request) {
         //1.对比文章中存在的图片，本批次中没有的直接删除数据库记录同时删除文件，有的修改状态为1 进行保留
         List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(pici);
@@ -115,6 +116,7 @@ public class WebManagerServiceImpl implements WebManagerService {
             }
         });
     }
+
     private void handlerimgpiciForHealthInquiry(String pici, String content, HttpServletRequest request, String fmimgpath) {
         //1.对比文章中存在的图片，这里不包含封面图图片
         List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(pici);
@@ -135,6 +137,7 @@ public class WebManagerServiceImpl implements WebManagerService {
         RequestFileUtil.delFileFromDisk(request, filePath);
         return tempimagesDao.deleteByPrimaryKey(imguid);
     }
+
     /**
      * 因为只需要一张封面图，所以之前的封面图删掉
      *
@@ -190,7 +193,6 @@ public class WebManagerServiceImpl implements WebManagerService {
     ////////////////////////////////////////////////健康资讯 start
 
 
-
     @Override
     public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
         PageInfo<HytbZixunHealthinquiry> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
@@ -243,8 +245,17 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public int saveFeedback(FeedbackParam param) {
-        HytbZixunFeedback fb=new HytbZixunFeedback();
+    public int saveFeedback(HttpServletRequest request, FeedbackParam param) {
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(param.getPici());
+        imgpathList.forEach(item -> {
+            //不存在的时候标识删除图片
+            if (param.getImgsContent().indexOf(item.getImagepath()) == -1) {
+                deleteImgeFile(request, item.getImagepath(), item.getUid());
+            } else {
+                tempimagesDao.setSaveState(item.getUid());//设置保留状态
+            }
+        });
+        HytbZixunFeedback fb = new HytbZixunFeedback();
         fb.setContent(param.getTextContent());
         fb.setContentimgs(param.getImgsContent());
         fb.setCreatetime(new Date());
@@ -255,4 +266,46 @@ public class WebManagerServiceImpl implements WebManagerService {
         return 0;
     }
 
+    @Override
+    public int delFeedBackById(HealthInquiryParam param) {
+        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
+        imgesPathByPici.forEach(img -> {
+            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
+        });
+        return feedbackDao.deleteByPrimaryKey(param.getUid());
+    }
+
+    @Override
+    public HytbZixunFeedbackExt getFeedBackById(Integer uid) {
+        return feedbackDao.selectByPrimaryKeyForExt(uid);
+    }
+
+    @Override
+    public HytbZixunDisclaimer getDisclaimer() {
+        List<HytbZixunDisclaimer> list = disclaimerDao.selectAll();
+        if (list != null && list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public void saveDisclaimer(HttpServletRequest request,HytbZixunDisclaimer param) {
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(param.getPici());
+        imgpathList.forEach(item -> {
+            //不存在的时候标识删除图片
+            if (param.getContent().indexOf(item.getImagepath()) == -1) {
+                deleteImgeFile(request, item.getImagepath(), item.getUid());
+            } else {
+                tempimagesDao.setSaveState(item.getUid());//设置保留状态
+            }
+        });
+        if (param.getUid() == null) {
+            param.setCreatetime(new Date());
+            disclaimerDao.insertSelective(param);
+        } else {
+            disclaimerDao.updateByPrimaryKeySelective(param);
+        }
+
+    }
 }

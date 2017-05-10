@@ -1,6 +1,7 @@
 package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.HytbZixunDisclaimer;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
@@ -126,9 +127,32 @@ public interface WebManagerService {
      * @param param
      * @return
      */
-    int saveFeedback(FeedbackParam param);
+    int saveFeedback(HttpServletRequest request,FeedbackParam param);
 
+    /**
+     * 删除意见反馈
+     * @param param
+     * @return
+     */
+    int delFeedBackById(HealthInquiryParam param);
 
+    /**
+     * 根据id获取信息
+     * @param uid
+     * @return
+     */
+    HytbZixunFeedbackExt getFeedBackById(Integer uid);
 
+    /**
+     * 获取免责声明
+     * @return
+     */
+    HytbZixunDisclaimer getDisclaimer();
 
+    /**
+     * 保存免责声明
+     *
+     * @param param
+     */
+    void saveDisclaimer(HttpServletRequest request,HytbZixunDisclaimer param);
 }

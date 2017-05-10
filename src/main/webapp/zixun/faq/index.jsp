@@ -23,7 +23,7 @@
                            href="/webHandler/editFAQ?uid=${obj.uid}&pici=${obj.imgpici}">编辑</a>
                         <a class="label label-warning" ajaxdel
                            href="/webHandler/delfaqById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
-                        <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
+                        <a class="label label-success" ajaxLayerWindowFrame title="常见问题"  width="500" height="600"
                            href="/webHandler/displayFAQ?uid=${obj.uid}">预览</a></td>
                 </tr>
             </c:forEach>

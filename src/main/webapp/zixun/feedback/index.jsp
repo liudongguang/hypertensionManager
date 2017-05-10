@@ -38,12 +38,10 @@
                     <td  style="vertical-align:middle">${obj.lxfs}</td>
                     <td  style="vertical-align:middle"><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
                     <td style="vertical-align:middle">
-                        <a class="label label-info" ajaxthispage
-                           href="/webHandler/edithealthInquiry?uid=${obj.uid}&pici=${obj.pici}">编辑</a>
                         <a class="label label-warning" ajaxdel
-                           href="/webHandler/delhealthInquiryById?uid=${obj.uid}&pici=${obj.pici}">删除</a>
-                        <a class="label label-success" ajaxLayerWindowFrame title="预览常见问题"  width="500" height="600"
-                           href="/webHandler/displayhealthInquiry?uid=${obj.uid}">预览</a></td>
+                           href="/webHandler/delFeedBackById?uid=${obj.uid}&pici=${obj.pici}">删除</a>
+                        <a class="label label-success" ajaxLayerWindowFrame title="意见反馈"  width="500" height="600"
+                           href="/webHandler/displayFeedBackById?uid=${obj.uid}">查看</a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -55,7 +53,7 @@
     <input id="pageSize" type="hidden" value="${page.pageSize}"/>
     <input id="pages" type="hidden" value="${page.pages}"/>
     <input id="total" type="hidden" value="${page.total}"/>
-    <input id="loadDataURL" type="hidden" value="/webHandler/faq_list"/>
+    <input id="loadDataURL" type="hidden" value="/webHandler/feedback_list"/>
     <input id="searFormID" type="hidden" value="subForm"/>
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>
