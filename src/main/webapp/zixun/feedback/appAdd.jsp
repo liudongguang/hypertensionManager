@@ -21,16 +21,17 @@
 </head>
 <body>
 <!-- Header -->
-<header data-am-widget="header" class="am-header am-header-default bgall">
+<%--<header data-am-widget="header" class="am-header am-header-default bgall">
     <h1 class="am-header-title">
         意见反馈
     </h1>
-</header>
+</header>--%>
 <!-- Header_ending -->
 <!--内容列表开始-->
 <div class="am-list-news-bd pdg">
-    <form id="subForm" action="webHandler/save_feedback" class="am-form text_main" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="pici" value="${param.pici}" id="piciID">
+    <input type="hidden" id="basePath" value="${pageContext.request.contextPath }/"/>
+    <form id="subForm" action="appHandler/saveAppfeedback" class="am-form text_main" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="pici" value="${pici}" id="piciID">
         <div class="clearfix"></div>
         <div class="am-form-group">
             <label class="msg_label" style="">意见反馈：</label>
@@ -53,16 +54,20 @@
         <div class="am-form-group">
             <label class="msg_label" style="">联系方式：</label>
             <input style="border-radius: 3px" placeholder="手机/QQ（必填）" type="text" required errInfo="手机/QQ（必填）" name="lxfs"/>
-            <input style="border-radius: 3px"  type="hidden" value="${param.registphone}" required errInfo="注册手机号" name="registphone"/>
+            <input style="border-radius: 3px"  type="hidden" value="${param.registphone}" required errInfo="请填写注册手机号" name="registphone"/>
         </div>
         <input type="hidden" value="" name="imgsContent" id="imgsContentID"/>
     </form>
     <a href="javascript:void(0)"  class="am-u-sm-12 am-margin-top-sm">
-        <button id="subBT" type="button" class="am-btn am-btn-primary am-radius am-u-sm-12 mb20 btn_bg">发表</button>
+        <button id="subBT" type="button" class="am-btn am-btn-primary am-radius am-u-sm-12 mb20 btn_bg" style="background-color: #0099b9">提交</button>
     </a>
 </div>
 <div class="clearfix"></div>
 <!--内容列表结束-->
-<script language="javascript" type="text/javascript" src="assets/js/zixun/feedback/add.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/ajaxForm.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/zixun/feedback/appAdd.js"></script>
 </body>
 </html>

@@ -11,7 +11,6 @@
         <button id="subBT" type="submit" class="btn btn-default">保存</button>
     </form>
 </div>
-<script language="javascript" type="text/javascript" src="assets/js/main/ajaxForm.js"></script>
 <script language="javascript" type="text/javascript" src="assets/summernote/summernote.js"></script>
 <script language="javascript" type="text/javascript" src="assets/summernote/lang/summernote-zh-CN.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/zixun/disclaimer/add.js"></script>

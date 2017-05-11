@@ -15,6 +15,7 @@ import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -236,12 +239,11 @@ public class WebPageController {
     public String healthInquiry_list(HttpServletRequest request, PageParam pageParam) throws Exception {
         request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunHealthinquiry> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
         return "/zixun/healthInquiry/index.jsp";
     }
-
     /**
      * 保存健康资讯
      *
@@ -251,6 +253,12 @@ public class WebPageController {
      */
     @RequestMapping(value = "/save_healthInquiry")
     public String save_healthInquiry(HttpServletRequest request, HealthInquiryParam param) throws Exception {
+        System.out.println(param.getContent());
+        File f=new File("d:/a.txt");
+        FileOutputStream fos=new FileOutputStream(f);
+        fos.write(param.getContent().getBytes());
+        fos.close();
+
         param.setRequest(request);
         int i = webManagerService.saveHealthInquiry(param);
         return "/webHandler/healthInquiry_list";
@@ -277,6 +285,21 @@ public class WebPageController {
         HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uid);
         request.setAttribute("obj", faq);
         return "/zixun/healthInquiry/add.jsp";
+    }
+    ///app
+    @RequestMapping(value = "/informationList")
+    public String informationList(HttpServletRequest request, PageParam pageParam) throws Exception {
+        /////
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
+        /////
+        return "/zixun/healthInquiry/appIndex.jsp";
+    }
+    @RequestMapping(value = "/informationDetails")
+    public String informationDetails(HttpServletRequest request, Integer uidparam) throws Exception {
+        HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uidparam);
+        request.setAttribute("obj", faq);
+        return "/zixun/healthInquiry/dis.jsp";
     }
     ////////////////////////////////////////////健康资讯   end
 
@@ -352,4 +375,6 @@ public class WebPageController {
         return "/webHandler/enterDisclaimer";
     }
     ////////////////////////////////////////////免责声明   end
+
+
 }

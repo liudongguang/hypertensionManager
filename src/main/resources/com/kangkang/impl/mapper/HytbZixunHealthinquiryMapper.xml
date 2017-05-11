@@ -13,7 +13,7 @@
     <result column="smallimg" jdbcType="VARCHAR" property="smallimg" />
     <result column="imgpici" jdbcType="VARCHAR" property="imgpici" />
   </resultMap>
-  <select id="healthInquiry_list" resultMap="BaseResultMap">
+  <select id="healthInquiry_list" resultType="com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt">
         select uid,title,createtime,smallimg,imgpici from hytb_zixun_healthinquiry order by uid desc
   </select>
 </mapper>

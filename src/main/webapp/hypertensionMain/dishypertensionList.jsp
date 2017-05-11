@@ -43,5 +43,4 @@
 -->
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/jPageExt.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/main/ajaxForm.js"></script>
 

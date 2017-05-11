@@ -13,6 +13,7 @@ import com.kangkang.api.vo.fileinput.SendingVo;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,7 +92,7 @@ public interface WebManagerService {
      * @param pageParam
      * @return
      */
-    PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam);
+    PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam);
 
     /**
      * 保存健康资讯

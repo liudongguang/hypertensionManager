@@ -106,6 +106,7 @@
 <script language="javascript" type="text/javascript" src="assets/js/moment.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/bootstrap-datetimepicker.min.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/ajaxForm.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/main/ajaxsessiontimeout.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/hypertensionMain/index.js"></script>

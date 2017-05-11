@@ -27,7 +27,12 @@ public class DateUtil {
 		return yyyyMMddHHmmssFormat.format(new Date());
 	}
 
-
+    public final  static String getStrFormatDate(Date d,String format){
+		if(d!=null){
+			return DateFormatUtils.format(d,format);
+		}
+		return null;
+	}
     /**
      *
      * @param months

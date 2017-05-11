@@ -1,13 +1,21 @@
 package com.kangkang.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.HytbZixunDisclaimer;
+import com.kangkang.api.po.HytbZixunFaq;
+import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
+import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.util.PeonyMessageUtil;
 import com.kangkang.api.vo.*;
+import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
+import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.MsgResult;
+import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +38,8 @@ public class AppController {
     private AppPatientService appPatientService;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private WebManagerService webManagerService;
     /**
      * 注册获取验证码
      * @param request
@@ -349,8 +359,65 @@ public class AppController {
         }
         return rs;
     }
+   //////////健康资讯
+    @RequestMapping(value = "/informationList")
+    @ResponseBody
+    public ResultMsg informationList(HttpServletRequest request, PageParam pageParam) throws Exception {
+        /////
+        ResultMsg rs = new ResultMsg();
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        rs.setData(faqpageInfo);
+        /////
+        return rs;
+    }
+    @RequestMapping(value = "/informationDetails")
+    public String informationDetails(HttpServletRequest request, Integer uidparam) throws Exception {
+        HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uidparam);
+        request.setAttribute("obj", faq);
+        return "/zixun/healthInquiry/dis.jsp";
+    }
+    /////////////意见反馈 start
+    @RequestMapping(value = "/feedBack")
+    public String feedBack(HttpServletRequest request) throws Exception {
+        request.setAttribute("pici", UUID.randomUUID().toString());
+        return "/zixun/feedback/appAdd.jsp";
+    }
 
+    @RequestMapping(value = "/saveAppfeedback")
+    @ResponseBody
+    public ResultMsg saveAppfeedback(HttpServletRequest request, FeedbackParam param) throws Exception {
+        param.setRequest(request);
+        ResultMsg rs=new ResultMsg();
+        int i = webManagerService.saveFeedback(request,param);
+        return rs;
+    }
+    ////意见反馈end
+    //免责声明
+    @RequestMapping(value = "/disclaimer")
+    public String  disclaimer(HttpServletRequest request) throws Exception {
+        HytbZixunDisclaimer obj=webManagerService.getDisclaimer();
+        request.setAttribute("obj",obj);
+        return "/zixun/disclaimer/dis.jsp";
+    }
+    //////
+    /////常见问题start
+    @RequestMapping(value = "/commonProblems")
+    @ResponseBody
+    public ResultMsg commonProblems(HttpServletRequest request, PageParam pageParam) throws Exception {
+        ResultMsg rs=new ResultMsg();
+        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam);
+        rs.setData(faqpageInfo);
+        /////
+        return rs;
+    }
 
+    @RequestMapping(value = "/commonProblemsDetails")
+    public String commonProblemsDetails(HttpServletRequest request, Integer uidparam) throws Exception {
+        HytbZixunFaq faq = webManagerService.getFAQByID(uidparam);
+        request.setAttribute("obj", faq);
+        return "/zixun/faq/disfaq.jsp";
+    }
+    /////
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {

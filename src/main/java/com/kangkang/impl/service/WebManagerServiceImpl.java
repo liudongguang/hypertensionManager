@@ -11,6 +11,7 @@ import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.FaqParam;
 import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
+import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
 import com.kangkang.impl.mapper.*;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
@@ -194,8 +195,8 @@ public class WebManagerServiceImpl implements WebManagerService {
 
 
     @Override
-    public PageInfo<HytbZixunHealthinquiry> healthInquiry_list(PageParam pageParam) {
-        PageInfo<HytbZixunHealthinquiry> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
+    public PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam) {
+        PageInfo<HytbZixunHealthinquiryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
         return pageInfo;
     }
 
