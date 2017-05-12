@@ -12,10 +12,7 @@ import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.kangkang.api.vo.webpagecontroller.FaqParam;
-import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
-import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
+import com.kangkang.api.vo.webpagecontroller.*;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
@@ -99,9 +96,34 @@ public class WebPageController {
      */
     @RequestMapping(value = "/lunbotuList")
     public String lunbotuList(HttpServletRequest request) throws Exception {
-        return "/hypertensionMain/lunboupload.jsp";
+        request.setAttribute("pici", UUID.randomUUID().toString());
+        return "/zixun/lunbo/lunboupload.jsp";
     }
 
+    /**
+     * 进入设置轮播图页面
+     * @param request
+     * @param setNum
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getSetContentPage")
+    public String getSetContentPage(HttpServletRequest request,Integer setNum) throws Exception {
+        return "/zixun/lunbo/setContent.jsp";
+    }
+
+    /**
+     * 保存轮播图内容
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/saveLunboImgContent")
+    @ResponseBody
+    public ResultMsg saveLunboImgContent(HttpServletRequest request,LunBoImg lbimg) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        return rs;
+    }
     /**
      * 获取轮播图数据
      *

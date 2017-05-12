@@ -608,4 +608,28 @@ function initBackBt(jq_bt, jq_content) {
         return false;
     });
 }
+function funwenbenInit($content,imgpici) {
+    $content.summernote({
+        height: 500,
+        lang: 'zh-CN',
+        callbacks: {
+            onImageUpload: function(files) {
+                //上传图片到服务器，使用了formData对象，至于兼容性...据说对低版本IE不太友好
+                var formData = new FormData();
+                formData.append('file',files[0]);
+                $.ajax({
+                    url : basePath+'fileUpload/uploadIMGForZx?pici='+imgpici,//后台文件上传接口
+                    type : 'POST',
+                    data : formData,
+                    processData : false,
+                    contentType : false,
+                    success : function(data) {
+                        $content.summernote('insertImage',data,"img");
+                    }
+                });
+            }
+        }
+    });
+}
+
 

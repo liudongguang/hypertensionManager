@@ -270,7 +270,7 @@ public class AppController {
     }
 
     /**
-     * 记录
+     * 记录    需要把用户头像联合查询出来
      * @param request
      * @return
      * @throws Exception

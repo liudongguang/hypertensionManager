@@ -25,6 +25,9 @@
 <body>
 <!-- Content -->
 <div class="container">
+    <!--1 表示16：9-->
+    <input type="hidden"  value="${param.bili}" id="biliID">
+    <input type="hidden"  value="${param.imgid}" id="imgID">
     <form id="subForm" action="fileUpload/uploadCropperImage" enctype="multipart/form-data" method="post">
         <input type="hidden" name="pici" value="${param.pici}" id="piciID">
         <div class="row">

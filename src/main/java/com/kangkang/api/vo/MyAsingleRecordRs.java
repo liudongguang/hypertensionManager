@@ -1,7 +1,5 @@
 package com.kangkang.api.vo;
 
-import com.kangkang.api.util.SysPropertiesUtil;
-import com.kangkang.constant.PropertiestConstant;
 import com.ldg.api.util.DateUtil;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -12,7 +10,7 @@ import java.util.Date;
  */
 public class MyAsingleRecordRs {
     private Integer uid;//用户id
-    private String headimageurl = SysPropertiesUtil.getRongYunValByKey(PropertiestConstant.RONGYUN_HEADIMGURL);//用户头像
+    private String headimageurl;//用户头像
     private String name;//用户名称
     private Date testtime;//测试时间
     private String testtimeStr;//测试时间

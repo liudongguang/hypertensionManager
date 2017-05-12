@@ -1,7 +1,8 @@
 package com.kangkang.api.po;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "hytb_zixun_healthinquiry")
 public class HytbZixunHealthinquiry {
@@ -12,11 +13,6 @@ public class HytbZixunHealthinquiry {
      * 标题
      */
     private String title;
-
-    /**
-     * 内容
-     */
-    private String content;
 
     /**
      * 创建时间
@@ -37,6 +33,11 @@ public class HytbZixunHealthinquiry {
      * 图片批次，删除时使用
      */
     private String imgpici;
+
+    /**
+     * 内容
+     */
+    private String content;
 
     /**
      * @return uid
@@ -68,24 +69,6 @@ public class HytbZixunHealthinquiry {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * 获取内容
-     *
-     * @return content - 内容
-     */
-    public String getContent() {
-        return content;
-    }
-
-    /**
-     * 设置内容
-     *
-     * @param content 内容
-     */
-    public void setContent(String content) {
-        this.content = content;
     }
 
     /**
@@ -158,5 +141,23 @@ public class HytbZixunHealthinquiry {
      */
     public void setImgpici(String imgpici) {
         this.imgpici = imgpici;
+    }
+
+    /**
+     * 获取内容
+     *
+     * @return content - 内容
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 设置内容
+     *
+     * @param content 内容
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -2,7 +2,10 @@ $(function () {
 
     'use strict';
 
-    var console = window.console || { log: function () {} };
+    var console = window.console || {
+            log: function () {
+            }
+        };
     var URL = window.URL || window.webkitURL;
     var $image = $('#image');
     var $download = $('#download');
@@ -13,9 +16,14 @@ $(function () {
     var $dataRotate = $('#dataRotate');
     var $dataScaleX = $('#dataScaleX');
     var $dataScaleY = $('#dataScaleY');
+    var defaultbili = 1 / 1;
+    var biliVal = $("#biliID").val();
+    if (biliVal == 1) {
+        defaultbili = 16 / 9;
+    }
     var options = {
-        aspectRatio: 1 / 1,
-        viewMode:2,
+        aspectRatio: defaultbili,
+        viewMode: 2,
         preview: '.img-preview',
         crop: function (e) {
             $dataX.val(Math.round(e.x));
@@ -53,7 +61,7 @@ $(function () {
             //console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
         },
         zoom: function (e) {
-           // console.log(e.type, e.ratio);
+            // console.log(e.type, e.ratio);
         }
     }).cropper(options);
 
@@ -246,12 +254,12 @@ $(function () {
     }
 //////
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {
-        parent.disImg(data);
-    }, true,function (form,options) {
-        var imgVal=$inputImage.val();
-        if(imgVal){
+        parent.disImg(data,$("#imgID").val());
+    }, true, function (form, options) {
+        var imgVal = $inputImage.val();
+        if (imgVal) {
             form.ajaxSubmit(options);
-        }else{
+        } else {
             layer.alert("请选择裁切图片！");
         }
     });

@@ -1,7 +1,5 @@
 package com.kangkang.api.vo;
 
-import com.kangkang.api.util.SysPropertiesUtil;
-
 /**
  * Created by LiuDongguang on 2017/4/28.
  */
@@ -10,7 +8,7 @@ public class GetHomePhotoAddressRs {
     private String homeimageurl;
 
     public String getHomeimage() {
-        return SysPropertiesUtil.getServer()+homeimage;
+        return homeimage;
     }
 
     public void setHomeimage(String homeimage) {
