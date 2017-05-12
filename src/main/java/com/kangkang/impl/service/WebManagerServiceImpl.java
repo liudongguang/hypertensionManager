@@ -8,10 +8,7 @@ import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
-import com.kangkang.api.vo.webpagecontroller.FaqParam;
-import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
-import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
+import com.kangkang.api.vo.webpagecontroller.*;
 import com.kangkang.impl.mapper.*;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
@@ -308,5 +305,40 @@ public class WebManagerServiceImpl implements WebManagerService {
             disclaimerDao.updateByPrimaryKeySelective(param);
         }
 
+    }
+
+    @Override
+    public int saveLunboImg(LunBoImg lbimg) {
+        ////////1.删除批次下的没用图片
+        System.out.println(lbimg);
+        ///////2.保存对应位置图片
+        //SysLunboimgs img=lunxunIMGDao.selectOneByImgnum(lbimg.getSetNum());
+        SysLunboimgs img=new SysLunboimgs();
+        if(lbimg.getUid()==null){
+            img=new SysLunboimgs();
+            if(lbimg.getLinkState()==2){
+                lbimg.setHomeimageurl("/webHandler/dislunbo");
+            }
+            img.setManagerid(1);
+            img.setImgnum(lbimg.getSetNum());
+            img.setCreatetime(new Date());
+            img.setHomeimageurl(lbimg.getHomeimageurl());
+            img.setHomeimage(lbimg.getHomeimage());
+            img.setContent(lbimg.getContent());
+            img.setLinkstate(lbimg.getLinkState());
+            lunxunIMGDao.insertSelective(img);
+        }else{
+            img.setHomeimageurl(lbimg.getHomeimageurl());
+            img.setHomeimage(lbimg.getHomeimage());
+            img.setContent(lbimg.getContent());
+            img.setLinkstate(lbimg.getLinkState());
+            lunxunIMGDao.updateByPrimaryKeySelective(img);
+        }
+        return 0;
+    }
+
+    @Override
+    public SysLunboimgs getlunboInfoBySetNum(Integer setNum) {
+        return lunxunIMGDao.getlunboInfoBySetNum(setNum);
     }
 }

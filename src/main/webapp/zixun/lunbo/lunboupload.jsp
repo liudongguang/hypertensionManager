@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--tabs-left:选项卡在左边显示 -->
-<input type="hidden" name="pici" value="${param.pici}" id="piciID">
+<input type="hidden"  value="${pici}" id="piciID">
 <div class="tabbable">
     <!--nav-pills，nav-tabs，nav-stacked :改变选项卡的样式-->
     <ul class="nav nav-tabs">

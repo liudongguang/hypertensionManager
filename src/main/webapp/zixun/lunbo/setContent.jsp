@@ -4,13 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link type="text/css" rel="stylesheet" href="assets/summernote/summernote.css">
 <div class="row">
-    <div class="col-md-3"><img id="checkfmID${param.setNum}" style="width: 320px;height: 180px;"
+    <div class="col-md-3" style="margin-top: 150px;"><img id="checkfmID${param.setNum}" style="width: 320px;height: 180px;padding-left: 50px;"
                                src="<c:if test="${obj.homeimage==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj.homeimage!=null}">${obj.homeimage}</c:if>">
     </div>
     <div class="col-md-9">
-        <form action="" method="post" class="form-horizontal">
+        <form id="subForm${param.setNum}" action="webHandler/saveLunboImgContent" method="post" class="form-horizontal">
             <!--图片地址-->
             <input type="hidden" id="checkfmID${param.setNum}_path" name="homeimage"/>
+            <input type="hidden" name="uid" value="${obj.uid}"/>
+            <input type="hidden" name="pici" value="${obj.pici}"/>
+            <input type="hidden" name="setNum" value="${param.setNum}" />
             <div class="form-group">
                 <label class="col-md-2 control-label">是否使用外部连接：</label>
                 <div class="col-md-10">
@@ -25,19 +28,17 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">连接地址：</label>
                 <div class="col-md-10">
-                    <input type="text" name="homeimageurl" class="form-control" disabled="disabled" placeholder="请输入连接地址....." >
+                    <input type="text" name="homeimageurl" value="${obj.homeimageurl}" class="form-control" disabled="disabled" placeholder="请输入连接地址....." >
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">内容介绍：</label>
                 <div class="col-md-10">
-                    <textarea name="content" class="summernote" id="contents${param.setNum}" title="Contents"></textarea>
+                    <textarea name="content" class="summernote" id="contents${param.setNum}" title="Contents">${obj.content}</textarea>
                 </div>
-                <button type="button" class="btn btn-default pull-right" style="margin-right: 13px;">提交</button>
+                <button id="subBT${param.setNum}" type="button" class="btn btn-default pull-right" style="margin-right: 13px;">提交</button>
             </div>
-
         </form>
-
     </div>
 </div>
 <script language="javascript" type="text/javascript" src="assets/summernote/summernote.js"></script>

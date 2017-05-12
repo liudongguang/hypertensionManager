@@ -1,5 +1,6 @@
 jQuery(document).ready(function () {
     var PiCiIDVal=$("#piciID").val();
+    $("[name=pici]").val(PiCiIDVal);
     var setNumVal = $("div[class='tabbable']").find("li[class='active']").find("a").attr("href").split("tab")[1];
     /////初始化富文本编辑控件
     funwenbenInit($('#contents'+setNumVal),PiCiIDVal);
@@ -21,11 +22,49 @@ jQuery(document).ready(function () {
             $imgurl.prop("disabled",true);
             $content.summernote('enable');
         }
-    })
+    });
+    initAjaxForm($("#subForm"+setNumVal), $("#subBT"+setNumVal), function (data) {
+          if(data.errcode==0){
+             layer.alert("保存完成！");
+          }else{
+              layer.alert("保存失败！");
+          }
+    }, false,function (form,options) {
+        var setNumVal = $("div[class='tabbable']").find("li[class='active']").find("a").attr("href").split("tab")[1];
+        /////
+        var imgPath=$("#checkfmID"+setNumVal+"_path").val();
+        if(!imgPath){
+            layer.alert("需要上传图片！");
+            return false;
+        }
+        /////
+        var linkState=$("[name=linkState]:checked").val();
+        if(1==linkState){
+            ///连接地址必填
+            var linkURL=$("[name=homeimageurl]").val();
+            if(linkURL){
+                var match = /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/;
+                if(!match.test(linkURL)){
+                    layer.alert("链接地址不合法！");
+                    return false;
+                }
+            }else{
+                layer.alert("链接地址不能为空！");
+                return false;
+            }
+        }else if(2==linkState) {
+            var $content = $("#contents" + setNumVal);
+            //内容必填
+            if(!$.trim($content.val())){
+                layer.alert("关联内容不能为空！");
+                return false;
+            }
+        }
+        form.ajaxSubmit(options);
+    });
 });
 function disImg(imgpath,imgid) {
-    var imgPath = imgpath + "?t=" + new Date().getTime();
-    $("#"+imgid).attr("src", imgPath);
-    $("#"+imgid+"_path").val(imgPath);
+    $("#"+imgid).attr("src", imgpath);
+    $("#"+imgid+"_path").val(imgpath);
     layer.close(jumpPageLayerNum);
 }

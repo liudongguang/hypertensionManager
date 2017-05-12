@@ -4,16 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbZixunDisclaimer;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
+import com.kangkang.api.po.SysLunboimgs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
-import com.kangkang.api.vo.webpagecontroller.FaqParam;
-import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
-import com.kangkang.api.vo.webpagecontroller.HealthInquiryParam;
-import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
+import com.kangkang.api.vo.webpagecontroller.*;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,4 +154,18 @@ public interface WebManagerService {
      * @param param
      */
     void saveDisclaimer(HttpServletRequest request,HytbZixunDisclaimer param);
+
+    /**
+     * 保存轮播图
+     * @param lbimg
+     * @return
+     */
+    int saveLunboImg(LunBoImg lbimg);
+
+    /**
+     * 获取轮播详情
+     * @param setNum
+     * @return
+     */
+    SysLunboimgs getlunboInfoBySetNum(Integer setNum);
 }

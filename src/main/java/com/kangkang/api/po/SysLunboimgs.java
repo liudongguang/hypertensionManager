@@ -1,7 +1,5 @@
 package com.kangkang.api.po;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -9,7 +7,6 @@ import java.util.Date;
 @Table(name = "sys_lunboimgs")
 public class SysLunboimgs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
 
     /**
@@ -28,6 +25,21 @@ public class SysLunboimgs {
     private Integer managerid;
 
     private Date createtime;
+
+    /**
+     * 外部连接还是内部连接   1外部   2内部
+     */
+    private Integer linkstate;
+
+    /**
+     * 图片编号
+     */
+    private Integer imgnum;
+
+    /**
+     * 关联内容
+     */
+    private String content;
 
     /**
      * @return uid
@@ -109,5 +121,59 @@ public class SysLunboimgs {
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    /**
+     * 获取外部连接还是内部连接   1外部   2内部
+     *
+     * @return linkstate - 外部连接还是内部连接   1外部   2内部
+     */
+    public Integer getLinkstate() {
+        return linkstate;
+    }
+
+    /**
+     * 设置外部连接还是内部连接   1外部   2内部
+     *
+     * @param linkstate 外部连接还是内部连接   1外部   2内部
+     */
+    public void setLinkstate(Integer linkstate) {
+        this.linkstate = linkstate;
+    }
+
+    /**
+     * 获取图片编号
+     *
+     * @return imgnum - 图片编号
+     */
+    public Integer getImgnum() {
+        return imgnum;
+    }
+
+    /**
+     * 设置图片编号
+     *
+     * @param imgnum 图片编号
+     */
+    public void setImgnum(Integer imgnum) {
+        this.imgnum = imgnum;
+    }
+
+    /**
+     * 获取关联内容
+     *
+     * @return content - 关联内容
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 设置关联内容
+     *
+     * @param content 关联内容
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 }

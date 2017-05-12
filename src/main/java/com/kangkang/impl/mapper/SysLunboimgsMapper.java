@@ -12,4 +12,13 @@ public interface SysLunboimgsMapper extends Mapper<SysLunboimgs> {
     List<InitialPreviewImgVo> getUploadedImgs();
 
     List<GetHomePhotoAddressRs> selectAllImges();
+
+    /**
+     * 根据编号获取是否有这个图片
+     * @param setNum
+     * @return
+     */
+    SysLunboimgs selectOneByImgnum(int setNum);
+
+    SysLunboimgs getlunboInfoBySetNum(Integer setNum);
 }

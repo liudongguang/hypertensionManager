@@ -1,10 +1,7 @@
 package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.kangkang.api.po.Acceptkkdata;
-import com.kangkang.api.po.HytbZixunDisclaimer;
-import com.kangkang.api.po.HytbZixunFaq;
-import com.kangkang.api.po.HytbZixunHealthinquiry;
+import com.kangkang.api.po.*;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
@@ -109,6 +106,8 @@ public class WebPageController {
      */
     @RequestMapping(value = "/getSetContentPage")
     public String getSetContentPage(HttpServletRequest request,Integer setNum) throws Exception {
+        SysLunboimgs img=webManagerService.getlunboInfoBySetNum(setNum);
+        request.setAttribute("obj",img);
         return "/zixun/lunbo/setContent.jsp";
     }
 
@@ -122,6 +121,7 @@ public class WebPageController {
     @ResponseBody
     public ResultMsg saveLunboImgContent(HttpServletRequest request,LunBoImg lbimg) throws Exception {
         ResultMsg rs = new ResultMsg();
+        int save=webManagerService.saveLunboImg(lbimg);
         return rs;
     }
     /**
