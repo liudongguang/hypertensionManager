@@ -12,13 +12,14 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="linkstate" jdbcType="INTEGER" property="linkstate" />
     <result column="imgnum" jdbcType="INTEGER" property="imgnum" />
+    <result column="pici" jdbcType="VARCHAR" property="pici" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <select id="getUploadedImgs" resultType="com.kangkang.api.vo.fileinput.InitialPreviewImgVo">
        select uid,homeimage as src,homeimageurl as imglink from sys_lunboimgs order by uid;
   </select>
   <select id="selectAllImges" resultType="com.kangkang.api.vo.GetHomePhotoAddressRs">
-      select homeimage,homeimageurl from sys_lunboimgs order by uid
+      select homeimage,homeimageurl,linkstate from sys_lunboimgs order by uid
   </select>
   <select id="selectOneByImgnum" resultMap="BaseResultMap">
     select uid from sys_lunboimgs where imgnum=#{setNum}

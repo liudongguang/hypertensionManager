@@ -1,5 +1,7 @@
 package com.kangkang.api.vo.webpagecontroller;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by LiuDongguang on 2017/5/12.
  */
@@ -11,6 +13,15 @@ public class LunBoImg {
     private String pici;
     private int setNum;
     private String content;//内容
+    private HttpServletRequest request;
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
     public Integer getUid() {
         return uid;

@@ -24,9 +24,23 @@ import java.util.List;
  */
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
+
     @Autowired
     private TempimagesMapper tempimagesDao;
-
+    /**
+     * 根据路径删除图片
+     * 1.删除图片
+     * 2.删除图片记录
+     *
+     * @param request
+     * @param delPath
+     * @return
+     */
+    @Override
+    public int deleteFileByPath(HttpServletRequest request, String delPath) {
+        RequestFileUtil.delFileFromDisk(request, delPath);
+        return tempimagesDao.deleteByFilePath(delPath);
+    }
     /**
      * 上传一张图片
      *
@@ -101,18 +115,84 @@ public class FileUploadServiceImpl implements FileUploadService {
         return fileRs.getSaveDBPath();
     }
 
+
     /**
-     * 根据路径删除图片
-     * 1.删除图片
-     * 2.删除图片记录
-     *
+     * 处理内容中包含图片与不包含图片的处理情况
+     * @param imgpathList
+     * @param content
      * @param request
-     * @param delPath
-     * @return
+     */
+
+   private void handlerWenZhangContentIMGS(List<Tempimages> imgpathList,String content, HttpServletRequest request){
+       imgpathList.forEach(item -> {
+           //不存在的时候标识删除图片
+           if (content.indexOf(item.getImagepath()) == -1) {
+               RequestFileUtil.delFileFromDisk(request, item.getImagepath());
+               tempimagesDao.deleteByPrimaryKey(item.getUid());
+           } else {
+               //2.内容中存在的图片，修改保留状态，避免清理程序后续的清理
+               tempimagesDao.setSaveState(item.getUid());//设置保留状态
+           }
+       });
+   }
+
+
+    /**
+     * 没有封面图的内容中，有图片的情况处理
+     * @param pici
+     * @param content
+     * @param request
      */
     @Override
-    public int deleteFileByPath(HttpServletRequest request, String delPath) {
-        RequestFileUtil.delFileFromDisk(request, delPath);
-        return tempimagesDao.deleteByFilePath(delPath);
+    public void handlerimgpici(String pici, String content, HttpServletRequest request) {
+        //1.对比文章中存在的图片，本批次中没有的直接删除数据库记录同时删除文件，有的修改状态为1 进行保留
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(pici);
+        handlerWenZhangContentIMGS(imgpathList,content,request);
+    }
+
+    /**
+     * 带封面图，内容中有图片的情况处理，通过批次号获取图片
+     * 1.删除内容中没有出现的图片
+     * 2.内容中存在的图片，修改保留状态，避免清理程序后续的清理
+     * @param pici
+     * @param content
+     * @param request
+     * @param fmimgpath  封面图路径
+     */
+    @Override
+    public void handlerimgpiciForOneFengMianIMG(String pici, String content, HttpServletRequest request, String fmimgpath) {
+        //1.对比文章中存在的图片，这里不包含封面图图片
+        List<Tempimages> imgpathList = tempimagesDao.getImgesPathExceptFengmianByPici(pici);
+        handlerWenZhangContentIMGS(imgpathList,content,request);
+        //////封面图的单张处理
+        //3.对封面的切图进行修改状态，针对上传后直接离开的情况，修改为1，进行长期保存
+        tempimagesDao.setSaveStateByFmpath(pici, fmimgpath);
+        //4.本次图片路径(fmimgpath)，不删除这个，其他的都删除
+        List<Tempimages> exceptSelfList = tempimagesDao.getFengMianImgesPathByPici(pici, fmimgpath);
+        exceptSelfList.forEach(item -> {
+            RequestFileUtil.delFileFromDisk(request, item.getImagepath());
+            tempimagesDao.deleteByPrimaryKey(item.getUid());
+        });
+    }
+
+    @Override
+    public void handlerimgpiciForOneFengMianIMG(String pici, HttpServletRequest request, String fmimgpath) {
+        //1.对封面的切图进行修改状态，针对上传后直接离开的情况，修改为1，进行长期保存
+        tempimagesDao.setSaveStateByFmpath(pici, fmimgpath);
+        //2.本次图片路径(fmimgpath)，不删除这个，其他的都删除
+        List<Tempimages> exceptSelfList = tempimagesDao.getFengMianImgesPathByPici(pici, fmimgpath);
+        exceptSelfList.forEach(item -> {
+            RequestFileUtil.delFileFromDisk(request, item.getImagepath());
+            tempimagesDao.deleteByPrimaryKey(item.getUid());
+        });
+    }
+
+    @Override
+    public void deleteAllByPici( HttpServletRequest request,String pici) {
+        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(pici);
+        imgesPathByPici.forEach(img -> {
+            RequestFileUtil.delFileFromDisk(request, img.getImagepath());
+            tempimagesDao.deleteByPrimaryKey(img.getUid());
+        });
     }
 }

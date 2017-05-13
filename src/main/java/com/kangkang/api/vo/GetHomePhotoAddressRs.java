@@ -6,6 +6,15 @@ package com.kangkang.api.vo;
 public class GetHomePhotoAddressRs {
     private String homeimage;
     private String homeimageurl;
+    private Integer linkstate;
+
+    public Integer getLinkstate() {
+        return linkstate;
+    }
+
+    public void setLinkstate(Integer linkstate) {
+        this.linkstate = linkstate;
+    }
 
     public String getHomeimage() {
         return homeimage;

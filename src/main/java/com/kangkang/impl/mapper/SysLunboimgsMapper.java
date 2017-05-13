@@ -21,4 +21,5 @@ public interface SysLunboimgsMapper extends Mapper<SysLunboimgs> {
     SysLunboimgs selectOneByImgnum(int setNum);
 
     SysLunboimgs getlunboInfoBySetNum(Integer setNum);
+
 }

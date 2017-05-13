@@ -4,31 +4,33 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link type="text/css" rel="stylesheet" href="assets/summernote/summernote.css">
 <div class="row">
-    <div class="col-md-3" style="margin-top: 150px;"><img id="checkfmID${param.setNum}" style="width: 320px;height: 180px;padding-left: 50px;"
+    <div class="col-md-3" style="margin-top: 150px;"><img id="checkfmID${param.setNum}" style="width: 320px;height: 180px;padding-left: 50px;cursor:pointer;"
                                src="<c:if test="${obj.homeimage==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj.homeimage!=null}">${obj.homeimage}</c:if>">
     </div>
     <div class="col-md-9">
+        <input type="hidden" setnum="${param.setNum}"  value="${pici}" id="piciID${param.setNum}">
         <form id="subForm${param.setNum}" action="webHandler/saveLunboImgContent" method="post" class="form-horizontal">
             <!--图片地址-->
-            <input type="hidden" id="checkfmID${param.setNum}_path" name="homeimage"/>
-            <input type="hidden" name="uid" value="${obj.uid}"/>
-            <input type="hidden" name="pici" value="${obj.pici}"/>
+            <input type="hidden" id="checkfmID${param.setNum}_path" name="homeimage" value="${obj.homeimage}"/>
+            <input type="hidden" name="uid" value="${obj.uid}" setnum="${param.setNum}"/>
+            <input type="hidden" setnum="${param.setNum}" name="pici" value="${obj.pici}"/>
             <input type="hidden" name="setNum" value="${param.setNum}" />
             <div class="form-group">
                 <label class="col-md-2 control-label">是否使用外部连接：</label>
                 <div class="col-md-10">
                     <label class="radio-inline">
-                        <input type="radio" name="linkState" value="1"> 是
+                        <input type="radio" name="linkState" setnum="${param.setNum}" value="1"> 是
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="linkState" value="2" checked="checked"> 否
+                        <input type="radio" name="linkState" setnum="${param.setNum}" value="2" checked="checked"> 否
                     </label>
+                    <input type="hidden" id="radio_linkState_${param.setNum}"  value="${obj.linkstate}" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">连接地址：</label>
                 <div class="col-md-10">
-                    <input type="text" name="homeimageurl" value="${obj.homeimageurl}" class="form-control" disabled="disabled" placeholder="请输入连接地址....." >
+                    <input type="text" setnum="${param.setNum}" name="homeimageurl" value="${obj.homeimageurl}" class="form-control" disabled="disabled" placeholder="请输入连接地址....." >
                 </div>
             </div>
             <div class="form-group">

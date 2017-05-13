@@ -5,6 +5,7 @@ import com.kangkang.api.po.HytbZixunDisclaimer;
 import com.kangkang.api.po.HytbZixunFaq;
 import com.kangkang.api.po.HytbZixunHealthinquiry;
 import com.kangkang.api.po.SysLunboimgs;
+import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
@@ -160,7 +161,7 @@ public interface WebManagerService {
      * @param lbimg
      * @return
      */
-    int saveLunboImg(LunBoImg lbimg);
+    SysLunboimgs saveLunboImg(LunBoImg lbimg);
 
     /**
      * 获取轮播详情
@@ -168,4 +169,19 @@ public interface WebManagerService {
      * @return
      */
     SysLunboimgs getlunboInfoBySetNum(Integer setNum);
+
+    /**
+     * 获取所有的轮播图 为App
+     * @return
+     */
+    List<GetHomePhotoAddressRs> getHomePhotoAddress();
+
+    /**
+     *
+     * @param paramuid
+     * @return
+     */
+    SysLunboimgs dislunboByParamuid(Integer paramuid);
+
+
 }

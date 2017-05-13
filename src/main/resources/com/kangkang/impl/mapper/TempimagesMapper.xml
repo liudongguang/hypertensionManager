@@ -24,7 +24,7 @@
   <update id="setSaveState" parameterType="int">
     update tempimages set state=1 where uid=#{uid}
   </update>
-    <select id="getImgesPathByPiciForHealthInquiry" resultMap="BaseResultMap">
+    <select id="getImgesPathExceptFengmianByPici" resultMap="BaseResultMap">
          select uid,imagepath from tempimages where pici=#{pici} and fmtpstate is null
     </select>
     <select id="getFengMianImgesPathByPici" resultMap="BaseResultMap">

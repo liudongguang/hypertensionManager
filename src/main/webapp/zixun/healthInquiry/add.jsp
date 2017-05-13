@@ -11,7 +11,7 @@
             <label class="col-md-2 control-label">封面图：</label>
             <div class="col-md-8">
 
-               <img id="checkfmID" style="width: 100px;height: 100px;" src="<c:if test="${obj.smallimg==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj.smallimg!=null}">${obj.smallimg}</c:if>">
+               <img id="checkfmID" style="width: 100px;height: 100px;cursor:pointer;" src="<c:if test="${obj.smallimg==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj.smallimg!=null}">${obj.smallimg}</c:if>">
             </div>
         </div>
         <div class="form-group">

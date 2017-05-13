@@ -5,6 +5,7 @@ import com.kangkang.api.po.*;
 import com.kangkang.api.service.KangKangDataService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
+import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
@@ -93,7 +94,6 @@ public class WebPageController {
      */
     @RequestMapping(value = "/lunbotuList")
     public String lunbotuList(HttpServletRequest request) throws Exception {
-        request.setAttribute("pici", UUID.randomUUID().toString());
         return "/zixun/lunbo/lunboupload.jsp";
     }
 
@@ -107,6 +107,11 @@ public class WebPageController {
     @RequestMapping(value = "/getSetContentPage")
     public String getSetContentPage(HttpServletRequest request,Integer setNum) throws Exception {
         SysLunboimgs img=webManagerService.getlunboInfoBySetNum(setNum);
+        if(img!=null){
+            request.setAttribute("pici",img.getPici());
+        }else{
+            request.setAttribute("pici", UUID.randomUUID().toString());
+        }
         request.setAttribute("obj",img);
         return "/zixun/lunbo/setContent.jsp";
     }
@@ -121,9 +126,34 @@ public class WebPageController {
     @ResponseBody
     public ResultMsg saveLunboImgContent(HttpServletRequest request,LunBoImg lbimg) throws Exception {
         ResultMsg rs = new ResultMsg();
-        int save=webManagerService.saveLunboImg(lbimg);
+        lbimg.setRequest(request);
+        SysLunboimgs lunbo=webManagerService.saveLunboImg(lbimg);
+        rs.setData(lunbo);
         return rs;
     }
+
+    /**
+     * 为APP提供轮播图的接口
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getHomePhotoAddress")
+    @ResponseBody
+    public ResultMsg getHomePhotoAddress(HttpServletRequest request) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        List<GetHomePhotoAddressRs> list=webManagerService.getHomePhotoAddress();
+        rs.setData(list);
+        return rs;
+    }
+    @RequestMapping(value = "/dislunbo")
+
+    public String dislunbo(HttpServletRequest request,Integer paramuid) throws Exception {
+        SysLunboimgs obj = webManagerService.dislunboByParamuid(paramuid);
+        request.setAttribute("obj", obj);
+        return "/zixun/lunbo/dis.jsp";
+    }
+
     /**
      * 获取轮播图数据
      *

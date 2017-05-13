@@ -1,5 +1,7 @@
 package com.kangkang.api.po;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.Date;
 @Table(name = "sys_lunboimgs")
 public class SysLunboimgs {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
 
     /**
@@ -35,6 +38,11 @@ public class SysLunboimgs {
      * 图片编号
      */
     private Integer imgnum;
+
+    /**
+     * 批次
+     */
+    private String pici;
 
     /**
      * 关联内容
@@ -157,6 +165,24 @@ public class SysLunboimgs {
      */
     public void setImgnum(Integer imgnum) {
         this.imgnum = imgnum;
+    }
+
+    /**
+     * 获取批次
+     *
+     * @return pici - 批次
+     */
+    public String getPici() {
+        return pici;
+    }
+
+    /**
+     * 设置批次
+     *
+     * @param pici 批次
+     */
+    public void setPici(String pici) {
+        this.pici = pici;
     }
 
     /**

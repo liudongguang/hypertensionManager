@@ -3,7 +3,9 @@ package com.kangkang.impl.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.*;
+import com.kangkang.api.service.FileUploadService;
 import com.kangkang.api.service.WebManagerService;
+import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
@@ -39,6 +41,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     private HytbZixunFeedbackMapper feedbackDao;
     @Autowired
     private HytbZixunDisclaimerMapper disclaimerDao;
+    @Autowired
+    private FileUploadService uploadFileService;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -101,57 +105,9 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
 
-    private void handlerimgpici(String pici, String content, HttpServletRequest request) {
-        //1.对比文章中存在的图片，本批次中没有的直接删除数据库记录同时删除文件，有的修改状态为1 进行保留
-        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(pici);
-        imgpathList.forEach(item -> {
-            //不存在的时候标识删除图片
-            if (content.indexOf(item.getImagepath()) == -1) {
-                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
-                deleteImgeFile(request, item.getImagepath(), item.getUid());
-            } else {
-                tempimagesDao.setSaveState(item.getUid());//设置保留状态
-            }
-        });
-    }
-
-    private void handlerimgpiciForHealthInquiry(String pici, String content, HttpServletRequest request, String fmimgpath) {
-        //1.对比文章中存在的图片，这里不包含封面图图片
-        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(pici);
-        imgpathList.forEach(item -> {
-            //不存在的时候标识删除图片
-            if (content.indexOf(item.getImagepath()) == -1) {
-                // delNum[0] =tempimagesDao.setDelState(item.getUid());//设置删除的状态，待删除任务来执行
-                deleteImgeFile(request, item.getImagepath(), item.getUid());
-            } else {
-                tempimagesDao.setSaveState(item.getUid());//设置保留状态
-            }
-        });
-        //2.对封面的切图进行修改状态，针对上传后直接离开的情况，这里将2修改为1，进行长期保存
-        tempimagesDao.setSaveStateByFmpath(pici, fmimgpath);
-    }
-
-    private int deleteImgeFile(HttpServletRequest request, String filePath, Integer imguid) {
-        RequestFileUtil.delFileFromDisk(request, filePath);
-        return tempimagesDao.deleteByPrimaryKey(imguid);
-    }
-
-    /**
-     * 因为只需要一张封面图，所以之前的封面图删掉
-     *
-     * @param pici
-     * @param request
-     */
-    private void handleruploadCropperIMG(String pici, HttpServletRequest request, String thisSmallImg) {
-        List<Tempimages> imgpathList = tempimagesDao.getFengMianImgesPathByPici(pici, thisSmallImg);
-        imgpathList.forEach(item -> {
-            deleteImgeFile(request, item.getImagepath(), item.getUid());
-        });
-    }
-
     @Override
     public int savefaq(FaqParam param) {
-        handlerimgpici(param.getPici(), param.getContent(), param.getRequest());
+        uploadFileService.handlerimgpici(param.getPici(), param.getContent(), param.getRequest());
         final int[] delNum = {0};
         HytbZixunFaq faq = new HytbZixunFaq();
         faq.setContent(param.getContent());
@@ -177,10 +133,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     @Override
     public int delfaqById(FaqParam param) {
         //1.查找关联这个常见问题的所有图片
-        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
-        imgesPathByPici.forEach(img -> {
-            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
-        });
+        uploadFileService.deleteAllByPici(param.getRequest(), param.getPici());
         return faqDao.deleteByPrimaryKey(param.getUid());
     }
 
@@ -200,8 +153,7 @@ public class WebManagerServiceImpl implements WebManagerService {
 
     @Override
     public int saveHealthInquiry(HealthInquiryParam param) {
-        handlerimgpiciForHealthInquiry(param.getPici(), param.getContent(), param.getRequest(), param.getSmallimg());
-        handleruploadCropperIMG(param.getPici(), param.getRequest(), param.getSmallimg());//只允许一个切图，若有则删除之前的
+        uploadFileService.handlerimgpiciForOneFengMianIMG(param.getPici(), param.getContent(), param.getRequest(), param.getSmallimg());
         final int[] delNum = {0};
         HytbZixunHealthinquiry healthinquiry = new HytbZixunHealthinquiry();
         healthinquiry.setContent(param.getContent());
@@ -222,10 +174,7 @@ public class WebManagerServiceImpl implements WebManagerService {
 
     @Override
     public int delHealthInquiryById(HealthInquiryParam param) {
-        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
-        imgesPathByPici.forEach(img -> {
-            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
-        });
+        uploadFileService.deleteAllByPici(param.getRequest(), param.getPici());
         return healthinquiryDao.deleteByPrimaryKey(param.getUid());
     }
 
@@ -244,15 +193,7 @@ public class WebManagerServiceImpl implements WebManagerService {
 
     @Override
     public int saveFeedback(HttpServletRequest request, FeedbackParam param) {
-        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPiciForHealthInquiry(param.getPici());
-        imgpathList.forEach(item -> {
-            //不存在的时候标识删除图片
-            if (param.getImgsContent().indexOf(item.getImagepath()) == -1) {
-                deleteImgeFile(request, item.getImagepath(), item.getUid());
-            } else {
-                tempimagesDao.setSaveState(item.getUid());//设置保留状态
-            }
-        });
+        uploadFileService.handlerimgpici(param.getPici(), param.getImgsContent(), request);
         HytbZixunFeedback fb = new HytbZixunFeedback();
         fb.setContent(param.getTextContent());
         fb.setContentimgs(param.getImgsContent());
@@ -260,16 +201,12 @@ public class WebManagerServiceImpl implements WebManagerService {
         fb.setLxfs(param.getLxfs());
         fb.setPici(param.getPici());
         fb.setUserregistphone(param.getRegistphone());
-        feedbackDao.insertSelective(fb);
-        return 0;
+        return feedbackDao.insertSelective(fb);
     }
 
     @Override
     public int delFeedBackById(HealthInquiryParam param) {
-        List<Tempimages> imgesPathByPici = tempimagesDao.getImgesPathByPici(param.getPici());
-        imgesPathByPici.forEach(img -> {
-            deleteImgeFile(param.getRequest(), img.getImagepath(), img.getUid());
-        });
+        uploadFileService.deleteAllByPici(param.getRequest(), param.getPici());
         return feedbackDao.deleteByPrimaryKey(param.getUid());
     }
 
@@ -288,57 +225,69 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public void saveDisclaimer(HttpServletRequest request,HytbZixunDisclaimer param) {
-        List<Tempimages> imgpathList = tempimagesDao.getImgesPathByPici(param.getPici());
-        imgpathList.forEach(item -> {
-            //不存在的时候标识删除图片
-            if (param.getContent().indexOf(item.getImagepath()) == -1) {
-                deleteImgeFile(request, item.getImagepath(), item.getUid());
-            } else {
-                tempimagesDao.setSaveState(item.getUid());//设置保留状态
-            }
-        });
+    public void saveDisclaimer(HttpServletRequest request, HytbZixunDisclaimer param) {
+        uploadFileService.handlerimgpici(param.getPici(), param.getContent(), request);
         if (param.getUid() == null) {
             param.setCreatetime(new Date());
             disclaimerDao.insertSelective(param);
         } else {
             disclaimerDao.updateByPrimaryKeySelective(param);
         }
-
     }
 
     @Override
-    public int saveLunboImg(LunBoImg lbimg) {
-        ////////1.删除批次下的没用图片
-        System.out.println(lbimg);
-        ///////2.保存对应位置图片
-        //SysLunboimgs img=lunxunIMGDao.selectOneByImgnum(lbimg.getSetNum());
-        SysLunboimgs img=new SysLunboimgs();
-        if(lbimg.getUid()==null){
-            img=new SysLunboimgs();
-            if(lbimg.getLinkState()==2){
-                lbimg.setHomeimageurl("/webHandler/dislunbo");
+    public SysLunboimgs saveLunboImg(LunBoImg lbimg) {
+        int linkState = lbimg.getLinkState();
+        if (linkState == 2) {//内部连接需要对内容中的图片进行处理
+            uploadFileService.handlerimgpiciForOneFengMianIMG(lbimg.getPici(), lbimg.getContent(), lbimg.getRequest(), lbimg.getHomeimage());
+        } else if (linkState == 1) {//外部连接不处理内容中的图片，只处理封面图
+            uploadFileService.handlerimgpiciForOneFengMianIMG(lbimg.getPici(), lbimg.getRequest(), lbimg.getHomeimage());
+        }
+        SysLunboimgs img = new SysLunboimgs();
+        if (lbimg.getUid() == null) {
+            img = new SysLunboimgs();
+            if (linkState == 2) {
+                lbimg.setHomeimageurl(" ");
             }
             img.setManagerid(1);
             img.setImgnum(lbimg.getSetNum());
             img.setCreatetime(new Date());
             img.setHomeimageurl(lbimg.getHomeimageurl());
             img.setHomeimage(lbimg.getHomeimage());
-            img.setContent(lbimg.getContent());
             img.setLinkstate(lbimg.getLinkState());
+            img.setPici(lbimg.getPici());
             lunxunIMGDao.insertSelective(img);
-        }else{
+            if (linkState== 2) { //不使用外部连接的情况下，编辑内容有效
+                img.setHomeimageurl("/webHandler/dislunbo?paramuid=" + img.getUid());
+                img.setContent(lbimg.getContent());
+            }
+            lunxunIMGDao.updateByPrimaryKeySelective(img);
+        } else {
+            img.setUid(lbimg.getUid());
             img.setHomeimageurl(lbimg.getHomeimageurl());
             img.setHomeimage(lbimg.getHomeimage());
-            img.setContent(lbimg.getContent());
+            if (linkState == 2) { //不使用外部连接的情况下，编辑内容有效
+                img.setHomeimageurl("/webHandler/dislunbo?paramuid=" + img.getUid());
+                img.setContent(lbimg.getContent());
+            }
             img.setLinkstate(lbimg.getLinkState());
             lunxunIMGDao.updateByPrimaryKeySelective(img);
         }
-        return 0;
+        return img;
     }
 
     @Override
     public SysLunboimgs getlunboInfoBySetNum(Integer setNum) {
         return lunxunIMGDao.getlunboInfoBySetNum(setNum);
+    }
+
+    @Override
+    public List<GetHomePhotoAddressRs> getHomePhotoAddress() {
+        return lunxunIMGDao.selectAllImges();
+    }
+
+    @Override
+    public SysLunboimgs dislunboByParamuid(Integer paramuid) {
+        return lunxunIMGDao.selectByPrimaryKey(paramuid);
     }
 }

@@ -35,6 +35,19 @@ public class FileUploadController {
         return delNum;
     }
     /**
+     * 上传图片
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/uploadIMGForZx")
+    @ResponseBody
+    public String uploadIMGForZx(HttpServletRequest request, FileUploadParam param) throws Exception {
+        String fileName = fileService.UploadedImg(request, param);
+        return fileName;
+    }
+    /**
      * 上传图片多个
      *
      * @param request
@@ -64,17 +77,5 @@ public class FileUploadController {
         return  cutImgPath;
     }
 
-    /**
-     * 上传图片
-     *
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/uploadIMGForZx")
-    @ResponseBody
-    public String uploadIMGForZx(HttpServletRequest request, FileUploadParam param) throws Exception {
-        String fileName = fileService.UploadedImg(request, param);
-        return fileName;
-    }
+
 }

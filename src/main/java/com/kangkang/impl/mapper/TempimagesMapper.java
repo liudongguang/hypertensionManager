@@ -20,7 +20,7 @@ public interface TempimagesMapper extends Mapper<Tempimages> {
      * @param pici
      * @return
      */
-    List<Tempimages> getImgesPathByPiciForHealthInquiry(String pici);
+    List<Tempimages> getImgesPathExceptFengmianByPici(String pici);
 
     /**
      * 获取封面图片不包含即将要保存的
