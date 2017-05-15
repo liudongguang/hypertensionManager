@@ -4,9 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.service.DoctorLogicService;
 import com.ldg.api.vo.PageParam;
+import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
@@ -52,6 +54,20 @@ public class DoctorLogicController {
         int saveNum = doctorLogicService.delDoctorInfo(doctor, request);
         return "/webDoctorHandler/doctorList";
     }
+
+    @RequestMapping(value = "/checkManagerUserName")
+    @ResponseBody
+    public ResultMsg checkManagerUserName(HttpServletRequest request, DoctorUsers doctor) throws Exception {
+        System.out.println(doctor);
+        ResultMsg rs = new ResultMsg();
+        String errorInfo = doctorLogicService.checkManagerUserName(doctor);
+        if (errorInfo != null) {
+            rs.setErrcode(1);
+            rs.setErrmsg(errorInfo);
+        }
+        return rs;
+    }
+
 ////////////////////////////////////////////
 
 }

@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Table(name = "doctor_users")
 public class DoctorUsers {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer uid;
 
     private String username;
@@ -50,6 +51,16 @@ public class DoctorUsers {
      * 头像地址
      */
     private String headimg;
+
+    /**
+     * 荣云id
+     */
+    private String rongid;
+
+    /**
+     * 荣云token
+     */
+    private String rytoken;
 
     /**
      * @return uid
@@ -235,5 +246,60 @@ public class DoctorUsers {
      */
     public void setHeadimg(String headimg) {
         this.headimg = headimg;
+    }
+
+    /**
+     * 获取荣云id
+     *
+     * @return rongid - 荣云id
+     */
+    public String getRongid() {
+        return rongid;
+    }
+
+    /**
+     * 设置荣云id
+     *
+     * @param rongid 荣云id
+     */
+    public void setRongid(String rongid) {
+        this.rongid = rongid;
+    }
+
+    /**
+     * 获取荣云token
+     *
+     * @return rytoken - 荣云token
+     */
+    public String getRytoken() {
+        return rytoken;
+    }
+
+    /**
+     * 设置荣云token
+     *
+     * @param rytoken 荣云token
+     */
+    public void setRytoken(String rytoken) {
+        this.rytoken = rytoken;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorUsers{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", zhicheng='" + zhicheng + '\'' +
+                ", keshi='" + keshi + '\'' +
+                ", workdanwei='" + workdanwei + '\'' +
+                ", diqu='" + diqu + '\'' +
+                ", gonghao='" + gonghao + '\'' +
+                ", imgpici='" + imgpici + '\'' +
+                ", headimg='" + headimg + '\'' +
+                ", rongid='" + rongid + '\'' +
+                ", rytoken='" + rytoken + '\'' +
+                '}';
     }
 }

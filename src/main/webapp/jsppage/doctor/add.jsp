@@ -33,6 +33,27 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-md-3 control-label">职称：</label>
+                <div class="col-md-4">
+                    <input type="text" name="zhicheng" required errInfo="职称不能为空！" value="${obj.zhicheng}"
+                           class="form-control" placeholder="请输入职称.....">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">工作单位：</label>
+                <div class="col-md-4">
+                    <input type="text" name="workdanwei" required errInfo="工作单位不能为空！" value="${obj.workdanwei}"
+                           class="form-control" placeholder="请输入工作单位.....">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">手机号：</label>
+                <div class="col-md-4">
+                    <input type="text" name="mobile" required errInfo="手机号不能为空！" value="${obj.mobile}"
+                           class="form-control" placeholder="请输手机号.....">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-3 control-label">所在科室：</label>
                 <div class="col-md-4">
                     <input type="text" name="keshi" required errInfo="所在科室不能为空！" value="${obj.keshi}"

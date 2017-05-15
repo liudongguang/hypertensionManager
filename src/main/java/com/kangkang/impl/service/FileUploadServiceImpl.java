@@ -72,7 +72,6 @@ public class FileUploadServiceImpl implements FileUploadService {
     public List<String> UploadedImgMultiple(HttpServletRequest request, FileUploadParam param) throws Exception {
         List<String> rsList = null;
         List<MultipartFile> uploadFiles = RequestFileUtil.getUploadFile(request);
-        System.out.println(uploadFiles);
         if (uploadFiles != null && uploadFiles.size() > 0) {
             rsList = new ArrayList<>();
             String fileName = RequestFileUtil.saveToComputer(uploadFiles, request, param.getFolder());

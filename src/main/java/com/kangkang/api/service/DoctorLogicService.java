@@ -35,4 +35,11 @@ public interface DoctorLogicService {
      * @return
      */
     int delDoctorInfo(DoctorUsers doctor, HttpServletRequest request);
+
+    /**
+     * 判断用户名或工号是否存在
+     * @param doctor
+     * @return
+     */
+    String checkManagerUserName(DoctorUsers doctor);
 }

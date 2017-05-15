@@ -20,4 +20,6 @@ public interface SysConstant {
     int UPLOADE_fmtpstate=1; //封面图状态
     int Tempimages_STATE_TEMP=0;//图片暂存状态，只存1天
     String SYS_semicolon=";";
+
+    String SYS_DOCTOR_STATE="_doctorAPP";
 }

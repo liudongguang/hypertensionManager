@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.DoctorUsersMapper">
-  <resultMap id="BaseResultMap" type="com.kangkang.api.po.DoctorUsers">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="zhicheng" jdbcType="VARCHAR" property="zhicheng" />
-    <result column="keshi" jdbcType="VARCHAR" property="keshi" />
-    <result column="workdanwei" jdbcType="VARCHAR" property="workdanwei" />
-    <result column="diqu" jdbcType="VARCHAR" property="diqu" />
-    <result column="gonghao" jdbcType="VARCHAR" property="gonghao" />
-    <result column="imgpici" jdbcType="VARCHAR" property="imgpici" />
-    <result column="headimg" jdbcType="VARCHAR" property="headimg" />
-  </resultMap>
-  <select id="selectAllForDoctorList" resultMap="BaseResultMap">
+    <resultMap id="BaseResultMap" type="com.kangkang.api.po.DoctorUsers">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="zhicheng" jdbcType="VARCHAR" property="zhicheng"/>
+        <result column="keshi" jdbcType="VARCHAR" property="keshi"/>
+        <result column="workdanwei" jdbcType="VARCHAR" property="workdanwei"/>
+        <result column="diqu" jdbcType="VARCHAR" property="diqu"/>
+        <result column="gonghao" jdbcType="VARCHAR" property="gonghao"/>
+        <result column="imgpici" jdbcType="VARCHAR" property="imgpici"/>
+        <result column="headimg" jdbcType="VARCHAR" property="headimg"/>
+        <result column="rongid" jdbcType="VARCHAR" property="rongid"/>
+        <result column="rytoken" jdbcType="VARCHAR" property="rytoken"/>
+    </resultMap>
+    <select id="selectAllForDoctorList" resultMap="BaseResultMap">
      select * from doctor_users order by uid
   </select>
+    <select id="selectUidByGonghaoOrUserName" parameterType="string" resultType="int">
+          select uid from doctor_users where gonghao=#{username} or username=#{username}
+    </select>
+    <select id="selectDoctorByGongHaoOrUserNameAndPsd" parameterType="com.kangkang.api.vo.AppDoctorParamVo"
+            resultType="com.kangkang.api.vo.DoctorUsersExt">
+        select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg from doctor_users where (gonghao=#{username} and password=#{password}) or ( username=#{username} and password=#{password} )
+    </select>
+    <select id="getUserInfoByUid" resultMap="BaseResultMap">
+         select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg,imgpici from doctor_users  where uid=#{uid}
+    </select>
+
+   <select id="selectUidByUserName" resultType="int" parameterType="com.kangkang.api.po.DoctorUsers">
+       select uid from doctor_users where username=#{username}
+   </select>
+    <select id="selectUidByGongHao" resultType="int" parameterType="com.kangkang.api.po.DoctorUsers">
+        select uid from doctor_users where gonghao=#{gonghao}
+    </select>
 </mapper>

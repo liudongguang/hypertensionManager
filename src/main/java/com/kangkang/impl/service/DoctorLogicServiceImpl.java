@@ -28,6 +28,7 @@ public class DoctorLogicServiceImpl implements DoctorLogicService {
     private FileUploadService fileUploadService;
     @Autowired
     private RongYunServie rongYunServie;
+
     @Override
     public PageInfo<DoctorUsers> getDoctorListPageInfo(PageParam pageParam) {
         PageInfo<DoctorUsers> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> doctorUsersDao.selectAllForDoctorList());
@@ -35,18 +36,23 @@ public class DoctorLogicServiceImpl implements DoctorLogicService {
     }
 
     @Override
-    public int saveDoctorInfo(DoctorUsers doctor,HttpServletRequest request) throws AesException {
-        fileUploadService.handlerimgpiciForOneFengMianIMG(doctor.getImgpici(),request,doctor.getHeadimg());
-        if(doctor.getUid()!=null){
+    public int saveDoctorInfo(DoctorUsers doctor, HttpServletRequest request) throws AesException {
+        fileUploadService.handlerimgpiciForOneFengMianIMG(doctor.getImgpici(), request, doctor.getHeadimg());
+        if (doctor.getUid() != null) {
             return doctorUsersDao.updateByPrimaryKeySelective(doctor);
         }
-        if(StringUtils.isBlank(doctor.getPassword())){
+        if (StringUtils.isBlank(doctor.getPassword())) {
             doctor.setPassword(doctor.getGonghao());
         }
         doctor.setPassword(MD5Util.string2MD5(doctor.getPassword()));
-        final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist("","");
-
-        return doctorUsersDao.insertSelective(doctor);
+        doctorUsersDao.insertSelective(doctor);
+        String ryUserID = "doctor" + doctor.getUid().toString();
+        final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist(ryUserID, doctor.getName().toString());
+        if (200 == ryrsObj.getCode()) {
+            doctor.setRongid(ryUserID);
+            doctor.setRytoken(ryrsObj.getToken());
+        }
+        return doctorUsersDao.updateByPrimaryKeySelective(doctor);
     }
 
     @Override
@@ -56,7 +62,20 @@ public class DoctorLogicServiceImpl implements DoctorLogicService {
 
     @Override
     public int delDoctorInfo(DoctorUsers doctor, HttpServletRequest request) {
-        fileUploadService.deleteAllByPici(request,doctor.getImgpici());
+        fileUploadService.deleteAllByPici(request, doctor.getImgpici());
         return doctorUsersDao.deleteByPrimaryKey(doctor.getUid());
+    }
+
+    @Override
+    public String checkManagerUserName(DoctorUsers doctor) {
+        Integer uid = doctorUsersDao.selectUidByUserName(doctor);
+        if (uid != null) {
+            return "登陆帐号已存在！";
+        }
+        uid = doctorUsersDao.selectUidByGongHao(doctor);
+        if (uid != null) {
+            return "工号已存在！";
+        }
+        return null;
     }
 }
