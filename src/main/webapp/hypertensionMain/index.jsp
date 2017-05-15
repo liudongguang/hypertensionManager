@@ -56,7 +56,9 @@
                     <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span
                             class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
-
+                    <li><a  href="/webDoctorHandler/doctorList"><span
+                            class="glyphicon glyphicon-list-alt"></span>医生管理</a>
+                    </li>
                 </ul>
             </li>
             <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-th-list btn-lg"></span>资讯管理

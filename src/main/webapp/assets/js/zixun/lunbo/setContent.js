@@ -27,7 +27,6 @@ jQuery(document).ready(function () {
     initAjaxForm($("#subForm"+setNumVal), $("#subBT"+setNumVal), function (data) {
           if(data.errcode==0){
               var lunbo=data.data;
-              console.log(lunbo);
               $("input[type=hidden][name=uid][setnum="+setNumVal+"]").val(lunbo.uid);
               $("input[type=text][name=homeimageurl][setnum="+setNumVal+"]").val(lunbo.homeimageurl);
              layer.alert("保存完成！");

@@ -20,13 +20,13 @@
     <div id="darkbannerwrap"></div>
     <div class="login_content">
         <div style="text-align:center; margin:48px 0 15px 0"><img src="assets/images/L-header.png"></div>
-        <form action="hypertensionMain/index.jsp" method="post">
+        <form action="webHandler/weblogin" method="post">
             ${requestScope.error}
             <label>用户名</label>
             <input name="username" required type="text" value="admin">
 
             <label>密码</label>
-            <input name="pass" required type="password" value="admin123">
+            <input name="password" required type="password" value="admin123">
 
             <input value="登录" style="width:100%; margin-top:40px;" type="submit" >
             <!--<hr class="hr20">-->

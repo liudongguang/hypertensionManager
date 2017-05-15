@@ -3,11 +3,8 @@ package com.kangkang.controller;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.*;
 import com.kangkang.api.service.KangKangDataService;
-import com.kangkang.api.service.RedisService;
 import com.kangkang.api.service.WebManagerService;
-import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
-import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.*;
@@ -33,8 +30,6 @@ public class WebPageController {
     private KangKangDataService kkService;
     @Autowired
     private WebManagerService webManagerService;
-    @Autowired
-    private RedisService redisService;
 
     /**
      * 登陆
@@ -44,30 +39,20 @@ public class WebPageController {
      * @throws Exception
      */
     @RequestMapping(value = "/weblogin")
-    @ResponseBody
-    public ResultMsg weblogin(HttpServletRequest request, WebParamVo param) throws Exception {
-        ResultMsg rs = new ResultMsg();
+    public String weblogin(HttpServletRequest request, WebParamVo param) throws Exception {
         Integer userid = webManagerService.getUserByUserName(param.getUsername());
         if (userid == null) {
-            rs.setErrcode(1);
-            rs.setErrmsg("用户未注册！");
-            return rs;
+            request.setAttribute("error","用户未注册！");
+            return "/index.jsp";
         }
-        TUsersExt user = webManagerService.loginForWeb(param);
+        SysManager user = webManagerService.loginForWeb(param);
         if (user != null) {
-            String uid = user.getUid().toString();
-            String appToken = redisService.get(uid);
-            if (appToken == null) {
-                appToken = UUID.randomUUID().toString();
-                redisService.add(uid, appToken, 60);
-            }
-            user.setApptoken(appToken);
-            rs.setData(user);
+            request.getSession().setAttribute("user",user);
         } else {
-            rs.setErrcode(1);
-            rs.setErrmsg("用户名或密码错误！");
+            request.setAttribute("error","用户名或密码错误！");
+            return "/index.jsp";
         }
-        return rs;
+        return "/hypertensionMain/index.jsp";
     }
 
     /**
@@ -133,21 +118,13 @@ public class WebPageController {
     }
 
     /**
-     * 为APP提供轮播图的接口
+     * 单独展示轮播图
      * @param request
+     * @param paramuid
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/getHomePhotoAddress")
-    @ResponseBody
-    public ResultMsg getHomePhotoAddress(HttpServletRequest request) throws Exception {
-        ResultMsg rs = new ResultMsg();
-        List<GetHomePhotoAddressRs> list=webManagerService.getHomePhotoAddress();
-        rs.setData(list);
-        return rs;
-    }
     @RequestMapping(value = "/dislunbo")
-
     public String dislunbo(HttpServletRequest request,Integer paramuid) throws Exception {
         SysLunboimgs obj = webManagerService.dislunboByParamuid(paramuid);
         request.setAttribute("obj", obj);

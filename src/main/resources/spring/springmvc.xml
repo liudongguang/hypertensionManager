@@ -85,6 +85,16 @@
 			<mvc:exclude-mapping path="/appHandler/testRedis"/>
 			<bean class="com.kangkang.interceptor.ManagerLoginInterceptor"></bean>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/webHandler/**" />
+			<mvc:exclude-mapping path="/webHandler/weblogin"/>
+			<mvc:exclude-mapping path="/webHandler/dislunbo"/>
+			<bean class="com.kangkang.interceptor.WEBManagerLoginInterceptor"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/webDoctorHandler/**" />
+			<bean class="com.kangkang.interceptor.WEBManagerLoginInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 </beans>

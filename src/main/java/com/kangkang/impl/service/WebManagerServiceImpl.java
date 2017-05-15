@@ -7,7 +7,6 @@ import com.kangkang.api.service.FileUploadService;
 import com.kangkang.api.service.WebManagerService;
 import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
-import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.*;
@@ -50,7 +49,7 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public TUsersExt loginForWeb(WebParamVo param) {
+    public SysManager loginForWeb(WebParamVo param) {
         return sysManagerMapper.loginForWeb(param);
     }
 

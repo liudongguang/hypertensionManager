@@ -11,11 +11,11 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="qx" jdbcType="VARCHAR" property="qx" />
   </resultMap>
-  <select id="getUserByUserName" resultMap="BaseResultMap">
+  <select id="getUserByUserName" resultType="int">
     select uid from sys_manager where username=#{username}
   </select>
   <select id="loginForWeb" parameterType="com.kangkang.api.vo.WebParamVo" resultMap="BaseResultMap">
-    select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid from sys_manager WHERE
+    select uid,name,qx from sys_manager WHERE
     username=#{username} and password=#{password}
   </select>
 </mapper>

@@ -1,13 +1,9 @@
 package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
-import com.kangkang.api.po.HytbZixunDisclaimer;
-import com.kangkang.api.po.HytbZixunFaq;
-import com.kangkang.api.po.HytbZixunHealthinquiry;
-import com.kangkang.api.po.SysLunboimgs;
+import com.kangkang.api.po.*;
 import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.HytbZixunFeedbackExt;
-import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
@@ -34,7 +30,7 @@ public interface WebManagerService {
      * @param param
      * @return
      */
-    TUsersExt loginForWeb(WebParamVo param);
+    SysManager loginForWeb(WebParamVo param);
 
     /**
      * 获取已上传的图片
