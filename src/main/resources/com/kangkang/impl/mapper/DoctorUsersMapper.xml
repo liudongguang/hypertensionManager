@@ -8,6 +8,14 @@
     <id column="uid" jdbcType="INTEGER" property="uid" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="zhicheng" jdbcType="VARCHAR" property="zhicheng" />
+    <result column="keshi" jdbcType="VARCHAR" property="keshi" />
+    <result column="workdanwei" jdbcType="VARCHAR" property="workdanwei" />
+    <result column="diqu" jdbcType="VARCHAR" property="diqu" />
+    <result column="gonghao" jdbcType="VARCHAR" property="gonghao" />
+    <result column="imgpici" jdbcType="VARCHAR" property="imgpici" />
+    <result column="headimg" jdbcType="VARCHAR" property="headimg" />
   </resultMap>
   <select id="selectAllForDoctorList" resultMap="BaseResultMap">
      select * from doctor_users order by uid

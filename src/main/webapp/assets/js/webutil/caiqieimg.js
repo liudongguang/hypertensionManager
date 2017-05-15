@@ -256,11 +256,16 @@ $(function () {
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {
         parent.disImg(data,$("#imgID").val());
     }, true, function (form, options) {
-        var imgVal = $inputImage.val();
-        if (imgVal) {
-            form.ajaxSubmit(options);
-        } else {
-            layer.alert("请选择裁切图片！");
+        var pici=$("input[type=hidden][name=pici]").val();
+        if(pici){
+            var imgVal = $inputImage.val();
+            if (imgVal) {
+                form.ajaxSubmit(options);
+            } else {
+                layer.alert("请选择裁切图片！");
+            }
+        }else{
+            layer.alert("无批次！");
         }
     });
 });

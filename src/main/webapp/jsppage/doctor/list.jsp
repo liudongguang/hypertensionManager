@@ -3,28 +3,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-    <button class="btn btn-primary ldgbtmarginbottom5" id="addfaq" type="button" pici="${pici}">新增</button>
+    <button class="btn btn-primary ldgbtmarginbottom5" id="addDoctor" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead>
             <tr>
-                <th>标题</th>
-                <th>创建时间</th>
+                <th>医生姓名</th>
+                <th>工号</th>
+                <th>所在科室</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${page.list}" var="obj">
                 <tr>
-                    <td>${obj.title}</td>
-                    <td><fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></td>
+                    <td>${obj.name}</td>
+                    <td>${obj.gonghao}</td>
+                    <td>${obj.keshi}</td>
                     <td>
                         <a class="label label-info" ajaxthispage
-                           href="/webHandler/editFAQ?uid=${obj.uid}&pici=${obj.imgpici}">编辑</a>
+                           href="/webDoctorHandler/editDoctor?uid=${obj.uid}">编辑</a>
                         <a class="label label-warning" ajaxdel
-                           href="/webHandler/delfaqById?uid=${obj.uid}&pici=${obj.imgpici}">删除</a>
-                        <a class="label label-success" ajaxLayerWindowFrame title="常见问题"  width="500" height="600"
-                           href="/webHandler/displayFAQ?uid=${obj.uid}">预览</a></td>
+                           href="/webDoctorHandler/delDoctorById?uid=${obj.uid}&imgpici=${obj.imgpici}">删除</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -41,4 +42,4 @@
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/jPageExt.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/zixun/faq/index.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/jsppage/doctor/list.js"></script>
