@@ -63,6 +63,11 @@ public class DoctorUsers {
     private String rytoken;
 
     /**
+     * 医生手机号
+     */
+    private String mobile;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -284,22 +289,21 @@ public class DoctorUsers {
         this.rytoken = rytoken;
     }
 
-    @Override
-    public String toString() {
-        return "DoctorUsers{" +
-                "uid=" + uid +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", zhicheng='" + zhicheng + '\'' +
-                ", keshi='" + keshi + '\'' +
-                ", workdanwei='" + workdanwei + '\'' +
-                ", diqu='" + diqu + '\'' +
-                ", gonghao='" + gonghao + '\'' +
-                ", imgpici='" + imgpici + '\'' +
-                ", headimg='" + headimg + '\'' +
-                ", rongid='" + rongid + '\'' +
-                ", rytoken='" + rytoken + '\'' +
-                '}';
+    /**
+     * 获取医生手机号
+     *
+     * @return mobile - 医生手机号
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * 设置医生手机号
+     *
+     * @param mobile 医生手机号
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

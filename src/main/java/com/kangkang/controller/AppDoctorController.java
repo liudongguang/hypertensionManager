@@ -88,6 +88,10 @@ public class AppDoctorController {
     public ResultMsg updateUserInfo(HttpServletRequest request, DoctorUsers doctor) throws Exception {
         ResultMsg rs = new ResultMsg();
         int updateNum=appDoctorService.updateUserInfoByUid(request,doctor);
+        if(updateNum==0){
+            rs.setErrcode(1);
+            rs.setErrmsg("修改失败！");
+        }
         return rs;
     }
 

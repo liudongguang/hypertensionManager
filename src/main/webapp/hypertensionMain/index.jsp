@@ -56,8 +56,17 @@
                     <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span
                             class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
+                    <li><a  href="/deviceHandler/deviceList"><span
+                            class="glyphicon glyphicon-list-alt"></span>设备库存</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-calendar btn-lg"></span> 医生管理
+                <div class="pull-right tt"><span class="caret"></span></div>
+            </a>
+                <ul class="templatemo-submenu">
                     <li><a  href="/webDoctorHandler/doctorList"><span
-                            class="glyphicon glyphicon-list-alt"></span>医生管理</a>
+                            class="glyphicon glyphicon-list-alt"></span>人员管理</a>
                     </li>
                 </ul>
             </li>

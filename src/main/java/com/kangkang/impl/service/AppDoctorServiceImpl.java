@@ -24,8 +24,8 @@ public class AppDoctorServiceImpl implements AppDoctorService {
 
     @Override
     public Integer getUserByUserName(String username) {
-        Integer uid=doctorUsersDao.selectUidByGonghaoOrUserName(username);
-        if(uid!=null){
+        Integer uid = doctorUsersDao.selectUidByGonghaoOrUserName(username);
+        if (uid != null) {
             return uid;
         }
         return null;
@@ -33,8 +33,8 @@ public class AppDoctorServiceImpl implements AppDoctorService {
 
     @Override
     public DoctorUsersExt login(AppDoctorParamVo param) {
-        DoctorUsersExt loginuser=doctorUsersDao.selectDoctorByGongHaoOrUserNameAndPsd(param);
-        if(loginuser!=null){
+        DoctorUsersExt loginuser = doctorUsersDao.selectDoctorByGongHaoOrUserNameAndPsd(param);
+        if (loginuser != null) {
             return loginuser;
         }
         return null;
@@ -47,11 +47,13 @@ public class AppDoctorServiceImpl implements AppDoctorService {
 
     @Override
     public int updateUserInfoByUid(HttpServletRequest request, DoctorUsers doctor) throws Exception {
-        fileUploadService.handlerimgpiciForOneFengMianIMG(doctor.getImgpici(),request,doctor.getHeadimg());
-        FileUploadParam fp=new FileUploadParam();
+        fileUploadService.handlerimgpiciForOneFengMianIMG(doctor.getImgpici(), request, doctor.getHeadimg());
+        FileUploadParam fp = new FileUploadParam();
         fp.setPici(doctor.getImgpici());
-        System.out.println(doctor.getImgpici()+"+++++++++++++++++++");
-        String fileName=fileUploadService.UploadedImg(request,fp);
+        if (doctor.getImgpici() == null) {
+            return 0;
+        }
+        String fileName = fileUploadService.UploadedImg(request, fp);
         doctor.setHeadimg(fileName);
         return doctorUsersDao.updateByPrimaryKeySelective(doctor);
     }

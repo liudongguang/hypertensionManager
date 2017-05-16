@@ -2,7 +2,6 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link type="text/css" rel="stylesheet" href="assets/summernote/summernote.css">
 <div class="row">
     <div class="col-md-12">
         <form id="subForm${param.setNum}" action="webDoctorHandler/saveDoctorInfo" method="post"
@@ -13,7 +12,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">医生头像：</label>
                 <div class="col-md-9">
-                    <img id="checkfmID" style="width: 200px;height: 200px;cursor:pointer;"
+                    <img id="checkfmID" style="width: 100px;height: 100px;cursor:pointer;"
                          src="<c:if test="${obj==null}">assets/images/rongyunHead.png</c:if><c:if test="${obj!=null}">${obj.headimg}</c:if>"/>
                     <input type="hidden" name="headimg" value="${obj.headimg}"/>
                 </div>

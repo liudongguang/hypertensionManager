@@ -1,19 +1,15 @@
 jQuery(document).ready(function () {
-    $("img[id=checkfmID]").click(function () {
-        var imgpici = $("input[type=hidden][name=imgpici]").val();
-        layerWindow("/webutil/caiqieimg.jsp?pici=" + imgpici, "图片裁切", 1200, 600, true);
-    });
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {
         $("#mainContent").empty().html(data);
     }, true, function (form, options) {
-        var usernameVal = $("input[name=username]").val();
-        var gonghaoVal = $("input[name=gonghao]").val();
+        var snVal = $("input[name=sn]").val();
+        var imeiVal = $("input[name=imei]").val();
         var uidVal = $("input[name=uid]").val();
-        if (usernameVal || gonghaoVal) {
+        if (snVal || imeiVal) {
             ajaxRun({
-                paramurl: basePath + "/webDoctorHandler/checkManagerUserName",
+                paramurl: basePath + "/deviceHandler/checkSNAndImei",
                 paramdata: {
-                    "username": usernameVal, "gonghao": gonghaoVal,uid:uidVal
+                    "sn": snVal, "imei": imeiVal,uid:uidVal
                 },
                 dataType: 'json',
                 callbackFun: function (data) {
@@ -29,20 +25,15 @@ jQuery(document).ready(function () {
                 }
             });
         }else{
-            if(!gonghaoVal){
-                layer.alert("工号不能为空！");
+            if(!snVal){
+                layer.alert("SN不能为空！");
                 return false;
             }
-            if(!usernameVal){
-                layer.alert("登陆帐号不能为空！");
+            if(!imeiVal){
+                layer.alert("IMEI不能为空！");
                 return false;
             }
 
         }
     });
-})
-function disImg(imgpath) {
-    $("input[type=hidden][name=headimg]").val(imgpath);
-    $("#checkfmID").attr("src", imgpath);
-    layer.close(jumpPageLayerNum);
-}
+});

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 /**
+ * 医生处理逻辑
  * Created by LiuDongguang on 2017/5/15.
  */
 @Controller
@@ -58,7 +59,6 @@ public class DoctorLogicController {
     @RequestMapping(value = "/checkManagerUserName")
     @ResponseBody
     public ResultMsg checkManagerUserName(HttpServletRequest request, DoctorUsers doctor) throws Exception {
-        System.out.println(doctor);
         ResultMsg rs = new ResultMsg();
         String errorInfo = doctorLogicService.checkManagerUserName(doctor);
         if (errorInfo != null) {
