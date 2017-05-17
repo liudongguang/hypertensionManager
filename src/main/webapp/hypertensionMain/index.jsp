@@ -57,7 +57,10 @@
                             class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
                     <li><a  href="/deviceHandler/deviceList"><span
-                            class="glyphicon glyphicon-list-alt"></span>设备库存</a>
+                            class="glyphicon glyphicon-list-alt"></span>设备管理</a>
+                    </li>
+                    <li><a  href="/webPatientHandler/patientList"><span
+                            class="glyphicon glyphicon-list-alt"></span>患者管理</a>
                     </li>
                 </ul>
             </li>

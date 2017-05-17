@@ -9,8 +9,6 @@ public class HytbDeviceRepertory {
 
     private String sn;
 
-    private String imei;
-
     /**
      * 别名
      */
@@ -47,20 +45,6 @@ public class HytbDeviceRepertory {
      */
     public void setSn(String sn) {
         this.sn = sn;
-    }
-
-    /**
-     * @return imei
-     */
-    public String getImei() {
-        return imei;
-    }
-
-    /**
-     * @param imei
-     */
-    public void setImei(String imei) {
-        this.imei = imei;
     }
 
     /**

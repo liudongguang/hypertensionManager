@@ -15,9 +15,11 @@ public interface DeviceService {
      * @param device
      * @return
      */
-    String checkSNAndImei(HytbDeviceRepertory device);
+    String checkDeviceSN(HytbDeviceRepertory device);
 
     int saveDevice(HytbDeviceRepertory device);
 
     int delDeviceByUid(HytbDeviceRepertory device);
+
+    HytbDeviceRepertory getDeviceByUid(HytbDeviceRepertory device);
 }

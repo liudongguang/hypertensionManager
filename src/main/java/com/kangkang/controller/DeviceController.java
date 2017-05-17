@@ -36,6 +36,20 @@ public class DeviceController {
     }
 
     /**
+     * 选择设备展示的列表
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/deviceListForSelect")
+    public String deviceListForSelect(HttpServletRequest request, PageParam pageParam) throws Exception {
+        PageInfo<HytbDeviceRepertory> page = deviceService.getDeviceListPageInfo(pageParam);
+        request.setAttribute("page", page);
+        return "/jsppage/device/selectdevicelist.jsp";
+    }
+
+    /**
      * 进入添加设备页面
      * @param request
      * @param pageParam
@@ -54,11 +68,11 @@ public class DeviceController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/checkSNAndImei")
+    @RequestMapping(value = "/checkDeviceSN")
     @ResponseBody
-    public ResultMsg checkSNAndImei(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
+    public ResultMsg checkDeviceSN(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
         ResultMsg rs = new ResultMsg();
-        String errorInfo = deviceService.checkSNAndImei(device);
+        String errorInfo = deviceService.checkDeviceSN(device);
         if (errorInfo != null) {
             rs.setErrcode(1);
             rs.setErrmsg(errorInfo);
@@ -79,10 +93,24 @@ public class DeviceController {
         return "/deviceHandler/deviceList";
     }
 
+    /**
+     * 删除设备
+     * @param request
+     * @param device
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/delDeviceById")
     public String delDeviceById(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
         int saveNum=deviceService.delDeviceByUid(device);
         return "/deviceHandler/deviceList";
+    }
+
+    @RequestMapping(value = "/editDevice")
+    public String editDevice(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
+        HytbDeviceRepertory obj=deviceService.getDeviceByUid(device);
+        request.setAttribute("obj", obj);
+        return "/jsppage/device/addDevice.jsp";
     }
 
 

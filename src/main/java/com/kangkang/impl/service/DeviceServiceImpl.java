@@ -24,25 +24,29 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public String checkSNAndImei(HytbDeviceRepertory device) {
+    public String checkDeviceSN(HytbDeviceRepertory device) {
         Integer uid = deviceRepertoryDao.selectUidBySN(device);
         if (uid != null) {
             return "SN已存在！";
-        }
-        uid = deviceRepertoryDao.selectUidByIMEI(device);
-        if (uid != null) {
-            return "IMEI已存在！";
         }
         return null;
     }
 
     @Override
     public int saveDevice(HytbDeviceRepertory device) {
+        if(device.getUid()!=null){
+            return deviceRepertoryDao.updateByPrimaryKeySelective(device);
+        }
         return deviceRepertoryDao.insertSelective(device);
     }
 
     @Override
     public int delDeviceByUid(HytbDeviceRepertory device) {
         return deviceRepertoryDao.deleteByPrimaryKey(device.getUid());
+    }
+
+    @Override
+    public HytbDeviceRepertory getDeviceByUid(HytbDeviceRepertory device) {
+        return deviceRepertoryDao.selectByPrimaryKey(device.getUid());
     }
 }

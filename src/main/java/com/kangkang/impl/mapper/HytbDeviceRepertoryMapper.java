@@ -10,5 +10,5 @@ public interface HytbDeviceRepertoryMapper extends Mapper<HytbDeviceRepertory> {
 
     Integer selectUidBySN(HytbDeviceRepertory device);
 
-    Integer selectUidByIMEI(HytbDeviceRepertory device);
+
 }

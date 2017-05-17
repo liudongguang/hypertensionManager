@@ -3,13 +3,12 @@ jQuery(document).ready(function () {
         $("#mainContent").empty().html(data);
     }, true, function (form, options) {
         var snVal = $("input[name=sn]").val();
-        var imeiVal = $("input[name=imei]").val();
         var uidVal = $("input[name=uid]").val();
-        if (snVal || imeiVal) {
+        if (snVal) {
             ajaxRun({
-                paramurl: basePath + "/deviceHandler/checkSNAndImei",
+                paramurl: basePath + "/deviceHandler/checkDeviceSN",
                 paramdata: {
-                    "sn": snVal, "imei": imeiVal,uid:uidVal
+                    "sn": snVal, uid: uidVal
                 },
                 dataType: 'json',
                 callbackFun: function (data) {
@@ -29,11 +28,6 @@ jQuery(document).ready(function () {
                 layer.alert("SN不能为空！");
                 return false;
             }
-            if(!imeiVal){
-                layer.alert("IMEI不能为空！");
-                return false;
-            }
-
         }
     });
 });
