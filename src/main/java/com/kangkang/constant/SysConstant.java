@@ -22,4 +22,8 @@ public interface SysConstant {
     String SYS_semicolon=";";
 
     String SYS_DOCTOR_STATE="_doctorAPP";
+
+
+    int DEVICE_LAND_CHUJIE=1;
+    int DEVICE_LAND_RETURN=2;
 }

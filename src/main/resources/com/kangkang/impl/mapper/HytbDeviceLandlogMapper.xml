@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangkang.impl.mapper.HytbDeviceLandlogMapper">
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbDeviceLandlog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="deviceid" jdbcType="INTEGER" property="deviceid" />
+    <result column="patientid" jdbcType="INTEGER" property="patientid" />
+    <result column="zjstart" jdbcType="TIMESTAMP" property="zjstart" />
+    <result column="zjend" jdbcType="TIMESTAMP" property="zjend" />
+    <result column="beizhu" jdbcType="VARCHAR" property="beizhu" />
+    <result column="devicesn" jdbcType="VARCHAR" property="devicesn" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="returnstate" jdbcType="INTEGER" property="returnstate" />
+  </resultMap>
+</mapper>

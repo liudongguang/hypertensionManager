@@ -46,8 +46,9 @@ jQuery(document).ready(function () {
         }
     });
 });
-function setDevice(deviceId,deviceName) {
+function setDevice(deviceId,deviceName,deviceSN) {
     $("input[type=text][name=shebeiName]").val(deviceName);
     $("input[type=hidden][name=shebeiUID]").val(deviceId);
+    $("input[type=hidden][name=shebeiSN]").val(deviceSN);
     layer.close(jumpPageLayerNum);
 }

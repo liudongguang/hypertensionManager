@@ -126,6 +126,17 @@ public class DateUtil {
 		return DateUtils.parseDate(time,format);
 	}
 
+	public final static Integer getyearsCha(Date start,Date end){
+		if(start==null||end==null){
+			return null;
+		}
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		startDate.setTime(start);
+		endDate.setTime(end);
+		return (endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR));
+	}
+
 	public static void main(String[] args) {
         System.out.println(getBeforeMonth(3));
 	}

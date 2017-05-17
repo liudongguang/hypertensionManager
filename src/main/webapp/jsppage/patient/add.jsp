@@ -35,13 +35,13 @@
                 <label class="col-md-3 control-label">性别：</label>
                 <div class="col-md-4">
                     <label class="radio-inline">
-                        <input type="radio" name="sex" value="1"
-                               <c:if test="${obj!=null&&obj.sex==1}">checked="checked"</c:if>
+                        <input type="radio" name="sex" value="男"
+                               <c:if test="${obj!=null&&obj.sex==男}">checked="checked"</c:if>
                         > 男
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="sex" value="2"
-                               <c:if test="${obj!=null&&obj.sex==2}">checked="checked"</c:if>
+                        <input type="radio" name="sex" value="女"
+                               <c:if test="${obj!=null&&obj.sex==女}">checked="checked"</c:if>
                         > 女
                     </label>
                 </div>
@@ -59,6 +59,7 @@
                     <input type="text" name="shebeiName" readonly="readonly" value="${obj.shebeiName}"
                            class="form-control scbtn" placeholder="点击设备分配">
                     <input type="hidden" name="shebeiUID" readonly="readonly" value="${obj.shebeiUID}">
+                    <input type="hidden" name="shebeiSN" readonly="readonly" value="${obj.shebeiSN}">
                 </div>
             </div>
             <div class="form-group">

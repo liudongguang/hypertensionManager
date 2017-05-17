@@ -61,7 +61,7 @@
     </update>
     <!--     -->
     <select id="selectAllForPatientListList" resultMap="BaseResultMap">
-        select uid,sn,name,registphone,birthday,sex,age from t_users
+        select uid,sn,name,registphone,birthday,sex,age from t_users order by uid desc
     </select>
     <select id="selectUidByPhone" resultType="int" parameterType="com.kangkang.api.vo.SavePatientParam">
         select uid from t_users where registphone=#{registphone}  <if test="uid!=null">and uid!=#{uid}</if>

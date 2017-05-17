@@ -20,6 +20,11 @@ public class HytbDeviceRepertory {
     private Integer enable;
 
     /**
+     * 当前租借记录id
+     */
+    private Integer landlogid;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -81,5 +86,23 @@ public class HytbDeviceRepertory {
      */
     public void setEnable(Integer enable) {
         this.enable = enable;
+    }
+
+    /**
+     * 获取当前租借记录id
+     *
+     * @return landlogid - 当前租借记录id
+     */
+    public Integer getLandlogid() {
+        return landlogid;
+    }
+
+    /**
+     * 设置当前租借记录id
+     *
+     * @param landlogid 当前租借记录id
+     */
+    public void setLandlogid(Integer landlogid) {
+        this.landlogid = landlogid;
     }
 }

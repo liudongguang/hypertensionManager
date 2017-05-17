@@ -22,4 +22,5 @@ public interface DeviceService {
     int delDeviceByUid(HytbDeviceRepertory device);
 
     HytbDeviceRepertory getDeviceByUid(HytbDeviceRepertory device);
+
 }

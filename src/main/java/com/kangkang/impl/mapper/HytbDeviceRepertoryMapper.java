@@ -11,4 +11,5 @@ public interface HytbDeviceRepertoryMapper extends Mapper<HytbDeviceRepertory> {
     Integer selectUidBySN(HytbDeviceRepertory device);
 
 
+    int saveLandIDForBind(HytbDeviceRepertory repertory);
 }

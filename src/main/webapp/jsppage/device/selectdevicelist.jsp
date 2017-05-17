@@ -39,7 +39,7 @@
             <tbody>
             <c:forEach items="${page.list}" var="obj">
                 <tr checkTR="${obj.uid}">
-                    <td><input type="radio" name="deviceid" id="deviceid${obj.uid}" value="${obj.uid}" mingcheng="${obj.alias}"/></td>
+                    <td><input type="radio" name="deviceid" id="deviceid${obj.uid}" value="${obj.uid}" mingcheng="${obj.alias}" deviceSN="${obj.sn}"/></td>
                     <td>${obj.sn}</td>
                     <td>${obj.alias}</td>
                     <td enable="${obj.enable}">

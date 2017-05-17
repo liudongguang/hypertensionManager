@@ -9,6 +9,7 @@
     <result column="sn" jdbcType="VARCHAR" property="sn" />
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="enable" jdbcType="INTEGER" property="enable" />
+    <result column="landlogid" jdbcType="INTEGER" property="landlogid" />
   </resultMap>
     <select id="selectAllForDeviceList" resultMap="BaseResultMap">
          select * from hytb_device_repertory order by uid desc
@@ -17,4 +18,8 @@
          select uid from hytb_device_repertory where sn=#{sn}
          <if test="uid!=null">and uid!=#{uid}</if>
     </select>
+
+    <update id="saveLandIDForBind" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
+        update hytb_device_repertory set landlogid=#{landlogid} where uid=#{uid}
+    </update>
 </mapper>

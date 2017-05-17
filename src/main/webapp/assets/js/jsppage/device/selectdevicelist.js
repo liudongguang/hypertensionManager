@@ -14,6 +14,7 @@ jQuery(document).ready(function () {
         var $checkedRadio=$("input[type='radio'][name='deviceid']:checked");
         var deviceID=$checkedRadio.val();
         var deviceName=$checkedRadio.attr("mingcheng");
-        parent.setDevice(deviceID,deviceName);
+        var deviceSN=$checkedRadio.attr("deviceSN");
+        parent.setDevice(deviceID,deviceName,deviceSN);
     });
 });

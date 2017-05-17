@@ -13,9 +13,19 @@ public class SavePatientParam {
     private Date birthday;//生日
     //////
     private Integer shebeiUID;//设备UID
+    private String shebeiSN;//设备sn
     private Date zjstart;//租借开始时间
     private Date zjend;//租借结束时间
     private String beizhu;//备注
+
+
+    public String getShebeiSN() {
+        return shebeiSN;
+    }
+
+    public void setShebeiSN(String shebeiSN) {
+        this.shebeiSN = shebeiSN;
+    }
 
     public Integer getUid() {
         return uid;
