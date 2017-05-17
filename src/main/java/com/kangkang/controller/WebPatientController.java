@@ -24,7 +24,7 @@ public class WebPatientController {
 
 
     /**
-     * 设备列表
+     * 患者列表
      * @param request
      * @param pageParam
      * @return
@@ -37,12 +37,24 @@ public class WebPatientController {
         return "/jsppage/patient/list.jsp";
     }
 
-
+    /**
+     * 进入添加患者页面
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/addPatient")
     public String addPatient(HttpServletRequest request) throws Exception {
         return "/jsppage/patient/add.jsp";
     }
 
+    /**
+     * 检查手机号是否存在
+     * @param request
+     * @param checkParam
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/checkValidate")
     @ResponseBody
     public ResultMsg checkValidate(HttpServletRequest request, SavePatientParam checkParam) throws Exception {
@@ -54,9 +66,17 @@ public class WebPatientController {
         }
         return rs;
     }
+
+    /**
+     * 保存用户信息
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/savePatient")
     public String savePatient(HttpServletRequest request, SavePatientParam param) throws Exception {
-        System.out.println(param);
+        int saveNum=webPationtService.savePatient(param);
         return "/webPatientHandler/patientList";
     }
 
