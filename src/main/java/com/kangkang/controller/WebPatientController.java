@@ -80,4 +80,19 @@ public class WebPatientController {
         return "/webPatientHandler/patientList";
     }
 
+    /**
+     * 根据病人id获取绑定信息
+     * @param request
+     * @param patientid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/patientBindDeviceByUid")
+    public String patientBindDeviceByUid(HttpServletRequest request, Integer patientid) throws Exception {
+        SavePatientParam patient=webPationtService.patientBindDeviceByUid(patientid);
+        request.setAttribute("obj", patient);
+        return "/jsppage/patient/add.jsp";
+    }
+
+
 }

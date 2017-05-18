@@ -12,6 +12,14 @@ jQuery(document).ready(function () {
     }
     $("input[type=text][name=zjstart]").datetimepicker(nowdatepickerOpt);
     $("input[type=text][name=zjend]").datetimepicker(nowdatepickerOpt);
+    var zjstartVal=$("input[type=hidden][name=zjstartVal]").val();
+    if(zjstartVal){
+        $("input[type=text][name=zjstart]").val(zjstartVal);
+    }
+    var zjendVal=$("input[type=hidden][name=zjendVal]").val();
+    if(zjendVal){
+        $("input[type=text][name=zjend]").val(zjendVal);
+    }
     $("input[type=text][name=birthday]").datetimepicker(datepickerOpt);
     ///////////////////////////////////////////////////////////////////////
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {

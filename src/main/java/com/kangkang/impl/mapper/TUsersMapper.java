@@ -35,4 +35,11 @@ public interface TUsersMapper extends Mapper<TUsers> {
     List<TUsers> selectAllForPatientListList();
 
     Integer selectUidByPhone(SavePatientParam checkParam);
+
+    /**
+     * 获取绑定的设备信息
+     * @param patientid
+     * @return
+     */
+    SavePatientParam selectPatientForBind(Integer patientid);
 }

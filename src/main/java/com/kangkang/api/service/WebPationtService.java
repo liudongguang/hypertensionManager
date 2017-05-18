@@ -25,4 +25,7 @@ public interface WebPationtService {
      * @return
      */
     int savePatient(SavePatientParam param) throws AesException;
+
+
+    SavePatientParam patientBindDeviceByUid(Integer patientid);
 }

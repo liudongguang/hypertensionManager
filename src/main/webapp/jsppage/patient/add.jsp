@@ -14,9 +14,6 @@
         <form id="subForm" action="webPatientHandler/savePatient" method="post"
               class="form-horizontal">
             <input type="hidden" name="uid" value="${obj.uid}"/>
-            <input type="hidden" name="imgpici"
-                   value="<c:if test="${obj!=null}">${obj.imgpici}</c:if><c:if test="${obj==null}">${pici}</c:if> "/>
-
             <div class="form-group">
                 <label class="col-md-3 control-label">患者姓名：</label>
                 <div class="col-md-4">
@@ -36,12 +33,12 @@
                 <div class="col-md-4">
                     <label class="radio-inline">
                         <input type="radio" name="sex" value="男"
-                               <c:if test="${obj!=null&&obj.sex==男}">checked="checked"</c:if>
+                               <c:if test="${obj!=null&&obj.sex=='男'}">checked="checked"</c:if>
                         > 男
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="sex" value="女"
-                               <c:if test="${obj!=null&&obj.sex==女}">checked="checked"</c:if>
+                               <c:if test="${obj!=null&&obj.sex=='女'}">checked="checked"</c:if>
                         > 女
                     </label>
                 </div>
@@ -49,7 +46,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">出生日期：</label>
                 <div class="col-md-4">
-                    <input type="text" name="birthday"  value="${obj.birthday}"
+                    <input type="text" name="birthday"  value="<fmt:formatDate value="${obj.birthday}" pattern="yyyy-MM-dd"></fmt:formatDate>"
                            class="form-control" placeholder="请输入出生日期.....">
                 </div>
             </div>
@@ -65,12 +62,14 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">租借时间：</label>
                 <div class="col-md-4">
-                        <input type="text" name="zjstart" value="${obj.zjstart}" placeholder="租借开始时间"  class="form-control radio-inline" style="width: 200px;"
+                        <input type="text" name="zjstart" value="" placeholder="租借开始时间"  class="form-control radio-inline" style="width: 200px;"
                                />
                          -
-                        <input type="text" name="zjend" value="${obj.zjend}" placeholder="租借结束时间" class="form-control radio-inline" style="width: 200px;"
+                        <input type="text" name="zjend" value="<fmt:formatDate value="${obj.zjend}" pattern="yyyy-MM-dd"></fmt:formatDate>" placeholder="租借结束时间" class="form-control radio-inline" style="width: 200px;"
                               />
                 </div>
+                <input name="zjstartVal" type="hidden" value="<fmt:formatDate value="${obj.zjstart}" pattern="yyyy-MM-dd"></fmt:formatDate>"/>
+                <input name="zjendVal" type="hidden" value="<fmt:formatDate value="${obj.zjend}" pattern="yyyy-MM-dd"></fmt:formatDate>"/>
             </div>
             <div class="form-group">
                 <label class="col-md-3 control-label">备注：</label>

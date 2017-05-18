@@ -9,7 +9,6 @@ import com.kangkang.api.service.RongYunServie;
 import com.kangkang.api.service.WebPationtService;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.SavePatientParam;
-import com.kangkang.api.vo.TUsersExt;
 import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.HytbDeviceLandlogMapper;
 import com.kangkang.impl.mapper.HytbDeviceRepertoryMapper;
@@ -55,41 +54,57 @@ public class WebPationtServiceImpl implements WebPationtService {
 
     @Override
     public int savePatient(SavePatientParam param) throws AesException {
-        String phone = param.getRegistphone();
-        final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist(phone, phone);
-        TUsersExt user = new TUsersExt();
-        if (200 == ryrsObj.getCode()) {
-            user.setUsername(phone);
-            user.setName(param.getName());
-            user.setRegistphone(ryrsObj.getUserId());
-            user.setCreatetime(new Date());
-            user.setPassword(MD5Util.string2MD5(phone));
-            user.setRytoken(ryrsObj.getToken());
-            user.setRongid(phone);
-            user.setSn(param.getShebeiSN());////用户绑定设备
+        if(param.getUid()!=null){
+            TUsers user = new TUsers();
+            user.setUid(param.getUid());
+            user.setRegistphone(param.getRegistphone());
             user.setSex(param.getSex());
-            user.setBirthday(param.getBirthday());
-            Integer age=DateUtil.getyearsCha(param.getBirthday(),new Date());
-            user.setAge(age);
-            usersMapper.insertSelective(user);//保存用户
-            ///////设备绑定状态修改
-            if (param.getShebeiUID() != null) {
-                HytbDeviceLandlog landlog = new HytbDeviceLandlog();//租借记录
-                landlog.setBeizhu(param.getBeizhu());
-                landlog.setCreatetime(new Date());
-                landlog.setDeviceid(param.getShebeiUID());
-                landlog.setDevicesn(param.getShebeiSN());
-                landlog.setReturnstate(SysConstant.DEVICE_LAND_CHUJIE);
-                landlog.setPatientid(user.getUid());
-                landlog.setZjstart(param.getZjstart());
-                landlog.setZjend(param.getZjend());
-                deviceLandlogDao.insertSelective(landlog);  //保存租借记录
-                HytbDeviceRepertory repertory=new HytbDeviceRepertory();
-                repertory.setUid(param.getShebeiUID());
-                repertory.setLandlogid(landlog.getUid());
-                return deviceRepertoryMapper.saveLandIDForBind(repertory);//把当前绑定记录关联到设备上
+            usersMapper.updateByPrimaryKeySelective(user);
+            //////////
+
+        }else {
+            String phone = param.getRegistphone();
+            final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist(phone, phone);
+            TUsers user = new TUsers();
+            if (200 == ryrsObj.getCode()) {
+                user.setUsername(phone);
+                user.setName(param.getName());
+                user.setRegistphone(ryrsObj.getUserId());
+                user.setCreatetime(new Date());
+                user.setPassword(MD5Util.string2MD5(phone));
+                user.setRytoken(ryrsObj.getToken());
+                user.setRongid(phone);
+                user.setSn(param.getShebeiSN());////用户绑定设备
+                user.setSex(param.getSex());
+                user.setBirthday(param.getBirthday());
+                Integer age = DateUtil.getyearsCha(param.getBirthday(), new Date());
+                user.setAge(age);
+                usersMapper.insertSelective(user);//保存用户
+                ///////设备绑定状态修改
+                if (param.getShebeiUID() != null) {
+                    HytbDeviceLandlog landlog = new HytbDeviceLandlog();//租借记录
+                    landlog.setBeizhu(param.getBeizhu());
+                    landlog.setCreatetime(new Date());
+                    landlog.setDeviceid(param.getShebeiUID());
+                    landlog.setDevicesn(param.getShebeiSN());
+                    landlog.setReturnstate(SysConstant.DEVICE_LAND_CHUJIE);//设置借出状态
+                    landlog.setPatientid(user.getUid());
+                    landlog.setZjstart(param.getZjstart());
+                    landlog.setZjend(param.getZjend());
+                    deviceLandlogDao.insertSelective(landlog);  //保存租借记录
+                    HytbDeviceRepertory repertory = new HytbDeviceRepertory();
+                    repertory.setUid(param.getShebeiUID());
+                    repertory.setLandlogid(landlog.getUid());
+                    return deviceRepertoryMapper.saveLandIDForBind(repertory);//把当前绑定记录关联到设备上
+                }
             }
         }
         return 0;
+    }
+
+    @Override
+    public SavePatientParam patientBindDeviceByUid(Integer patientid) {
+        SavePatientParam user = usersMapper.selectPatientForBind(patientid);
+        return user;
     }
 }

@@ -32,9 +32,7 @@
                     </td>
                     <td>
                         <a class="label label-info" ajaxthispage
-                           href="/deviceHandler/editDevice?uid=${obj.uid}">编辑</a>
-                        <a class="label label-warning" ajaxdel
-                           href="/deviceHandler/delDeviceById?uid=${obj.uid}">删除</a>
+                           href="/webPatientHandler/patientBindDeviceByUid?patientid=${obj.uid}">编辑</a>
                     </td>
                 </tr>
             </c:forEach>

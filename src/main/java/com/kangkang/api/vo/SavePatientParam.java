@@ -14,10 +14,18 @@ public class SavePatientParam {
     //////
     private Integer shebeiUID;//设备UID
     private String shebeiSN;//设备sn
+    private String shebeiName;//设备名称
     private Date zjstart;//租借开始时间
     private Date zjend;//租借结束时间
     private String beizhu;//备注
 
+    public String getShebeiName() {
+        return shebeiName;
+    }
+
+    public void setShebeiName(String shebeiName) {
+        this.shebeiName = shebeiName;
+    }
 
     public String getShebeiSN() {
         return shebeiSN;
@@ -102,11 +110,14 @@ public class SavePatientParam {
     @Override
     public String toString() {
         return "SavePatientParam{" +
-                "name='" + name + '\'' +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
                 ", registphone='" + registphone + '\'' +
                 ", sex='" + sex + '\'' +
                 ", birthday=" + birthday +
                 ", shebeiUID=" + shebeiUID +
+                ", shebeiSN='" + shebeiSN + '\'' +
+                ", shebeiName='" + shebeiName + '\'' +
                 ", zjstart=" + zjstart +
                 ", zjend=" + zjend +
                 ", beizhu='" + beizhu + '\'' +
