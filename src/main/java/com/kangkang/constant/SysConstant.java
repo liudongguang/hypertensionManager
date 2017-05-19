@@ -24,6 +24,7 @@ public interface SysConstant {
     String SYS_DOCTOR_STATE="_doctorAPP";
 
 
-    int DEVICE_LAND_CHUJIE=1;
-    int DEVICE_LAND_RETURN=2;
+    int DEVICE_LAND_CHUJIE=1;//出借
+    int DEVICE_LAND_RETURN=2;//归还
+    int DEVICE_LAND_REPLACE=3;//替换
 }

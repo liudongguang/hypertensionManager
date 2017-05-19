@@ -15,4 +15,10 @@
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="returnstate" jdbcType="INTEGER" property="returnstate" />
   </resultMap>
+  <select id="getCurrentBindLog" resultMap="BaseResultMap" parameterType="int">
+      select uid,deviceid from hytb_device_landlog where patientid=#{uid} and returnstate=1
+  </select>
+  <update id="updateBindDeviceState" parameterType="com.kangkang.api.po.HytbDeviceLandlog">
+       update hytb_device_landlog set returnstate=#{returnstate}
+  </update>
 </mapper>
