@@ -28,4 +28,7 @@
         FROM hypertensionmanager.acceptkkdata kkdata left join hypertensionmanager.t_users usertb on kkdata.userid=usertb.uid
         where kkdata.userid=#{uid}
   </select>
+    <select id="getAcceptkkDataByDeviceSNAndPatientID" resultMap="BaseResultMap" parameterType="com.kangkang.api.po.HytbDeviceLandlog">
+        select * from acceptkkdata where userid=#{patientid} and kksn=#{devicesn} order by uid desc
+    </select>
 </mapper>

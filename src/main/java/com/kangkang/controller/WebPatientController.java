@@ -1,7 +1,10 @@
 package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.TUsers;
+import com.kangkang.api.service.DeviceService;
 import com.kangkang.api.service.WebPationtService;
 import com.kangkang.api.vo.SavePatientParam;
 import com.ldg.api.vo.PageParam;
@@ -21,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public class WebPatientController {
     @Autowired
     private WebPationtService webPationtService;
-
-
+    @Autowired
+    private DeviceService deviceService;
     /**
      * 患者列表
      * @param request
@@ -93,6 +96,29 @@ public class WebPatientController {
         request.setAttribute("obj", patient);
         return "/jsppage/patient/add.jsp";
     }
+
+    /**
+     * 根据用户id获取绑定记录
+     * @param request
+     * @param pageParam
+     * @param patientid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/patientBindDeviceLogsByUid")
+    public String patientBindDeviceLogsByUid(HttpServletRequest request,PageParam pageParam, Integer patientid) throws Exception {
+        PageInfo<HytbDeviceLandlog> page=deviceService.getDeviceLogsPageInfoByPatientID(pageParam,patientid);
+        request.setAttribute("page", page);
+        return "/jsppage/patient/bindlist.jsp";
+    }
+
+    @RequestMapping(value = "/getpatientBindDeviceDataByDeviceSNAndPatientID")
+    public String getpatientBindDeviceDataByDeviceSNAndPatientID(HttpServletRequest request,PageParam pageParam, HytbDeviceLandlog log) throws Exception {
+        PageInfo<Acceptkkdata> page=deviceService.getAcceptkkDataByDeviceSNAndPatientID(pageParam,log);
+        request.setAttribute("page", page);
+        return "/jsppage/patient/binddevicedatalist.jsp";
+    }
+
 
 
 }

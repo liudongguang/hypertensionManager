@@ -21,4 +21,7 @@
   <update id="updateBindDeviceState" parameterType="com.kangkang.api.po.HytbDeviceLandlog">
        update hytb_device_landlog set returnstate=#{returnstate}
   </update>
+  <select id="getDeviceLogsPageInfoByPatientID" resultMap="BaseResultMap" parameterType="int">
+       select uid,deviceid,zjstart,zjend,returnstate,createtime,devicesn,patientid from hytb_device_landlog where patientid=#{patientid} order by createtime desc
+  </select>
 </mapper>

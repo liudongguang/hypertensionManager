@@ -32,6 +32,21 @@ public class WebPageController {
     private WebManagerService webManagerService;
 
     /**
+     * 获取血压数据
+     *
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/hypertensionListByUser")
+    public String hypertensionListByUser(HttpServletRequest request, PageParam pageParam) throws Exception {
+        PageInfo<Acceptkkdata> page = kkService.hypertensionListByUser(pageParam);
+        request.setAttribute("page", page);
+        return "/hypertensionMain/dishypertensionList.jsp";
+    }
+
+    /**
      * 登陆
      *
      * @param request
@@ -55,20 +70,7 @@ public class WebPageController {
         return "/hypertensionMain/index.jsp";
     }
 
-    /**
-     * 获取血压数据
-     *
-     * @param request
-     * @param pageParam
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/hypertensionListByUser")
-    public String hypertensionListByUser(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<Acceptkkdata> page = kkService.hypertensionListByUser(pageParam);
-        request.setAttribute("page", page);
-        return "/hypertensionMain/dishypertensionList.jsp";
-    }
+
 
     /**
      * 进入轮播图页面

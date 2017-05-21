@@ -2,6 +2,7 @@ package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.DoctorUsers;
+import com.kangkang.api.po.HytbDeviceLandlog;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
 
@@ -42,4 +43,5 @@ public interface DoctorLogicService {
      * @return
      */
     String checkManagerUserName(DoctorUsers doctor);
+
 }

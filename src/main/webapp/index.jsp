@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-
+<html>
 <head>
     <base href="${pageContext.request.contextPath }/"/>
     <meta charset="utf-8">
@@ -28,7 +28,7 @@
             <label>密码</label>
             <input name="password" required type="password" value="admin123">
 
-            <input value="登录" style="width:100%; margin-top:40px;" type="submit" >
+            <input value="登录" style="width:100%; margin-top:40px;" type="submit">
             <!--<hr class="hr20">-->
             <!-- 帮助 <a onClick="alert('请联系管理员')">忘记密码</a> -->
         </form>

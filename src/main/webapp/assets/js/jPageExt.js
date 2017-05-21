@@ -16,12 +16,21 @@ jQuery(document).ready(function () {
         if (num == 0 || num == (total + 1)) {
 
         } else {
-            var subURL = loadDataURL + "?pageNum=" + num;
+            var wenhaoIndex=loadDataURL.indexOf("?");
+            var defaultLinkseparator="?";
+            if(wenhaoIndex!=-1){
+                defaultLinkseparator="&";
+            }
+            var subURL = loadDataURL + defaultLinkseparator+"pageNum=" + num;
             if (searFormID && $("#" + searFormID).length != 0) {
                 var formSerialize = $("#" + searFormID).serialize();
                 subURL = subURL + "&" + formSerialize;
             }
             if (noAjaxPageVal == 1) {
+                var ii = layer.load(0, {
+                    shade: [0.8, '#fff']
+                    // 0.1透明度的白色背景
+                });
                 location.href = basePath + subURL;
             } else {
                 jumpPageNoAuthorityForHandler(subURL, $("#mainContent"), function () {
@@ -45,12 +54,21 @@ jQuery(document).ready(function () {
             layer.alert("请填写页码！");
             return false;
         }
-        var subURL = loadDataURL + "?pageNum=" + num;
+        var wenhaoIndex=loadDataURL.indexOf("?");
+        var defaultLinkseparator="?";
+        if(wenhaoIndex!=-1){
+            defaultLinkseparator="&";
+        }
+        var subURL = loadDataURL + defaultLinkseparator+"pageNum=" + num;
         if (searFormID) {
             var formSerialize = $("#" + searFormID).serialize();
             subURL = subURL + "&" + formSerialize;
         }
         if (noAjaxPageVal == 1) {
+            var ii = layer.load(0, {
+                shade: [0.8, '#fff']
+                // 0.1透明度的白色背景
+            });
             location.href = basePath + subURL;
         } else {
             jumpPageNoAuthorityForHandler(subURL, $("#mainContent"), function () {

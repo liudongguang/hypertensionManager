@@ -2,8 +2,12 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.service.DeviceService;
+import com.kangkang.impl.mapper.AcceptkkdataMapper;
+import com.kangkang.impl.mapper.HytbDeviceLandlogMapper;
 import com.kangkang.impl.mapper.HytbDeviceRepertoryMapper;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,11 @@ import org.springframework.stereotype.Service;
 public class DeviceServiceImpl implements DeviceService {
     @Autowired
     private HytbDeviceRepertoryMapper deviceRepertoryDao;
+
+    @Autowired
+    private HytbDeviceLandlogMapper deviceLandlogDao;
+    @Autowired
+    private AcceptkkdataMapper acceptkkdataMapper;
 
     @Override
     public PageInfo<HytbDeviceRepertory> getDeviceListPageInfo(PageParam pageParam) {
@@ -48,5 +57,17 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public HytbDeviceRepertory getDeviceByUid(HytbDeviceRepertory device) {
         return deviceRepertoryDao.selectByPrimaryKey(device.getUid());
+    }
+
+    @Override
+    public PageInfo<HytbDeviceLandlog> getDeviceLogsPageInfoByPatientID(PageParam pageParam, Integer patientid) {
+        PageInfo<HytbDeviceLandlog> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> deviceLandlogDao.getDeviceLogsPageInfoByPatientID(patientid));
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<Acceptkkdata> getAcceptkkDataByDeviceSNAndPatientID(PageParam pageParam, HytbDeviceLandlog log) {
+        PageInfo<Acceptkkdata> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> acceptkkdataMapper.getAcceptkkDataByDeviceSNAndPatientID(log));
+        return pageInfo;
     }
 }

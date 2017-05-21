@@ -3,7 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
+
+
     <button class="btn btn-primary ldgbtmarginbottom5" id="addPatient" type="button">新增</button>
+
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -28,11 +31,21 @@
                             ${obj.age}
                     </td>
                     <td>
+
+                        <c:if test="${obj.sn!=null}">
                             ${obj.sn}
+                        </c:if>
+                        <c:if test="${obj.sn==null||fn:length(fn:trim(obj.sn))==0}">
+                            <span style="color: red">未绑定</span>
+                        </c:if>
                     </td>
                     <td>
                         <a class="label label-info" ajaxthispage
                            href="/webPatientHandler/patientBindDeviceByUid?patientid=${obj.uid}">编辑</a>
+                        <a class="label label-success" ajaxLayerWindowFrame title="绑定记录" width="1000" height="800"
+                           href="/webPatientHandler/patientBindDeviceLogsByUid?patientid=${obj.uid}">绑定记录</a>
+                        <a class="label label-warning" ajaxLayerWindowFrame title="测量数据" width="1000" height="800"
+                           href="/webPatientHandler/getpatientBindDeviceDataByDeviceSNAndPatientID?devicesn=${obj.sn}&patientid=${obj.uid}">测量数据</a>
                     </td>
                 </tr>
             </c:forEach>

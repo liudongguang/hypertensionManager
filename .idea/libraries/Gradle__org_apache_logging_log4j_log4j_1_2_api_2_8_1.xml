@@ -2,11 +2,13 @@
   <library name="Gradle: org.apache.logging.log4j:log4j-1.2-api:2.8.1">
     <CLASSES>
       <root url="jar://F:/ideaTools/gradleServiceDirectory/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-1.2-api/2.8.1/528209ace1be835bf3152e6f218112a748425d6b/log4j-1.2-api-2.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../gradleServiceDirectory/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-1.2-api/2.8.1/528209ace1be835bf3152e6f218112a748425d6b/log4j-1.2-api-2.8.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-1.2-api/2.8.1/ab9cec3c8276b2f681e64eb3a123e4f5de171dfe/log4j-1.2-api-2.8.1-sources.jar!/" />
       <root url="jar://F:/ideaTools/gradleServiceDirectory/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-1.2-api/2.8.1/ab9cec3c8276b2f681e64eb3a123e4f5de171dfe/log4j-1.2-api-2.8.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../gradleServiceDirectory/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-1.2-api/2.8.1/ab9cec3c8276b2f681e64eb3a123e4f5de171dfe/log4j-1.2-api-2.8.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

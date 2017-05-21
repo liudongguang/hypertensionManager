@@ -1,6 +1,8 @@
 package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.Acceptkkdata;
+import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.ldg.api.vo.PageParam;
 
@@ -11,7 +13,7 @@ public interface DeviceService {
     PageInfo<HytbDeviceRepertory> getDeviceListPageInfo(PageParam pageParam);
 
     /**
-     * 检查是否存在SN或IMEI
+     * 检查是否存在SN
      * @param device
      * @return
      */
@@ -23,4 +25,18 @@ public interface DeviceService {
 
     HytbDeviceRepertory getDeviceByUid(HytbDeviceRepertory device);
 
+    /**
+     *根据患者id获取绑定的记录
+     * @param pageParam
+     * @return
+     */
+    PageInfo<HytbDeviceLandlog> getDeviceLogsPageInfoByPatientID(PageParam pageParam, Integer patientid);
+
+    /**
+     * 根据患者id跟设备SN获取测量的数据
+     * @param pageParam
+     * @param log
+     * @return
+     */
+    PageInfo<Acceptkkdata> getAcceptkkDataByDeviceSNAndPatientID(PageParam pageParam, HytbDeviceLandlog log);
 }
