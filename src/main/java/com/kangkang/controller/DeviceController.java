@@ -3,6 +3,7 @@ package com.kangkang.controller;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.service.DeviceService;
+import com.kangkang.api.vo.HytbDeviceRepertoryExt;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class DeviceController {
      */
     @RequestMapping(value = "/deviceList")
     public String deviceList(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<HytbDeviceRepertory> page = deviceService.getDeviceListPageInfo(pageParam);
+        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam);
         request.setAttribute("page", page);
         return "/jsppage/device/devicelist.jsp";
     }
@@ -44,7 +45,7 @@ public class DeviceController {
      */
     @RequestMapping(value = "/deviceListForSelect")
     public String deviceListForSelect(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<HytbDeviceRepertory> page = deviceService.getDeviceListPageInfo(pageParam);
+        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam);
         request.setAttribute("page", page);
         return "/jsppage/device/selectdevicelist.jsp";
     }
@@ -106,6 +107,13 @@ public class DeviceController {
         return "/deviceHandler/deviceList";
     }
 
+    /**
+     * 报废设备
+     * @param request
+     * @param device
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/destroyDeviceById")
     public String destroyDeviceById(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
         int destroyDeviceNum=deviceService.destroyDeviceById(device);

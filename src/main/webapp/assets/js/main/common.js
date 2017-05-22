@@ -346,7 +346,12 @@ function initTable(jq_ThisContent, jq_Table) {
     // ///
     $("[ajaxdel]").click(function () {
         var hrefurl = $(this).attr("href");
-        layer.confirm('确定删除吗？', {
+        var alertMSG="确定删除吗？";
+        var attrAlertMSG=$(this).attr("alertMSG");
+        if(attrAlertMSG){
+            alertMSG=attrAlertMSG;
+        }
+        layer.confirm(alertMSG, {
             btn: ['确定']
             // 按钮
         }, function (index) {

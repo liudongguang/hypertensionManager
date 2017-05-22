@@ -44,6 +44,9 @@
     <update id="unBindedDevice" parameterType="com.kangkang.api.po.TUsers">
         update  t_users set sn=null,imei=null where uid=#{uid}
   </update>
+    <update id="unBindedDeviceBySN" parameterType="string">
+        update  t_users set sn=null,imei=null where sn=#{sn}
+    </update>
     <select id="isBindedByUid" parameterType="com.kangkang.api.po.TUsers" resultMap="BaseResultMap">
           select uid,sn,imei from t_users where uid=#{uid}
     </select>

@@ -42,4 +42,11 @@ public interface TUsersMapper extends Mapper<TUsers> {
      * @return
      */
     SavePatientParam selectPatientForBind(Integer patientid);
+
+    /**
+     * 根据sn解绑设备
+     * @param sn
+     * @return
+     */
+    int unBindedDeviceBySN(String sn);
 }

@@ -26,8 +26,8 @@
                     <td>
                         <a class="label label-info" ajaxthispage
                            href="/deviceHandler/editDevice?uid=${obj.uid}">编辑</a>
-                        <a class="label label-warning" ajaxdel
-                           href="/deviceHandler/delDeviceById?uid=${obj.uid}">删除</a>
+                        <a class="label label-warning" ajaxdel  alertMSG="<c:if test="${obj.landlogid!=null}">有绑定用户！</c:if>确定报废吗？"
+                           href="/deviceHandler/destroyDeviceById?uid=${obj.uid}&sn=${obj.sn}">报废</a>
                     </td>
                 </tr>
             </c:forEach>

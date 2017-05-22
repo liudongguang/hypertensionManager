@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.HytbDeviceRepertoryMapper">
-  <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbDeviceRepertory">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="sn" jdbcType="VARCHAR" property="sn" />
-    <result column="alias" jdbcType="VARCHAR" property="alias" />
-    <result column="enable" jdbcType="INTEGER" property="enable" />
-    <result column="landlogid" jdbcType="INTEGER" property="landlogid" />
-  </resultMap>
-    <select id="selectAllForDeviceList" resultMap="BaseResultMap">
-         select * from hytb_device_repertory order by uid desc
+    <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbDeviceRepertory">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="alias" jdbcType="VARCHAR" property="alias"/>
+        <result column="enable" jdbcType="INTEGER" property="enable"/>
+        <result column="landlogid" jdbcType="INTEGER" property="landlogid"/>
+        <result column="destroy" jdbcType="INTEGER" property="destroy"/>
+    </resultMap>
+    <select id="selectAllForDeviceList" resultType="com.kangkang.api.vo.HytbDeviceRepertoryExt">
+        select shebei.*,landlog.returnstate,landlog.zjstart,landlog.zjend,landlog.patientname from hypertensionmanager.hytb_device_repertory shebei
+left join (
+select landlog.uid,landlog.zjstart,landlog.zjend,landlog.returnstate,patient.name as patientname from hypertensionmanager.hytb_device_landlog landlog
+left join hypertensionmanager.t_users patient on landlog.patientid=patient.uid
+) landlog on shebei.landlogid=landlog.uid
+order by shebei.uid desc
     </select>
     <select id="selectUidBySN" resultType="int">
-         select uid from hytb_device_repertory where sn=#{sn}
-         <if test="uid!=null">and uid!=#{uid}</if>
+        select uid from hytb_device_repertory where sn=#{sn}
+        <if test="uid!=null">and uid!=#{uid}</if>
     </select>
 
     <update id="saveLandIDForBind" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
         update hytb_device_repertory set landlogid=#{landlogid} where uid=#{uid}
+    </update>
+
+    <update id="destroyDeviceById" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
+        update hytb_device_repertory set destroy=2 where uid=${uid}
     </update>
 </mapper>

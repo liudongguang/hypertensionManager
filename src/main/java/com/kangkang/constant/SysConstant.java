@@ -27,4 +27,7 @@ public interface SysConstant {
     int DEVICE_LAND_CHUJIE=1;//出借
     int DEVICE_LAND_RETURN=2;//归还
     int DEVICE_LAND_REPLACE=3;//替换
+
+    int DeviceRepertory_DESTROY_NO=1;
+    int DeviceRepertory_DESTROY_YES=2;
 }

@@ -4,13 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
+import com.kangkang.api.vo.HytbDeviceRepertoryExt;
 import com.ldg.api.vo.PageParam;
 
 /**
  * Created by LiuDongguang on 2017/5/16.
  */
 public interface DeviceService {
-    PageInfo<HytbDeviceRepertory> getDeviceListPageInfo(PageParam pageParam);
+    PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam);
 
     /**
      * 检查是否存在SN

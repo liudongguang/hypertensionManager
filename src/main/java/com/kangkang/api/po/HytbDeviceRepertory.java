@@ -25,6 +25,11 @@ public class HytbDeviceRepertory {
     private Integer landlogid;
 
     /**
+     * 1.正常使用 2.报废
+     */
+    private Integer destroy;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -104,5 +109,23 @@ public class HytbDeviceRepertory {
      */
     public void setLandlogid(Integer landlogid) {
         this.landlogid = landlogid;
+    }
+
+    /**
+     * 获取1.正常使用 2.报废
+     *
+     * @return destroy - 1.正常使用 2.报废
+     */
+    public Integer getDestroy() {
+        return destroy;
+    }
+
+    /**
+     * 设置1.正常使用 2.报废
+     *
+     * @param destroy 1.正常使用 2.报废
+     */
+    public void setDestroy(Integer destroy) {
+        this.destroy = destroy;
     }
 }

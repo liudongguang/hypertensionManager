@@ -6,9 +6,12 @@ import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.service.DeviceService;
+import com.kangkang.api.vo.HytbDeviceRepertoryExt;
+import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.HytbDeviceLandlogMapper;
 import com.kangkang.impl.mapper.HytbDeviceRepertoryMapper;
+import com.kangkang.impl.mapper.TUsersMapper;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +28,13 @@ public class DeviceServiceImpl implements DeviceService {
     private HytbDeviceLandlogMapper deviceLandlogDao;
     @Autowired
     private AcceptkkdataMapper acceptkkdataMapper;
+    @Autowired
+    private TUsersMapper userDao;
+
 
     @Override
-    public PageInfo<HytbDeviceRepertory> getDeviceListPageInfo(PageParam pageParam) {
-        PageInfo<HytbDeviceRepertory> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> deviceRepertoryDao.selectAllForDeviceList());
+    public PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam) {
+        PageInfo<HytbDeviceRepertoryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> deviceRepertoryDao.selectAllForDeviceList());
         return pageInfo;
     }
 
@@ -46,6 +52,7 @@ public class DeviceServiceImpl implements DeviceService {
         if(device.getUid()!=null){
             return deviceRepertoryDao.updateByPrimaryKeySelective(device);
         }
+        device.setDestroy(SysConstant.DeviceRepertory_DESTROY_NO);//默认不是报废的
         return deviceRepertoryDao.insertSelective(device);
     }
 
@@ -73,6 +80,8 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public int destroyDeviceById(HytbDeviceRepertory device) {
-        return 0;
+        //解除用户绑定
+        int updateNum=userDao.unBindedDeviceBySN(device.getSn());
+        return deviceRepertoryDao.destroyDeviceById(device);
     }
 }
