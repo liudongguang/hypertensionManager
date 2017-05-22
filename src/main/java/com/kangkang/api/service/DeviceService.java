@@ -47,4 +47,11 @@ public interface DeviceService {
      * @return
      */
     int destroyDeviceById(HytbDeviceRepertory device);
+
+    /**
+     * 解绑处理
+     * @param device
+     * @return
+     */
+    int unbindDeviceById(HytbDeviceRepertory device);
 }

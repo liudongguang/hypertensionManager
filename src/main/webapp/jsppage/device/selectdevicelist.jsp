@@ -17,9 +17,8 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="assets/cropper/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/cropper/tether.min.css">
-    <link rel="stylesheet" href="assets/css/bootstrap3.3.7.css">
+    <link rel="stylesheet" href="assets/css/templatemo_main.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <div style="margin: 20px;">
@@ -34,17 +33,32 @@
                 <th>sn</th>
                 <th>名称</th>
                 <th>激活状态</th>
+                <th>报废状态</th>
+                <th>使用状态</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${page.list}" var="obj">
                 <tr checkTR="${obj.uid}">
-                    <td><input type="radio" name="deviceid" id="deviceid${obj.uid}" value="${obj.uid}" mingcheng="${obj.alias}" deviceSN="${obj.sn}"/></td>
+                    <td><input type="radio" name="deviceid" id="deviceid${obj.uid}" value="${obj.uid}"
+                               mingcheng="${obj.alias}" deviceSN="${obj.sn}"/></td>
                     <td>${obj.sn}</td>
                     <td>${obj.alias}</td>
                     <td enable="${obj.enable}">
-                        <c:if test="${obj.enable==1}">是</c:if>
-                        <c:if test="${obj.enable==2}">否</c:if>
+                        <c:if test="${obj.enable==1}"><span style="color: green">是</span></c:if>
+                        <c:if test="${obj.enable==2}"><span style="color: red">否</span></c:if>
+                    </td>
+                    <td destroy="${obj.destroy}">
+                        <c:if test="${obj.destroy==1}">否</c:if>
+                        <c:if test="${obj.destroy==2}"><span style="color: red">是</span></c:if>
+                    </td>
+                    <td returnstate="${obj.returnstate}">
+                        <c:if test="${obj.returnstate==1}">
+                           <span style="color: red">借出中</span>
+                        </c:if>
+                        <c:if test="${obj.returnstate!=1}">
+                            空闲
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

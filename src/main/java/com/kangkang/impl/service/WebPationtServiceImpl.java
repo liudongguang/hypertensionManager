@@ -7,6 +7,7 @@ import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.RongYunServie;
 import com.kangkang.api.service.WebPationtService;
+import com.kangkang.api.util.PeonySystemTool;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.SavePatientParam;
 import com.kangkang.constant.SysConstant;
@@ -103,7 +104,7 @@ public class WebPationtServiceImpl implements WebPationtService {
                 user.setName(param.getName());
                 user.setRegistphone(ryrsObj.getUserId());
                 user.setCreatetime(new Date());
-                user.setPassword(MD5Util.string2MD5(phone));
+                user.setPassword(MD5Util.string2MD5(PeonySystemTool.getPassByPhone(phone)));
                 user.setRytoken(ryrsObj.getToken());
                 user.setRongid(phone);
                 user.setSn(param.getShebeiSN());////用户绑定设备

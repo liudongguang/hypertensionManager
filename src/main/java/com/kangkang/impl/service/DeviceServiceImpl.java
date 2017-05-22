@@ -16,6 +16,8 @@ import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by LiuDongguang on 2017/5/16.
  */
@@ -52,6 +54,7 @@ public class DeviceServiceImpl implements DeviceService {
         if(device.getUid()!=null){
             return deviceRepertoryDao.updateByPrimaryKeySelective(device);
         }
+        device.setCreatetime(new Date());
         device.setDestroy(SysConstant.DeviceRepertory_DESTROY_NO);//默认不是报废的
         return deviceRepertoryDao.insertSelective(device);
     }
@@ -83,5 +86,11 @@ public class DeviceServiceImpl implements DeviceService {
         //解除用户绑定
         int updateNum=userDao.unBindedDeviceBySN(device.getSn());
         return deviceRepertoryDao.destroyDeviceById(device);
+    }
+
+    @Override
+    public int unbindDeviceById(HytbDeviceRepertory device) {
+        int updateNum=userDao.unBindedDeviceBySN(device.getSn());
+        return deviceRepertoryDao.unbindDeviceById(device);
     }
 }

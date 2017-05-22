@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.HytbDeviceRepertoryMapper">
-    <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbDeviceRepertory">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="uid" jdbcType="INTEGER" property="uid"/>
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="alias" jdbcType="VARCHAR" property="alias"/>
-        <result column="enable" jdbcType="INTEGER" property="enable"/>
-        <result column="landlogid" jdbcType="INTEGER" property="landlogid"/>
-        <result column="destroy" jdbcType="INTEGER" property="destroy"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbDeviceRepertory">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="alias" jdbcType="VARCHAR" property="alias" />
+    <result column="enable" jdbcType="INTEGER" property="enable" />
+    <result column="landlogid" jdbcType="INTEGER" property="landlogid" />
+    <result column="destroy" jdbcType="INTEGER" property="destroy" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
     <select id="selectAllForDeviceList" resultType="com.kangkang.api.vo.HytbDeviceRepertoryExt">
         select shebei.*,landlog.returnstate,landlog.zjstart,landlog.zjend,landlog.patientname from hypertensionmanager.hytb_device_repertory shebei
 left join (
@@ -30,6 +31,10 @@ order by shebei.uid desc
     </update>
 
     <update id="destroyDeviceById" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
-        update hytb_device_repertory set destroy=2 where uid=${uid}
+        update hytb_device_repertory set destroy=2,landlogid=null where uid=${uid}
     </update>
+    <update id="unbindDeviceById" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
+        update hytb_device_repertory set landlogid=null where uid=${uid}
+    </update>
+
 </mapper>

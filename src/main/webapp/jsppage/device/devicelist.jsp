@@ -11,6 +11,10 @@
                 <th>sn</th>
                 <th>名称</th>
                 <th>激活状态</th>
+                <th>报废状态</th>
+                <th>入库时间</th>
+                <th>使用状态</th>
+                <th>使用人</th>
                 <th>操作</th>
             </tr>
             </thead>
@@ -20,14 +24,39 @@
                     <td>${obj.sn}</td>
                     <td>${obj.alias}</td>
                     <td>
-                        <c:if test="${obj.enable==1}">是</c:if>
-                        <c:if test="${obj.enable==2}">否</c:if>
+                        <c:if test="${obj.enable==1}"><span style="color: green">是</span></c:if>
+                        <c:if test="${obj.enable==2}"><span style="color: red">否</span></c:if>
+                    </td>
+                    <td>
+                        <c:if test="${obj.destroy==0||obj.destroy==1}">否</c:if>
+                        <c:if test="${obj.destroy==2}"><span style="color: red">是</span></c:if>
+                    </td>
+                    <td>
+                        <fmt:formatDate value="${obj.createtime}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                    </td>
+                    <td>
+                        <c:if test="${obj.returnstate==1}">
+                            借出中
+                        </c:if>
+                        <c:if test="${obj.returnstate!=1}">
+                            空闲
+                        </c:if>
+                    </td>
+                    <td>
+                            ${obj.patientname}
                     </td>
                     <td>
                         <a class="label label-info" ajaxthispage
                            href="/deviceHandler/editDevice?uid=${obj.uid}">编辑</a>
-                        <a class="label label-warning" ajaxdel  alertMSG="<c:if test="${obj.landlogid!=null}">有绑定用户！</c:if>确定报废吗？"
-                           href="/deviceHandler/destroyDeviceById?uid=${obj.uid}&sn=${obj.sn}">报废</a>
+                        <a
+                                <c:if test="${obj.destroy==2}">preventInfo="已报废！"</c:if> class="label label-warning"
+                                ajaxdel alertMSG="<c:if test="${obj.landlogid!=null}">有绑定用户！</c:if>确定报废吗？"
+                                href="/deviceHandler/destroyDeviceById?uid=${obj.uid}&sn=${obj.sn}">报废</a>
+                        <a  <c:if test="${obj.returnstate!=1}">
+                            preventInfo="未绑定，不需要解绑！"
+                        </c:if> class="label label-success" ajaxdel
+                                alertMSG="<c:if test="${obj.landlogid!=null}">有绑定用户！</c:if>确定解绑吗？"
+                                href="/deviceHandler/unbindDeviceById?uid=${obj.uid}&sn=${obj.sn}">解绑</a>
                     </td>
                 </tr>
             </c:forEach>

@@ -1,6 +1,8 @@
 package com.kangkang.api.po;
 
-import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Table(name = "hytb_device_repertory")
 public class HytbDeviceRepertory {
@@ -28,6 +30,11 @@ public class HytbDeviceRepertory {
      * 1.正常使用 2.报废
      */
     private Integer destroy;
+
+    /**
+     * 设备入库时间
+     */
+    private Date createtime;
 
     /**
      * @return uid
@@ -127,5 +134,23 @@ public class HytbDeviceRepertory {
      */
     public void setDestroy(Integer destroy) {
         this.destroy = destroy;
+    }
+
+    /**
+     * 获取设备入库时间
+     *
+     * @return createtime - 设备入库时间
+     */
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    /**
+     * 设置设备入库时间
+     *
+     * @param createtime 设备入库时间
+     */
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

@@ -6,6 +6,7 @@ import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.service.DoctorLogicService;
 import com.kangkang.api.service.FileUploadService;
 import com.kangkang.api.service.RongYunServie;
+import com.kangkang.api.util.PeonySystemTool;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.impl.mapper.DoctorUsersMapper;
 import com.ldg.api.util.MD5Util;
@@ -42,7 +43,7 @@ public class DoctorLogicServiceImpl implements DoctorLogicService {
             return doctorUsersDao.updateByPrimaryKeySelective(doctor);
         }
         if (StringUtils.isBlank(doctor.getPassword())) {
-            doctor.setPassword(doctor.getGonghao());
+            doctor.setPassword(PeonySystemTool.getPassByPhone(doctor.getGonghao()));
         }
         doctor.setPassword(MD5Util.string2MD5(doctor.getPassword()));
         doctorUsersDao.insertSelective(doctor);

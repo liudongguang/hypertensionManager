@@ -15,4 +15,6 @@ public interface HytbDeviceRepertoryMapper extends Mapper<HytbDeviceRepertory> {
     int saveLandIDForBind(HytbDeviceRepertory repertory);
 
     int destroyDeviceById(HytbDeviceRepertory device);
+
+    int unbindDeviceById(HytbDeviceRepertory device);
 }

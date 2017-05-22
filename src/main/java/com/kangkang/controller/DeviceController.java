@@ -133,5 +133,17 @@ public class DeviceController {
         return "/jsppage/device/addDevice.jsp";
     }
 
+    /**
+     * 解绑设备
+     * @param request
+     * @param device
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/unbindDeviceById")
+    public String unbindDeviceById(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
+        int unbindDeviceNum=deviceService.unbindDeviceById(device);
+        return "/deviceHandler/deviceList";
+    }
 
 }

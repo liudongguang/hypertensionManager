@@ -351,6 +351,11 @@ function initTable(jq_ThisContent, jq_Table) {
         if(attrAlertMSG){
             alertMSG=attrAlertMSG;
         }
+        var preventInfoVal= $(this).attr("preventInfo");
+        if(preventInfoVal){
+            layer.alert(preventInfoVal);
+            return false;
+        }
         layer.confirm(alertMSG, {
             btn: ['确定']
             // 按钮
