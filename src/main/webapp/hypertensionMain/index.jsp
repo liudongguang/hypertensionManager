@@ -54,10 +54,12 @@
                 <div class="pull-right tt"><span class="caret"></span></div>
             </a>
                 <ul class="templatemo-submenu">
+                    <!--
                     <li><a id="cysfID" href="/webHandler/hypertensionListByUser"><span
                             class="glyphicon glyphicon-list-alt"></span>血压记录</a>
                     </li>
-                    <li><a  href="/deviceHandler/deviceList"><span
+                    -->
+                    <li><a id="cysfID"  href="/deviceHandler/deviceList"><span
                             class="glyphicon glyphicon-list-alt"></span>设备管理</a>
                     </li>
                     <li><a  href="/webPatientHandler/patientList"><span

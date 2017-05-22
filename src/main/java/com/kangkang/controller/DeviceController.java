@@ -106,6 +106,13 @@ public class DeviceController {
         return "/deviceHandler/deviceList";
     }
 
+    /**
+     * 编辑设备
+     * @param request
+     * @param device
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/editDevice")
     public String editDevice(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
         HytbDeviceRepertory obj=deviceService.getDeviceByUid(device);

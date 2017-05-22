@@ -92,6 +92,7 @@
             <mvc:exclude-mapping path="/appDoctorHandler/login"/>
             <bean class="com.kangkang.interceptor.AppDoctorInterceptor"></bean>
         </mvc:interceptor>
+        <!--网页端-->
         <mvc:interceptor>
             <mvc:mapping path="/webHandler/**"/>
             <mvc:exclude-mapping path="/webHandler/weblogin"/>
@@ -103,7 +104,14 @@
             <bean class="com.kangkang.interceptor.WEBManagerLoginInterceptor"></bean>
         </mvc:interceptor>
 
-
+        <mvc:interceptor>
+            <mvc:mapping path="/deviceHandler/**"/>
+            <bean class="com.kangkang.interceptor.WEBManagerLoginInterceptor"></bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/webPatientHandler/**"/>
+            <bean class="com.kangkang.interceptor.WEBManagerLoginInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>

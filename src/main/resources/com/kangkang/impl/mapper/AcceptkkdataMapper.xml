@@ -29,6 +29,6 @@
         where kkdata.userid=#{uid}
   </select>
     <select id="getAcceptkkDataByDeviceSNAndPatientID" resultMap="BaseResultMap" parameterType="com.kangkang.api.po.HytbDeviceLandlog">
-        select * from acceptkkdata where userid=#{patientid} and kksn=#{devicesn} order by uid desc
+        select * from acceptkkdata where userid=#{patientid} and kksn=#{devicesn} order by kktime desc
     </select>
 </mapper>

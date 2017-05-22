@@ -112,6 +112,14 @@ public class WebPatientController {
         return "/jsppage/patient/bindlist.jsp";
     }
 
+    /**
+     * 根据患者id与设备sn获取测量数据
+     * @param request
+     * @param pageParam
+     * @param log
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/getpatientBindDeviceDataByDeviceSNAndPatientID")
     public String getpatientBindDeviceDataByDeviceSNAndPatientID(HttpServletRequest request,PageParam pageParam, HytbDeviceLandlog log) throws Exception {
         PageInfo<Acceptkkdata> page=deviceService.getAcceptkkDataByDeviceSNAndPatientID(pageParam,log);
