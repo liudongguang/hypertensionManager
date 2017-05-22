@@ -42,9 +42,9 @@
                     <td>
                         <a class="label label-info" ajaxthispage
                            href="/webPatientHandler/patientBindDeviceByUid?patientid=${obj.uid}">编辑</a>
-                        <a class="label label-success" ajaxLayerWindowFrame title="绑定记录" width="1000" height="800"
+                        <a class="label label-success" ajaxLayerWindowFrame title="绑定记录" width="1000" height="600"
                            href="/webPatientHandler/patientBindDeviceLogsByUid?patientid=${obj.uid}">绑定记录</a>
-                        <a class="label label-warning" ajaxLayerWindowFrame title="测量数据" width="1000" height="800"
+                        <a class="label label-warning" ajaxLayerWindowFrame title="【${obj.name}】测量数据" width="1000" height="600"
                            href="/webPatientHandler/getpatientBindDeviceDataByDeviceSNAndPatientID?devicesn=${obj.sn}&patientid=${obj.uid}">测量数据</a>
                     </td>
                 </tr>

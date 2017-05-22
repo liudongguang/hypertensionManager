@@ -39,4 +39,11 @@ public interface DeviceService {
      * @return
      */
     PageInfo<Acceptkkdata> getAcceptkkDataByDeviceSNAndPatientID(PageParam pageParam, HytbDeviceLandlog log);
+
+    /**
+     * 报废处理
+     * @param device
+     * @return
+     */
+    int destroyDeviceById(HytbDeviceRepertory device);
 }

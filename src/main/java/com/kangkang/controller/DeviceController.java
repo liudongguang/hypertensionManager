@@ -106,6 +106,11 @@ public class DeviceController {
         return "/deviceHandler/deviceList";
     }
 
+    @RequestMapping(value = "/destroyDeviceById")
+    public String destroyDeviceById(HttpServletRequest request, HytbDeviceRepertory device) throws Exception {
+        int destroyDeviceNum=deviceService.destroyDeviceById(device);
+        return "/deviceHandler/deviceList";
+    }
     /**
      * 编辑设备
      * @param request

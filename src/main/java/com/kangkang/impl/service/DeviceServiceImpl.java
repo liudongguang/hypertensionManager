@@ -70,4 +70,9 @@ public class DeviceServiceImpl implements DeviceService {
         PageInfo<Acceptkkdata> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> acceptkkdataMapper.getAcceptkkDataByDeviceSNAndPatientID(log));
         return pageInfo;
     }
+
+    @Override
+    public int destroyDeviceById(HytbDeviceRepertory device) {
+        return 0;
+    }
 }
