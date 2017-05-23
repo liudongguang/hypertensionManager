@@ -2,6 +2,7 @@ package com.kangkang.impl.mapper;
 
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.vo.AppDoctorParamVo;
+import com.kangkang.api.vo.DoctorListRsVo;
 import com.kangkang.api.vo.DoctorUsersExt;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -24,4 +25,6 @@ public interface DoctorUsersMapper extends Mapper<DoctorUsers> {
 
 
     DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
+
+    List<DoctorListRsVo> doctorList();
 }

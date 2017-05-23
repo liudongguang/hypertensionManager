@@ -1,5 +1,6 @@
 package com.kangkang.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppDoctorService;
@@ -8,6 +9,7 @@ import com.kangkang.api.service.RedisService;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorUsersExt;
 import com.kangkang.constant.SysConstant;
+import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -112,6 +114,17 @@ public class AppDoctorController {
         ResultMsg rs = new ResultMsg();
         TUsers user=appPatientService.getPatientUserByrongyunid(userId);
         rs.setData(user);
+        return rs;
+    }
+
+
+    @RequestMapping(value = "/patientList")
+    @ResponseBody
+    public ResultMsg patientList(HttpServletRequest request, PageParam pageParam) throws Exception {
+        ResultMsg rs=new ResultMsg();
+        PageInfo<TUsers> pageinfo = appPatientService.patientList(pageParam);
+        rs.setData(pageinfo);
+        /////
         return rs;
     }
 

@@ -1,12 +1,16 @@
 package com.kangkang.impl.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kangkang.api.bo.FileUploadParam;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.service.AppDoctorService;
 import com.kangkang.api.service.FileUploadService;
 import com.kangkang.api.vo.AppDoctorParamVo;
+import com.kangkang.api.vo.DoctorListRsVo;
 import com.kangkang.api.vo.DoctorUsersExt;
 import com.kangkang.impl.mapper.DoctorUsersMapper;
+import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +65,11 @@ public class AppDoctorServiceImpl implements AppDoctorService {
     @Override
     public DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId) {
         return doctorUsersDao.getDoctorHeadImgAndNameByRongYunID(userId);
+    }
+
+    @Override
+    public PageInfo<DoctorListRsVo> doctorList(PageParam pageParam) {
+        PageInfo<DoctorListRsVo> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> doctorUsersDao.doctorList());
+        return pageInfo;
     }
 }

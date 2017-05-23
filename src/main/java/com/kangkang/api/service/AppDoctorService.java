@@ -1,8 +1,11 @@
 package com.kangkang.api.service;
 
+import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.vo.AppDoctorParamVo;
+import com.kangkang.api.vo.DoctorListRsVo;
 import com.kangkang.api.vo.DoctorUsersExt;
+import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,4 +23,6 @@ public interface AppDoctorService {
 
 
     DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
+
+    PageInfo<DoctorListRsVo> doctorList(PageParam pageParam);
 }

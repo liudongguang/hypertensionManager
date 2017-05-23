@@ -88,4 +88,8 @@ where patient.uid=#{patientid}
     <update id="updatePassByNewPass" parameterType="com.kangkang.api.bo.UpdatePasswordParam">
         update t_users set password=#{newpassword} where uid=#{uid}
     </update>
+
+    <select id="patientList" resultMap="BaseResultMap">
+       select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ package com.kangkang.constant;
  * Created by LiuDongguang on 2017/4/19.
  */
 public interface SysConstant {
+    String DEFAULT_HEADIMG="assets/images/rongyunHead.png";
     String PAGE_REQUEST_ATTR="page";
     int PEONYMSG_SUCCESS_CODE=301;
     int ResultMsg_FAIL_PHONEERR=7;

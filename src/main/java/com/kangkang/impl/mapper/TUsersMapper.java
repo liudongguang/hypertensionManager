@@ -66,4 +66,10 @@ public interface TUsersMapper extends Mapper<TUsers> {
      * @return
      */
     int updatePassByNewPass(UpdatePasswordParam param);
+
+    /**
+     * 获取患者列表
+     * @return
+     */
+    List<TUsers> patientList();
 }

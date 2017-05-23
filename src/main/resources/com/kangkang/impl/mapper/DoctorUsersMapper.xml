@@ -45,4 +45,7 @@
     <select id="getDoctorHeadImgAndNameByRongYunID" resultMap="BaseResultMap">
         select name,headimg from doctor_users where rongid=#{userId}
     </select>
+    <select id="doctorList" resultType="com.kangkang.api.vo.DoctorListRsVo">
+        select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg from doctor_users order by name
+    </select>
 </mapper>

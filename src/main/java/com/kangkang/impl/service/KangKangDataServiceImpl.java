@@ -9,6 +9,7 @@ import com.kangkang.api.service.RongYunServie;
 import com.kangkang.api.vo.AppParamVo;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.TUsersExt;
+import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
 import com.ldg.api.vo.PageParam;
@@ -65,6 +66,7 @@ public class KangKangDataServiceImpl implements KangKangDataService {
             user.setPassword(param.getPassword());
             user.setRytoken(ryrsObj.getToken());
             user.setRongid(phone);
+            user.setHeadimageurl(SysConstant.DEFAULT_HEADIMG);
             usersMapper.insertSelective(user);
             user.setPassword(null);
         }

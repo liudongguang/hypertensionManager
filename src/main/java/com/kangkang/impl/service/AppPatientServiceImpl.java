@@ -1,20 +1,27 @@
 package com.kangkang.impl.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kangkang.api.bo.UpdatePasswordParam;
+import com.kangkang.api.po.HytbPatientImlog;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.GetVerificationCodeParam;
 import com.kangkang.api.vo.MyAsingleRecordRs;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
+import com.kangkang.impl.mapper.HytbPatientImlogMapper;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
+import com.ldg.api.util.PinyinTool;
 import com.ldg.api.util.RequestFileUtil;
+import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +37,9 @@ public class AppPatientServiceImpl implements AppPatientService {
     private AcceptkkdataMapper kkDataDao;
     @Autowired
     private TUsersMapper userDao;
+
+    @Autowired
+    private HytbPatientImlogMapper patientImLogDao;
     @Override
     public List<GetHomePhotoAddressRs> getHomePhotoAddress() {
         return lunboImgeDao.selectAllImges();
@@ -80,5 +90,34 @@ public class AppPatientServiceImpl implements AppPatientService {
         }
 
         return null;
+    }
+
+    @Override
+    public PageInfo<TUsers> patientList(PageParam pageParam) {
+        PageInfo<TUsers> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> userDao.patientList());
+        return pageInfo;
+    }
+
+    @Override
+    public int beforeIM(Integer doctorid, Integer uid) {
+        //根据患者id与医生id获取记录，若存在则只修改settime，不存在则添加一条记录
+        Integer loguid=patientImLogDao.selectUidBydoctorIdAndPatientId(doctorid,uid);
+         if(loguid!=null){
+            return patientImLogDao.updateSetTimeByuid(loguid,new Date());
+         }else{
+             //根据患者id获取患者姓名，然后获取拼音首字母
+             TUsers user= userDao.getPatientUserById(uid);
+             String name=user.getName();
+             String szm=PinyinTool.getPinYinFirstChar(name);
+             HytbPatientImlog imlog=new HytbPatientImlog();
+             imlog.setDoctorid(doctorid);
+             imlog.setPatientid(uid);
+             if(szm!=null&&szm.length()>0){
+                 imlog.setPatientidnamepinyin(szm.substring(0,1).toUpperCase());
+             }
+             imlog.setSettime("");
+
+         }
+        return 0;
     }
 }

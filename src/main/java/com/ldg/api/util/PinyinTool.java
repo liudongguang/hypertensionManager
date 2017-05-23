@@ -10,7 +10,7 @@ public class PinyinTool {
 	/**
 	 * 将汉字转换为全拼
 	 * 
-	 * @param src
+
 	 * @return String
 	 */
 	public static String getPinYin(String str) {
@@ -62,7 +62,7 @@ public class PinyinTool {
 	/**
 	 * 将汉字转 Unicode 码
 	 * 
-	 * @param cnStr
+
 	 * @return String
 	 */
 	public static String toUnicode(String str) {

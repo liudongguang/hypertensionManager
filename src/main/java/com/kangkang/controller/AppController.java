@@ -450,6 +450,24 @@ public class AppController {
         rs.setData(user);
         return rs;
     }
+
+    /**
+     * 获取医生列表
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/doctorList")
+    @ResponseBody
+    public ResultMsg doctorList(HttpServletRequest request, PageParam pageParam) throws Exception {
+        ResultMsg rs=new ResultMsg();
+        PageInfo<DoctorListRsVo> pageinfo = appDoctorService.doctorList(pageParam);
+        rs.setData(pageinfo);
+        /////
+        return rs;
+    }
+
     /////
     @RequestMapping(value = "/testRedis")
     @ResponseBody
@@ -466,5 +484,22 @@ public class AppController {
         return msg;
     }
 
+    /**
+     * 点开医生头像聊天时调用
+     * @param request
+     * @param doctorid
+     * @param uid
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/beforeIM")
+    @ResponseBody
+    public ResultMsg beforeIM(HttpServletRequest request,Integer doctorid,Integer uid) throws Exception {
+        ResultMsg rs=new ResultMsg();
+         int handlerNum=appPatientService.beforeIM(doctorid,uid);
+
+        /////
+        return rs;
+    }
 
 }
