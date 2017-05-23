@@ -9,7 +9,9 @@ import com.kangkang.api.service.FileUploadService;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorListRsVo;
 import com.kangkang.api.vo.DoctorUsersExt;
+import com.kangkang.api.vo.PatientListRsVo;
 import com.kangkang.impl.mapper.DoctorUsersMapper;
+import com.kangkang.impl.mapper.HytbPatientImlogMapper;
 import com.ldg.api.vo.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class AppDoctorServiceImpl implements AppDoctorService {
     private DoctorUsersMapper doctorUsersDao;
     @Autowired
     private FileUploadService fileUploadService;
+    @Autowired
+    private HytbPatientImlogMapper patientImLogDao;
 
     @Override
     public Integer getUserByUserName(String username) {
@@ -70,6 +74,12 @@ public class AppDoctorServiceImpl implements AppDoctorService {
     @Override
     public PageInfo<DoctorListRsVo> doctorList(PageParam pageParam) {
         PageInfo<DoctorListRsVo> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> doctorUsersDao.doctorList());
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<PatientListRsVo> patientList(Integer uid) {
+        PageInfo<PatientListRsVo> pageInfo = PageHelper.startPage(1, 50, true).doSelectPageInfo(() -> patientImLogDao.patientList());
         return pageInfo;
     }
 }

@@ -5,6 +5,7 @@ import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorListRsVo;
 import com.kangkang.api.vo.DoctorUsersExt;
+import com.kangkang.api.vo.PatientListRsVo;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,4 +26,11 @@ public interface AppDoctorService {
     DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
 
     PageInfo<DoctorListRsVo> doctorList(PageParam pageParam);
+
+    /**
+     * 根据医生id 获取聊过的患者列表
+     * @param uid
+     * @return
+     */
+    PageInfo<PatientListRsVo> patientList(Integer uid);
 }

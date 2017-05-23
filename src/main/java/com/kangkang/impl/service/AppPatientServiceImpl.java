@@ -40,6 +40,7 @@ public class AppPatientServiceImpl implements AppPatientService {
 
     @Autowired
     private HytbPatientImlogMapper patientImLogDao;
+
     @Override
     public List<GetHomePhotoAddressRs> getHomePhotoAddress() {
         return lunboImgeDao.selectAllImges();
@@ -56,11 +57,11 @@ public class AppPatientServiceImpl implements AppPatientService {
     }
 
     @Override
-    public TUsers modifyUserInfo(HttpServletRequest request, TUsers user)  throws Exception {
-        List<MultipartFile> filelist= RequestFileUtil.getUploadFile(request);
-        if(filelist!=null&&filelist.size()!=0){
+    public TUsers modifyUserInfo(HttpServletRequest request, TUsers user) throws Exception {
+        List<MultipartFile> filelist = RequestFileUtil.getUploadFile(request);
+        if (filelist != null && filelist.size() != 0) {
             System.out.println(filelist.size());
-            String savePath= RequestFileUtil.saveToComputer(filelist,request,"patientsHeadimgs");
+            String savePath = RequestFileUtil.saveToComputer(filelist, request, "patientsHeadimgs");
             user.setHeadimageurl(savePath);
         }
         System.out.println(user);
@@ -81,11 +82,11 @@ public class AppPatientServiceImpl implements AppPatientService {
     @Override
     public String modifyPwd(UpdatePasswordParam param) {
         //1.旧密码是否正确
-        Integer uid=userDao.selectUidByOldPsd(param);
+        Integer uid = userDao.selectUidByOldPsd(param);
         //2.正确就修改成为新密码
-        if(uid!=null){
-           int updateNum=userDao.updatePassByNewPass(param);
-        }else{
+        if (uid != null) {
+            int updateNum = userDao.updatePassByNewPass(param);
+        } else {
             return "原密码错误！";
         }
 
@@ -101,23 +102,22 @@ public class AppPatientServiceImpl implements AppPatientService {
     @Override
     public int beforeIM(Integer doctorid, Integer uid) {
         //根据患者id与医生id获取记录，若存在则只修改settime，不存在则添加一条记录
-        Integer loguid=patientImLogDao.selectUidBydoctorIdAndPatientId(doctorid,uid);
-         if(loguid!=null){
-            return patientImLogDao.updateSetTimeByuid(loguid,new Date());
-         }else{
-             //根据患者id获取患者姓名，然后获取拼音首字母
-             TUsers user= userDao.getPatientUserById(uid);
-             String name=user.getName();
-             String szm=PinyinTool.getPinYinFirstChar(name);
-             HytbPatientImlog imlog=new HytbPatientImlog();
-             imlog.setDoctorid(doctorid);
-             imlog.setPatientid(uid);
-             if(szm!=null&&szm.length()>0){
-                 imlog.setPatientidnamepinyin(szm.substring(0,1).toUpperCase());
-             }
-             imlog.setSettime("");
-
-         }
-        return 0;
+        Integer loguid = patientImLogDao.selectUidBydoctorIdAndPatientId(doctorid, uid);
+        if (loguid != null) {
+            return patientImLogDao.updateSetTimeByuid(loguid, new Date());
+        } else {
+            //根据患者id获取患者姓名，然后获取拼音首字母
+            TUsers user = userDao.getPatientUserById(uid);
+            String name = user.getName();
+            String szm = PinyinTool.getPinYinFirstChar(name);
+            HytbPatientImlog imlog = new HytbPatientImlog();
+            imlog.setDoctorid(doctorid);
+            imlog.setPatientid(uid);
+            if (szm != null && szm.length() > 0) {
+                imlog.setPatientidnamepinyin(szm.substring(0, 1).toUpperCase());
+            }
+            imlog.setSettime(new Date());
+            return patientImLogDao.insertSelective(imlog);
+        }
     }
 }

@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.HytbPatientImlogMapper">
-  <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbPatientImlog">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="settime" jdbcType="VARCHAR" property="settime" />
-    <result column="patientid" jdbcType="INTEGER" property="patientid" />
-    <result column="doctorid" jdbcType="INTEGER" property="doctorid" />
-    <result column="patientidnamepinyin" jdbcType="VARCHAR" property="patientidnamepinyin" />
-  </resultMap>
-  <select id="selectUidBydoctorIdAndPatientId" resultType="int">
+    <resultMap id="BaseResultMap" type="com.kangkang.api.po.HytbPatientImlog">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="settime" jdbcType="TIMESTAMP" property="settime"/>
+        <result column="patientid" jdbcType="INTEGER" property="patientid"/>
+        <result column="doctorid" jdbcType="INTEGER" property="doctorid"/>
+        <result column="patientidnamepinyin" jdbcType="VARCHAR" property="patientidnamepinyin"/>
+    </resultMap>
+    <select id="selectUidBydoctorIdAndPatientId" resultType="int">
         select uid from hytb_patient_imlog where doctorid=#{doctorid} and patientid=#{patientid}
   </select>
-  <update id="updateSetTimeByuid" parameterType="date">
-       update set settime=#{nowDate} where uid=#{loguid}
+    <update id="updateSetTimeByuid">
+       update hytb_patient_imlog set settime=#{nowDate} where uid=#{loguid}
   </update>
+    <select id="patientList" resultType="com.kangkang.api.vo.PatientListRsVo">
+      SELECT imlog.patientidnamepinyin as firstLetter,patient.name,patient.uid as patientuid,patient.headimageurl   FROM hytb_patient_imlog imlog
+         left join t_users patient on imlog.patientid=patient.uid order by settime,patientidnamepinyin DESC
+  </select>
 </mapper>

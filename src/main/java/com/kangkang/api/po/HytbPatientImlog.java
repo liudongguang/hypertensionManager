@@ -1,5 +1,6 @@
 package com.kangkang.api.po;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "hytb_patient_imlog")
@@ -10,7 +11,7 @@ public class HytbPatientImlog {
     /**
      * 创建时间,当再次调用接口的时候会更新
      */
-    private String settime;
+    private Date settime;
 
     /**
      * 患者id
@@ -46,7 +47,7 @@ public class HytbPatientImlog {
      *
      * @return settime - 创建时间,当再次调用接口的时候会更新
      */
-    public String getSettime() {
+    public Date getSettime() {
         return settime;
     }
 
@@ -55,7 +56,7 @@ public class HytbPatientImlog {
      *
      * @param settime 创建时间,当再次调用接口的时候会更新
      */
-    public void setSettime(String settime) {
+    public void setSettime(Date settime) {
         this.settime = settime;
     }
 

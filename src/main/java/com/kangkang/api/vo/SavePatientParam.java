@@ -1,5 +1,7 @@
 package com.kangkang.api.vo;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Date;
 
 /**
@@ -28,6 +30,9 @@ public class SavePatientParam {
     }
 
     public String getShebeiSN() {
+        if(StringUtils.isBlank(shebeiSN)){
+            shebeiSN=null;
+        }
         return shebeiSN;
     }
 

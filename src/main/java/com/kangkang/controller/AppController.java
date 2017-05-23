@@ -497,7 +497,6 @@ public class AppController {
     public ResultMsg beforeIM(HttpServletRequest request,Integer doctorid,Integer uid) throws Exception {
         ResultMsg rs=new ResultMsg();
          int handlerNum=appPatientService.beforeIM(doctorid,uid);
-
         /////
         return rs;
     }
