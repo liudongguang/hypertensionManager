@@ -1,5 +1,6 @@
 package com.kangkang.impl.mapper;
 
+import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.*;
@@ -49,4 +50,20 @@ public interface TUsersMapper extends Mapper<TUsers> {
      * @return
      */
     int unBindedDeviceBySN(String sn);
+
+    TUsers getPatientUserByrongyunid(String rongyunid);
+
+    /**
+     * 根据旧密码与uid获取uid
+     * @param param
+     * @return
+     */
+    Integer selectUidByOldPsd(UpdatePasswordParam param);
+
+    /**
+     * 修改成为新密码
+     * @param param
+     * @return
+     */
+    int updatePassByNewPass(UpdatePasswordParam param);
 }

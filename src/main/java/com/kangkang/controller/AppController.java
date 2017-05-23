@@ -1,14 +1,9 @@
 package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.kangkang.api.po.HytbZixunDisclaimer;
-import com.kangkang.api.po.HytbZixunFaq;
-import com.kangkang.api.po.HytbZixunHealthinquiry;
-import com.kangkang.api.po.TUsers;
-import com.kangkang.api.service.AppPatientService;
-import com.kangkang.api.service.KangKangDataService;
-import com.kangkang.api.service.RedisService;
-import com.kangkang.api.service.WebManagerService;
+import com.kangkang.api.bo.UpdatePasswordParam;
+import com.kangkang.api.po.*;
+import com.kangkang.api.service.*;
 import com.kangkang.api.util.PeonyMessageUtil;
 import com.kangkang.api.vo.*;
 import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
@@ -40,6 +35,8 @@ public class AppController {
     private RedisService redisService;
     @Autowired
     private WebManagerService webManagerService;
+    @Autowired
+    private AppDoctorService appDoctorService;
     /**
      * 注册获取验证码
      * @param request
@@ -417,18 +414,55 @@ public class AppController {
         request.setAttribute("obj", faq);
         return "/zixun/faq/disfaq.jsp";
     }
+
+
+    /**
+     * 修改密码
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modifyPwd")
+    @ResponseBody
+    public ResultMsg modifyPwd(HttpServletRequest request,UpdatePasswordParam param) throws Exception {
+        ResultMsg rs=new ResultMsg();
+        String errorMsg=appPatientService.modifyPwd(param);
+        if(errorMsg!=null){
+            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            rs.setErrmsg(errorMsg);
+        }
+        return rs;
+    }
+
+    /**
+     * 根据荣云id获取头像跟姓名
+     * @param request
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getDoctorHeadImgAndNameByRongYunID")
+    @ResponseBody
+    public ResultMsg getDoctorHeadImgAndNameByRongYunID(HttpServletRequest request, String userId) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        DoctorUsers user=appDoctorService.getDoctorHeadImgAndNameByRongYunID(userId);
+        rs.setData(user);
+        return rs;
+    }
     /////
     @RequestMapping(value = "/testRedis")
     @ResponseBody
     public ResultMsg testRedis(HttpServletRequest request) {
         ResultMsg msg = new ResultMsg();
-        msg.setData("22222");
-        redisService.add("1", msg, 3);
-        ResultMsg msg2 =redisService.get("1");
-        System.out.println(msg2);
-        redisService.del("1");
-        msg2 =redisService.get("1");
-        System.out.println(msg2);
+//        msg.setData("22222");
+//        redisService.add("1", msg, 3);
+//        ResultMsg msg2 =redisService.get("1");
+//        System.out.println(msg2);
+//        redisService.del("1");
+//        msg2 =redisService.get("1");
+//        System.out.println(msg2);
+        System.out.println(SysConstant.MANAGER_TOKENVALIDE_MSG);
         return msg;
     }
 

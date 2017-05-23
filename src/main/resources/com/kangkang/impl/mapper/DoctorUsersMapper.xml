@@ -42,4 +42,7 @@
         select uid from doctor_users where gonghao=#{gonghao}
         <if test="uid!=null">and uid!=#{uid}</if>
     </select>
+    <select id="getDoctorHeadImgAndNameByRongYunID" resultMap="BaseResultMap">
+        select name,headimg from doctor_users where rongid=#{userId}
+    </select>
 </mapper>

@@ -45,6 +45,7 @@ public class KKController {
 //        param.setSn("YMA5206816387");
 //        param.setKey("Key");
 //        param.setUnique("Unique");
+        //System.out.println(param);
         int saveInt = kkService.saveKangkangData(param.getDBData());
         AcceptResultVo av = new AcceptResultVo();
         av.setCode(1);

@@ -1,5 +1,6 @@
 package com.kangkang.impl.service;
 
+import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.vo.GetHomePhotoAddressRs;
@@ -60,5 +61,24 @@ public class AppPatientServiceImpl implements AppPatientService {
     @Override
     public int updateUserPhone(GetVerificationCodeParam param) {
         return userDao.updateUserPhone(param);
+    }
+
+    @Override
+    public TUsers getPatientUserByrongyunid(String rongyunid) {
+        return userDao.getPatientUserByrongyunid(rongyunid);
+    }
+
+    @Override
+    public String modifyPwd(UpdatePasswordParam param) {
+        //1.旧密码是否正确
+        Integer uid=userDao.selectUidByOldPsd(param);
+        //2.正确就修改成为新密码
+        if(uid!=null){
+           int updateNum=userDao.updatePassByNewPass(param);
+        }else{
+            return "原密码错误！";
+        }
+
+        return null;
     }
 }

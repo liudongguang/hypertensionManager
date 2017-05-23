@@ -17,4 +17,7 @@ public interface AppDoctorService {
     DoctorUsers getUserInfoByUid(Integer uid);
 
     int updateUserInfoByUid(HttpServletRequest request, DoctorUsers doctor) throws Exception;
+
+
+    DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
 }

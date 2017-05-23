@@ -1,5 +1,6 @@
 package com.kangkang.api.service;
 
+import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.GetHomePhotoAddressRs;
 import com.kangkang.api.vo.GetVerificationCodeParam;
@@ -42,4 +43,18 @@ public interface AppPatientService {
      * @return
      */
     int updateUserPhone(GetVerificationCodeParam param);
+
+    /**
+     * 根据荣云id获取头像姓名
+     * @param rongyunid
+     * @return
+     */
+    TUsers getPatientUserByrongyunid(String rongyunid);
+
+    /**
+     * 根据旧密码修改密码
+     * @param param
+     * @return
+     */
+    String modifyPwd(UpdatePasswordParam param);
 }

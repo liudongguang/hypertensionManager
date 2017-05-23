@@ -18,7 +18,7 @@ public class TUsersExt extends TUsers{
 
     @Override
     public String toString() {
-        return "TUsersExt{" +
+        return super.toString()+"   TUsersExt{" +
                 "apptoken='" + apptoken + '\'' +
                 '}';
     }

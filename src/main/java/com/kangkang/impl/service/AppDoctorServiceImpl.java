@@ -57,4 +57,9 @@ public class AppDoctorServiceImpl implements AppDoctorService {
         doctor.setHeadimg(fileName);
         return doctorUsersDao.updateByPrimaryKeySelective(doctor);
     }
+
+    @Override
+    public DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId) {
+        return doctorUsersDao.getDoctorHeadImgAndNameByRongYunID(userId);
+    }
 }

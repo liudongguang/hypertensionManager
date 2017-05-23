@@ -21,4 +21,7 @@ public interface DoctorUsersMapper extends Mapper<DoctorUsers> {
     Integer selectUidByUserName(DoctorUsers doctor);
 
     Integer selectUidByGongHao(DoctorUsers doctor);
+
+
+    DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
 }

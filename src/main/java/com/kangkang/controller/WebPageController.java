@@ -284,7 +284,6 @@ public class WebPageController {
      */
     @RequestMapping(value = "/save_healthInquiry")
     public String save_healthInquiry(HttpServletRequest request, HealthInquiryParam param) throws Exception {
-        System.out.println(param.getContent());
         File f=new File("d:/a.txt");
         FileOutputStream fos=new FileOutputStream(f);
         fos.write(param.getContent().getBytes());

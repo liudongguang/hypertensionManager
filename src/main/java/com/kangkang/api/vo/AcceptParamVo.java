@@ -5,6 +5,7 @@ import com.ldg.api.util.DateUtil;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Created by liudo on 2017/3/29.
@@ -122,7 +123,11 @@ public class AcceptParamVo {
         acc.setSystolicpressure(this.systolicpressure);
         acc.setDiastolicpressure(this.diastolicpressure);
         acc.setPulse(this.pulse);
-        acc.setKktime(DateUtils.parseDate(time, DateUtil.yyyyMMddHHmmss));
+        if(time!=null){
+            acc.setKktime(DateUtils.parseDate(time, DateUtil.yyyyMMddHHmmss));
+        }else{
+            acc.setKktime(new Date());
+        }
         acc.setKklevel(this.level);
         acc.setImei(this.imei);
         acc.setKkmode(this.mode);

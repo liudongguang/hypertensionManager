@@ -1,7 +1,9 @@
 package com.kangkang.controller;
 
 import com.kangkang.api.po.DoctorUsers;
+import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppDoctorService;
+import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.service.RedisService;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorUsersExt;
@@ -23,9 +25,10 @@ import java.util.UUID;
 public class AppDoctorController {
     @Autowired
     private RedisService redisService;
-
     @Autowired
     private AppDoctorService appDoctorService;
+    @Autowired
+    private AppPatientService appPatientService;
 
     @RequestMapping(value = "/login")
     @ResponseBody
@@ -92,6 +95,23 @@ public class AppDoctorController {
             rs.setErrcode(1);
             rs.setErrmsg("修改失败！");
         }
+        return rs;
+    }
+
+    /**
+     * 医生端调用
+     * 根据荣云id获取头像跟姓名
+     * @param request
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getPatientHeadImgAndNameByRongYunID")
+    @ResponseBody
+    public ResultMsg getPatientHeadImgAndNameByRongYunID(HttpServletRequest request, String userId) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        TUsers user=appPatientService.getPatientUserByrongyunid(userId);
+        rs.setData(user);
         return rs;
     }
 
