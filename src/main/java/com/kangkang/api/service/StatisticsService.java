@@ -14,5 +14,17 @@ public interface StatisticsService {
      */
     IndexRs getLastDateMeasureData(AppstatisticsParam param);
 
+    /**
+     * 获取今天的
+     * @param param
+     * @return
+     */
     IndexRs getTodayDateMeasureData(AppstatisticsParam param);
+
+    /**
+     * 按日期，患者id获取血压记录
+     * @param param
+     * @return
+     */
+    IndexRs getKKDataByPatientidAndSearchDate(AppstatisticsParam param);
 }

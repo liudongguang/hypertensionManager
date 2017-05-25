@@ -89,6 +89,7 @@
             <mvc:exclude-mapping path="/appHandler/disclaimer"/>
             <mvc:exclude-mapping path="/appHandler/commonProblems"/>
             <mvc:exclude-mapping path="/appHandler/commonProblemsDetails"/>
+            <mvc:exclude-mapping path="/appHandler/feedBack"/>
 
             <bean class="com.kangkang.interceptor.ManagerLoginInterceptor"></bean>
         </mvc:interceptor>

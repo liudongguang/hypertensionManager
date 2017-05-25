@@ -22,32 +22,10 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private AcceptkkdataMapper acckkDao;
 
-    @Override
-    public IndexRs getLastDateMeasureData(AppstatisticsParam param) {
-        //1.获取测量的最后一天的信息
-        PageInfo<Date> pageInfo = PageHelper.startPage(1, 1, false).doSelectPageInfo(() -> acckkDao.getgetLastDateByPatientID(param));
-        if (pageInfo.getTotal() != 0) {
-            Date lastDate = pageInfo.getList().get(0);
-            Date[] bwdate = DateUtil.getDATEBetween(lastDate);
-            param.setStart(bwdate[0]);
-            param.setEnd(bwdate[1]);
-            List<Acceptkkdata> rslist = acckkDao.getMeasureDateByBetDate(param);
-            if (rslist.size() != 0) {
-                IndexRs rs = new IndexRs();
-                rs.setLastDate(lastDate);
-                rs.setMeasureData(rslist);
-                return rs;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public IndexRs getTodayDateMeasureData(AppstatisticsParam param) {
-        Date today = new Date();
+    private final  IndexRs getMeasureDateByBetDate(AppstatisticsParam param) {
         IndexRs rs = new IndexRs();
-        rs.setLastDate(today);
-        Date[] bwdate = DateUtil.getDATEBetween(today);
+        rs.setLastDate(param.getSearchDate());
+        Date[] bwdate = DateUtil.getDATEBetween(param.getSearchDate());
         param.setStart(bwdate[0]);
         param.setEnd(bwdate[1]);
         List<Acceptkkdata> rslist = acckkDao.getMeasureDateByBetDate(param);
@@ -55,5 +33,28 @@ public class StatisticsServiceImpl implements StatisticsService {
             rs.setMeasureData(rslist);
         }
         return rs;
+    }
+
+    @Override
+    public IndexRs getLastDateMeasureData(AppstatisticsParam param) {
+        //1.获取测量的最后一天的信息
+        PageInfo<Date> pageInfo = PageHelper.startPage(1, 1, false).doSelectPageInfo(() -> acckkDao.getgetLastDateByPatientID(param));
+        if (pageInfo.getTotal() != 0) {
+            Date lastDate = pageInfo.getList().get(0);
+            param.setSearchDate(lastDate);
+            return getMeasureDateByBetDate(param);
+        }
+        return null;
+    }
+
+    @Override
+    public IndexRs getTodayDateMeasureData(AppstatisticsParam param) {
+        param.setSearchDate(new Date());
+        return getMeasureDateByBetDate(param);
+    }
+
+    @Override
+    public IndexRs getKKDataByPatientidAndSearchDate(AppstatisticsParam param) {
+        return getMeasureDateByBetDate(param);
     }
 }

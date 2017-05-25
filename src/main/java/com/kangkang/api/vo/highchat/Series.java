@@ -7,7 +7,16 @@ import java.util.List;
  */
 public class Series {
     private String name;
-    private List<Double> data;
+    private List<? extends Number> data;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;
@@ -17,11 +26,11 @@ public class Series {
         this.name = name;
     }
 
-    public List<Double> getData() {
+    public List<? extends Number> getData() {
         return data;
     }
 
-    public void setData(List<Double> data) {
+    public void setData(List<? extends Number> data) {
         this.data = data;
     }
 }

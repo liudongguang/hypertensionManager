@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="assets/css/gdh/appstatistics.css">
 </head>
 <body>
+<input type="hidden" id="basePath" value="${pageContext.request.contextPath }/"/>
+<input type="hidden" value="${param.patientid}" id="patientUID"/>
+<input type="hidden" value="${param.searchDate}" id="currentDateID"/>
 <div style="padding: 10px 0;" class="am-u-sm-12 am-margin-bottom am-margin-top">
     <div class="divs1 am-u-sm-12 am-margin-bottom">
         <img class="imgs1 am-margin-left" src="assets/images/date.png" alt=""/>
@@ -32,53 +35,8 @@
 <div id="container" style="width: 100%;height:400px"></div>
 <script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
 <script language="javascript" type="text/javascript" src="assets/Highcharts/highcharts.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#container').highcharts({
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: ['6:00', '9：00', '12:00', '15:00', '18:00']
-            },
-            yAxis: {
-                title: {
-                    text: '血压/心率值',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-            },
-
-            plotOptions: {
-                series: {
-                    stacking: 'normal'
-                }
-            },
-            series: [{
-                type: 'column',
-                name: '心率',
-                data: [70, 80, 73, 78, 64]
-            }, {
-                name: '收缩压',
-                type: 'spline',
-                data: [121, 126, 135, 140, 120],
-                tooltip: {
-                    valueSuffix: ''
-                }
-            }, {
-                name: '舒张压',
-                type: 'spline',
-                data: [60, 68, 72, 80, 65],
-                tooltip: {
-                    valueSuffix: ''
-                }
-            }],
-            credits: {
-                enabled: false
-            }
-        });
-    });
-</script>
+<script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
+<script src="assets/js/jsppage/appstatistics/daypressure.js"></script>
 </body>
 </html>

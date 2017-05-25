@@ -15,6 +15,7 @@ public class HighchartsConfig {
     private Tooltip tooltip=new Tooltip();
     private Legend legend=new Legend();
     private List<Series> series=new ArrayList<>();
+    private PlotOptions plotOptions=new PlotOptions();
 
     public Credits getCredits() {
         return credits;
