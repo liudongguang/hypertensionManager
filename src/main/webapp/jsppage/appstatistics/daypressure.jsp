@@ -10,60 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" user-scalable="no">
     <meta name="description" content="ECharts, a powerful, interactive charting and visualization library for browser">
     <link rel="stylesheet" href="assets/css/gdh/amazeui.min.css">
-    <style>
-        .divs1 {
-            border-top: solid 1px #aaa;
-            border-bottom: solid 1px #aaa;
-            padding: 10px 0;
-        }
-
-        .imgs1 {
-            width: 32px;
-            float: left;
-            margin-right: 20px;
-        }
-
-        .imgs2 {
-            width: 35px;
-            float: right;
-            margin-right: 20px;
-        }
-
-        .imgs3 {
-            width: 33px;
-            float: right;
-            margin-right: 20px;
-        }
-
-        .spans1 {
-            width: 44%;
-            height: 35px;
-            line-height: 35px;
-            display: inline-block;
-            float: left;
-            text-align: center;
-            border-right: solid 1px #aaa;
-        }
-
-        .spans2 {
-            width: 44%;
-            height: 35px;
-            line-height: 35px;
-            display: inline-block;
-            float: right;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/gdh/appstatistics.css">
 </head>
 <body>
 <div style="padding: 10px 0;" class="am-u-sm-12 am-margin-bottom am-margin-top">
     <div class="divs1 am-u-sm-12 am-margin-bottom">
         <img class="imgs1 am-margin-left" src="assets/images/date.png" alt=""/>
         <!--<span style="width: 50px;height: 35px;line-height: 35px;display: inline-block;float: left;border-right: solid 1px #aaa;font-size: 18px;">日期</span>-->
-        <input style="border:none;background-color: #fff!important;float: left;display: inline-block;width: 35%"
+        <input style="border:none;background-color: #fff!important;float: left;display: inline-block;width: 35%" value="${param.searchDate}"
                type="text" class="am-form-field " placeholder="时间" data-am-datepicker="{theme: 'success'}" readonly/>
-        <a href="jsppage/appstatistics/pressureIndex.jsp"><img class="imgs2" src="assets/images/bd.png" alt=""/></a>
-        <a href="jsppage/appstatistics/daypressure.jsp"><img class="imgs3" src="assets/images/today.png" alt=""/></a>
+        <a href="appstatistics/index?patientid=${param.patientid}"><img class="imgs2" src="assets/images/bd.png" alt=""/></a>
+        <a href="appstatistics/enterDisplayDayChat?patientid=${param.patientid}&searchDate=${param.searchDate}"><img class="imgs3" src="assets/images/today.png" alt=""/></a>
     </div>
     <div style="width: 100%;border-top: solid 1px #aaa;border-bottom: solid 1px #aaa;padding: 10px 0;"
          class="am-u-sm-12 am-margin-bottom">

@@ -17,17 +17,19 @@
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="stylesheet" href="assets/css/gdh/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/gdh/appstatisticsIndex.css">
+    <link rel="stylesheet" href="assets/css/templatemo_main.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.css">
 </head>
 <body>
 <div class="am-margin-top-lg">
     <div class="divs1 am-u-sm-12 am-margin-bottom">
         <img class="am-margin-left imgs1" src="assets/images/date.png"
              alt=""/>
-        <!--<span style="width: 50px;height: 35px;line-height: 35px;display: inline-block;float: left;border-right: solid 1px #aaa;font-size: 18px;">日期</span>-->
-        <input type="text" class="ipts1 am-form-field " placeholder="日期" data-am-datepicker="{theme: 'success'}"
+        <input type="text"  placeholder="日期"  id="searchDateID"
                value="<fmt:formatDate value="${obj.lastDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"
                readonly/>
-        <a href="jsppage/appstatistics/daypressure.jsp"><img style="width: 32px;float: right;margin-right: 20px"
+        <a href="appstatistics/enterDisplayDayChat?patientid=${param.patientid}&searchDate=<fmt:formatDate value="${obj.lastDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"><img style="width: 32px;float: right;margin-right: 20px"
                                                              src="assets/images/xy.png" alt=""/></a>
         <a href="appstatistics/indexForToday?patientid=${param.patientid}"><img style="width: 33px;float: right;margin-right: 20px"
                                                              src="assets/images/today.png" alt=""/></a>
@@ -72,6 +74,10 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/handlebars.min.js"></script>
 <script src="assets/js/amazeui.widgets.helper.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/bootstrap3.3.7.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/templatemo_script.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/moment.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/bootstrap-datetimepicker.min.js"></script>
 <script src="assets/js/jsppage/appstatistics/pressureIndex.js"></script>
 </body>
 </html>

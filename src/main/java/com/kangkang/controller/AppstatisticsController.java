@@ -41,9 +41,23 @@ public class AppstatisticsController {
     @RequestMapping(value = "/indexForToday")
     public String indexForToday(HttpServletRequest request, AppstatisticsParam param) throws Exception {
         IndexRs indexrs=statisticsService.getTodayDateMeasureData(param);
-        System.out.println(indexrs);
         request.setAttribute("obj",indexrs);
         return "/jsppage/appstatistics/pressureIndex.jsp";
     }
+
+    /**
+     * 进入日统计图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/enterDisplayDayChat")
+    public String enterDisplayDayChat(HttpServletRequest request, AppstatisticsParam param) throws Exception {
+
+        return "/jsppage/appstatistics/daypressure.jsp";
+    }
+
+
 
 }

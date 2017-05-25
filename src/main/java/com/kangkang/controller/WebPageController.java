@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -284,11 +282,6 @@ public class WebPageController {
      */
     @RequestMapping(value = "/save_healthInquiry")
     public String save_healthInquiry(HttpServletRequest request, HealthInquiryParam param) throws Exception {
-        File f=new File("d:/a.txt");
-        FileOutputStream fos=new FileOutputStream(f);
-        fos.write(param.getContent().getBytes());
-        fos.close();
-
         param.setRequest(request);
         int i = webManagerService.saveHealthInquiry(param);
         return "/webHandler/healthInquiry_list";
