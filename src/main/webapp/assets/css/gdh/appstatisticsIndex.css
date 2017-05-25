@@ -1,0 +1,17 @@
+.divs1{
+    border-top: solid 1px #aaa;border-bottom: solid 1px #aaa;padding: 10px 0;
+}
+.divs2{
+    width: 100%;border-top: solid 1px #aaa;border-bottom: solid 1px #aaa;padding: 10px 0;        }
+.imgs1{
+    width: 32px;float: left;margin-right: 20px;
+}
+.ipts1{
+    border:none;background-color: #fff!important;float: left;display: inline-block;width: 35%;
+}
+.spans1{
+    width: 44%;height: 35px;line-height: 35px;display: inline-block;float: left;text-align: center;border-right: solid 1px #aaa;
+}
+.spans2{
+    width: 44%;height: 35px;line-height: 35px;display: inline-block;float: right;text-align: center;
+}

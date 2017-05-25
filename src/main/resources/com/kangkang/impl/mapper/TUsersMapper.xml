@@ -61,7 +61,7 @@
         username=#{username} and password=#{password}
     </select>
     <select id="getPatientUserById" resultMap="BaseResultMap">
-        select uid,name,sex,birthday,age,address,headimageurl from  t_users  where uid=#{uid}
+        select uid,name,sex,birthday,age,address,headimageurl,registphone,rongid from  t_users  where uid=#{uid}
     </select>
     <update id="updateUserPhone" parameterType="com.kangkang.api.vo.GetVerificationCodeParam">
          update t_users set registphone=#{mobile} where uid=#{uid}

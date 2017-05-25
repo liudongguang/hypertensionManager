@@ -91,8 +91,10 @@ public class WebPationtServiceImpl implements WebPationtService {
                 }
             } else {
                 //直接绑定
-                user.setSn(param.getShebeiSN());
-                bindDevice(user, param);
+                if(param.getShebeiSN()!=null){//有sn编码的时候
+                    user.setSn(param.getShebeiSN());
+                    bindDevice(user, param);
+                }
             }
             usersMapper.updateByPrimaryKeySelective(user);
         } else {

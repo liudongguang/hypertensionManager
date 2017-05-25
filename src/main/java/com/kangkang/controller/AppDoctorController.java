@@ -6,10 +6,7 @@ import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppDoctorService;
 import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.service.RedisService;
-import com.kangkang.api.vo.AppDoctorParamVo;
-import com.kangkang.api.vo.DoctorUsersExt;
-import com.kangkang.api.vo.PatientListRsVo;
-import com.kangkang.api.vo.PinyinListDisplay;
+import com.kangkang.api.vo.*;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
@@ -66,7 +63,22 @@ public class AppDoctorController {
         }
         return rs;
     }
-
+    /**
+     * 退出登陆
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/loginout")
+    @ResponseBody
+    public ResultMsg loginout(HttpServletRequest request,AppParamVo param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        StringBuilder redisUID = new StringBuilder();
+        redisUID.append(param.getUid()).append(SysConstant.SYS_DOCTOR_STATE);
+        redisService.del(redisUID.toString());
+        return rs;
+    }
     /**
      * 个人中心
      * <p>

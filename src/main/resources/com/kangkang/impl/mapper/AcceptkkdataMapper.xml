@@ -23,12 +23,18 @@
   </select>
 
     <select id="getAsingleRecord" resultType="com.kangkang.api.vo.MyAsingleRecordRs">
-        SELECT usertb.uid as uid,usertb.name as name,kkdata.kktime as testtime,kkdata.systolicpressure as highPressureValue,
-        kkdata.diastolicpressure as lowVoltageValue,kkdata.pulse as heartrate,kkdata.kklevel as bloodPressureState
-        FROM hypertensionmanager.acceptkkdata kkdata left join hypertensionmanager.t_users usertb on kkdata.userid=usertb.uid
+  SELECT usertb.uid as uid,usertb.name as name,kkdata.kktime as testtime,kkdata.systolicpressure as highPressureValue,usertb.headimageurl,kkdata.diastolicpressure as lowVoltageValue
+      FROM hypertensionmanager.acceptkkdata kkdata left join hypertensionmanager.t_users usertb on kkdata.userid=usertb.uid
         where kkdata.userid=#{uid}
   </select>
     <select id="getAcceptkkDataByDeviceSNAndPatientID" resultMap="BaseResultMap" parameterType="com.kangkang.api.po.HytbDeviceLandlog">
         select * from acceptkkdata where userid=#{patientid} and kksn=#{devicesn} order by kktime desc
+    </select>
+
+    <select id="getgetLastDateByPatientID" resultType="Date" parameterType="com.kangkang.api.vo.AppstatisticsParam">
+        select kktime from acceptkkdata where userid=#{patientid} order by kktime desc
+    </select>
+    <select id="getMeasureDateByBetDate" resultMap="BaseResultMap" parameterType="com.kangkang.api.vo.AppstatisticsParam">
+         select * from acceptkkdata where userid=#{patientid} and kktime BETWEEN #{start} AND #{end} order by kktime asc
     </select>
 </mapper>

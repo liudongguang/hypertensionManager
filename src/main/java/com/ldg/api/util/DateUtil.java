@@ -27,6 +27,28 @@ public class DateUtil {
 		return yyyyMMddHHmmssFormat.format(new Date());
 	}
 
+	/**
+	 * 获取这天的0点到23点59：59
+	 * @param date
+	 * @return
+	 */
+	public final static Date[] getDATEBetween(Date date){
+		Date[] dates=new Date[2];
+		Calendar start=Calendar.getInstance();
+		start.setTime(date);
+		start.set(Calendar.HOUR_OF_DAY,0);
+		start.set(Calendar.MINUTE,0);
+		start.set(Calendar.SECOND,0);
+		dates[0]=start.getTime();
+		Calendar end=Calendar.getInstance();
+		end.setTime(date);
+		end.set(Calendar.HOUR_OF_DAY,23);
+		end.set(Calendar.MINUTE,59);
+		end.set(Calendar.SECOND,59);
+		dates[1]=end.getTime();
+		return dates;
+	}
+
     public final  static String getStrFormatDate(Date d,String format){
 		if(d!=null){
 			return DateFormatUtils.format(d,format);

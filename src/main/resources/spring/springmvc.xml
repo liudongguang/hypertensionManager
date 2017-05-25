@@ -84,6 +84,12 @@
             <mvc:exclude-mapping path="/appHandler/forgetPwd"/>
             <mvc:exclude-mapping path="/appHandler/resetPwd"/>
             <mvc:exclude-mapping path="/appHandler/testRedis"/>
+            <!---->
+
+            <mvc:exclude-mapping path="/appHandler/disclaimer"/>
+            <mvc:exclude-mapping path="/appHandler/commonProblems"/>
+            <mvc:exclude-mapping path="/appHandler/commonProblemsDetails"/>
+
             <bean class="com.kangkang.interceptor.ManagerLoginInterceptor"></bean>
         </mvc:interceptor>
         <!--医生端-->

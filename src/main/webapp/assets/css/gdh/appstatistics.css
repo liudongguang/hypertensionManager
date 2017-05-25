@@ -1,0 +1,19 @@
+.divs1{
+    border-top: solid 1px #aaa;border-bottom: solid 1px #aaa;padding: 10px 0;
+}
+.imgs1{
+    width: 32px;float: left;margin-right: 20px;
+}
+.imgs2{
+    width: 35px;float: right;margin-right: 20px;
+}
+.imgs3{
+    width: 33px;float: right;margin-right: 20px;
+}
+.spans1{
+    width: 44%;height: 35px;line-height: 35px;display: inline-block;float: left;text-align: center;border-right: solid 1px #aaa;
+}
+.spans2{
+    width: 44%;height: 35px;line-height: 35px;display: inline-block;float: right;text-align: center;
+}
+
