@@ -1,9 +1,12 @@
 package com.kangkang.api.vo.highchat;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * Created by LiuDongguang on 2017/5/24.
  * 图例说明是包含图表中数列标志和名称的容器。
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Legend {
     private String layout="vertical";
     private String align="right";

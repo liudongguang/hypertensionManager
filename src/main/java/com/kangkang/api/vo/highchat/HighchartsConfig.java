@@ -1,12 +1,16 @@
 package com.kangkang.api.vo.highchat;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by LiuDongguang on 2017/5/24.
  */
-public class HighchartsConfig {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class HighchartsConfig{
     private Credits credits=new Credits();
     private Title title=new Title();
     private Subtitle subtitle=new Subtitle();
@@ -16,6 +20,14 @@ public class HighchartsConfig {
     private Legend legend=new Legend();
     private List<Series> series=new ArrayList<>();
     private PlotOptions plotOptions=new PlotOptions();
+
+    public PlotOptions getPlotOptions() {
+        return plotOptions;
+    }
+
+    public void setPlotOptions(PlotOptions plotOptions) {
+        this.plotOptions = plotOptions;
+    }
 
     public Credits getCredits() {
         return credits;
