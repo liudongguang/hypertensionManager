@@ -115,9 +115,10 @@ public class AppstatisticsController {
             xinlvSeries.setType("column");
             xinlvSeries.setData(xinlvL);
             List<Series> series=hcfg.getSeries();
+            series.add(xinlvSeries);//先添加的在下面
             series.add(shousuoSeries);
             series.add(shuzhangSeries);
-            series.add(xinlvSeries);
+
 
             rs.setData(hcfg);
         }else{

@@ -84,19 +84,21 @@
             <mvc:exclude-mapping path="/appHandler/forgetPwd"/>
             <mvc:exclude-mapping path="/appHandler/resetPwd"/>
             <mvc:exclude-mapping path="/appHandler/testRedis"/>
+            <mvc:exclude-mapping path="/appHandler/loginout"/>
             <!---->
 
             <mvc:exclude-mapping path="/appHandler/disclaimer"/>
             <mvc:exclude-mapping path="/appHandler/commonProblems"/>
             <mvc:exclude-mapping path="/appHandler/commonProblemsDetails"/>
             <mvc:exclude-mapping path="/appHandler/feedBack"/>
-
+            <mvc:exclude-mapping path="/appHandler/saveAppfeedback"/>
             <bean class="com.kangkang.interceptor.ManagerLoginInterceptor"></bean>
         </mvc:interceptor>
         <!--医生端-->
         <mvc:interceptor>
             <mvc:mapping path="/appDoctorHandler/**"/>
             <mvc:exclude-mapping path="/appDoctorHandler/login"/>
+            <mvc:exclude-mapping path="/appDoctorHandler/loginout"/>
             <bean class="com.kangkang.interceptor.AppDoctorInterceptor"></bean>
         </mvc:interceptor>
         <!--网页端-->

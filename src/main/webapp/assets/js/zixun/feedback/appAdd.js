@@ -47,8 +47,8 @@ $(function () {
     });
 
     initAjaxForm($("#subForm"), $("#subBT"), function (data) {
-        $("#subBT").attr("disabled","disabled");
         if(data.errcode==0){
+            $("#subBT").attr("disabled","disabled");
             layer.alert("保存完成！",function (index) {
                 layer.close(index);
                 location.replace(basePath+"/success.jsp");

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-    <title>随访管理</title>
+    <title>ri</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width">
@@ -22,7 +22,20 @@
     <input  id="startTimeID2"/>
 </div>
 
-
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/bootstrap3.3.7.js"></script>
@@ -32,7 +45,6 @@
 <script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/main/ajaxsessiontimeout.js"></script>
-<script language="javascript" type="text/javascript" src="assets/js/followupDisplay/index.js"></script>
 <script>
     jQuery(document).ready(function () {
         $('#startTimeID').datetimepicker({
@@ -44,6 +56,7 @@
             dayViewHeaderFormat:'YYYY MMMM',
             format: 'YYYY-MM-DD HH:mm:ss'
         });
+        $('#datetimepicker1').datetimepicker();
     });
 </script>
 </body>

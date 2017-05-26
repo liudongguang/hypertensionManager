@@ -51,7 +51,7 @@
         update  t_users set sn=null,imei=null where sn=#{sn}
     </update>
     <select id="isBindedByUid" parameterType="com.kangkang.api.po.TUsers" resultMap="BaseResultMap">
-          select uid,sn,imei from t_users where uid=#{uid}
+          select uid,sn,imei from t_users where uid=#{uid} and sn is not null
     </select>
     <select id="getUserByUserName" resultMap="BaseResultMap">
        select uid from t_users where username=#{username}

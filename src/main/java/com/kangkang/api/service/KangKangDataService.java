@@ -75,7 +75,7 @@ public interface KangKangDataService {
     int unBindedDevice(TUsers user);
 
     /**
-     * 获取用户信息通过uid
+     * 获取用户信息通过uid，获取sn不为null的用户
      * @param user
      * @return
      */

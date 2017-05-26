@@ -23,6 +23,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     private AcceptkkdataMapper acckkDao;
 
     private final  IndexRs getMeasureDateByBetDate(AppstatisticsParam param) {
+        if(param.getSearchDate()==null){
+            return null;
+        }
         IndexRs rs = new IndexRs();
         rs.setLastDate(param.getSearchDate());
         Date[] bwdate = DateUtil.getDATEBetween(param.getSearchDate());
@@ -39,7 +42,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     public IndexRs getLastDateMeasureData(AppstatisticsParam param) {
         //1.获取测量的最后一天的信息
         PageInfo<Date> pageInfo = PageHelper.startPage(1, 1, false).doSelectPageInfo(() -> acckkDao.getgetLastDateByPatientID(param));
-        if (pageInfo.getTotal() != 0) {
+        if (pageInfo.getList().size()!=0) {
             Date lastDate = pageInfo.getList().get(0);
             param.setSearchDate(lastDate);
             return getMeasureDateByBetDate(param);
