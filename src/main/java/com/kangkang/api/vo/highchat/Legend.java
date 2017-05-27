@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Legend {
-    private String layout="vertical";
-    private String align="right";
-    private String verticalAlign="middle";
+    private String layout="horizontal";//vertical垂直   horizontal 水平
+    private String align="center";
+    private String verticalAlign="bottom"; //垂直对齐
     private int borderWidth;
 
     public String getLayout() {

@@ -15,20 +15,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="stylesheet" href="assets/css/gdh/amazeui.min.css">
-    <link rel="stylesheet" href="assets/css/gdh/appstatisticsIndex.css">
     <link rel="stylesheet" href="assets/css/bootstrap3.3.7.css">
     <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="assets/css/gdh/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/gdh/appstatisticsIndex.css">
 </head>
 <body>
+<input type="hidden" id="basePath" value="${pageContext.request.contextPath }/"/>
 <div class="am-margin-top-lg">
     <input type="hidden" value="${param.patientid}" id="patientUID"/>
     <div class="divs1 am-u-sm-12 am-margin-bottom">
-        <img class="am-margin-left imgs1" src="assets/images/date.png"
-             alt=""/>
         <input type="text" style="border:none;background-color: #fff!important;float: left;display: inline-block;width: 35%"
-               placeholder="日期"  id="searchDateID" class="form-control"
+               placeholder="日期"  id="searchDateID" class="form-control" readonly="readonly"
                value="<fmt:formatDate value="${obj.lastDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"/>
+        <img class="am-margin-left imgs1" src="assets/images/date.png" id="dateimgID"
+             alt=""/>
 
         <a href="appstatistics/enterDisplayDayChat?patientid=${param.patientid}&searchDate=<fmt:formatDate value="${obj.lastDate}" pattern="yyyy-MM-dd"></fmt:formatDate>"><img style="width: 32px;float: right;margin-right: 20px"
                                                              src="assets/images/xy.png" alt=""/></a>

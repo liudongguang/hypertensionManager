@@ -31,4 +31,6 @@ public interface SysConstant {
 
     int DeviceRepertory_DESTROY_NO=1;
     int DeviceRepertory_DESTROY_YES=2;
+
+    String HighchartsConfig_NULLTITLE="无展示数据！";
 }

@@ -1,8 +1,8 @@
 package com.kangkang.api.vo.highchat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kangkang.constant.SysConstant;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +11,14 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HighchartsConfig{
+    private final static HighchartsConfig nullcig=new HighchartsConfig();
+    static {
+        nullcig.getTitle().setText(SysConstant.HighchartsConfig_NULLTITLE);
+    }
+    public static HighchartsConfig getNullcig() {
+        return nullcig;
+    }
+
     private Credits credits=new Credits();
     private Title title=new Title();
     private Subtitle subtitle=new Subtitle();

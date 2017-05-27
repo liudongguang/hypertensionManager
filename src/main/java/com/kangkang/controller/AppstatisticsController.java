@@ -73,6 +73,18 @@ public class AppstatisticsController {
     public String enterDisplayDayChat(HttpServletRequest request, AppstatisticsParam param) throws Exception {
         return "/jsppage/appstatistics/daypressure.jsp";
     }
+    /**
+     * 进入日统计图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/enterDisplayDayChatForThisDay")
+    public String enterDisplayDayChatForThisDay(HttpServletRequest request, AppstatisticsParam param) throws Exception {
+        request.setAttribute("reqParam",param);
+        return "/jsppage/appstatistics/daypressure.jsp";
+    }
 
 
     @RequestMapping(value = "/displayDayChat")
@@ -118,12 +130,9 @@ public class AppstatisticsController {
             series.add(xinlvSeries);//先添加的在下面
             series.add(shousuoSeries);
             series.add(shuzhangSeries);
-
-
             rs.setData(hcfg);
         }else{
-            rs.setErrcode(1);
-            rs.setErrmsg("无数据！");
+           rs.setData(HighchartsConfig.getNullcig());
         }
         return rs;
     }
