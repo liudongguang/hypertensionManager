@@ -58,11 +58,9 @@ public class AppPatientServiceImpl implements AppPatientService {
     public TUsers modifyUserInfo(HttpServletRequest request, TUsers user) throws Exception {
         List<MultipartFile> filelist = RequestFileUtil.getUploadFile(request);
         if (filelist != null && filelist.size() != 0) {
-            System.out.println(filelist.size());
             String savePath = RequestFileUtil.saveToComputer(filelist, request, "patientsHeadimgs");
             user.setHeadimageurl(savePath);
         }
-        System.out.println(user);
         userDao.updateByPrimaryKeySelective(user);
         return user;
     }

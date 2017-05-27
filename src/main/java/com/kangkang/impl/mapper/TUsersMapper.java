@@ -74,4 +74,6 @@ public interface TUsersMapper extends Mapper<TUsers> {
     List<TUsers> patientList();
 
     TUsersExt selectUserByWXOpenID(WXReqParam param);
+
+    Integer getUserByPhoneNumberForRegist(String mobile);
 }

@@ -30,7 +30,6 @@ public class FileUploadController {
     @RequestMapping(value = "/deleteFileByPath")
     @ResponseBody
     public Integer deleteFileByPath(HttpServletRequest request, String delPath) throws Exception {
-        System.out.println(delPath);
         int  delNum = fileService.deleteFileByPath(request, delPath);
         return delNum;
     }

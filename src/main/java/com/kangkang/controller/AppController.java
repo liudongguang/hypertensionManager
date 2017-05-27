@@ -76,8 +76,16 @@ public class AppController {
     @RequestMapping(value = "/wxLogin")
     @ResponseBody
     public ResultMsg wxLogin(HttpServletRequest request,WXReqParam param) throws Exception {
-        ResultMsg rs = new ResultMsg();
-
+        AppParamVo Appparam=new AppParamVo();
+        Appparam.setMobile(param.getMobile());//手机号
+        Appparam.setName(param.getNickname());//昵称
+        Appparam.setState(2);//标识微信注册
+        Appparam.setHeadimageurl(param.getHeadimgurl());//头像
+        Appparam.setSex(param.getSex());//性别
+        Appparam.setOpenid(param.getOpenid());//微信openid
+        Appparam.setCity(param.getCity());//城市
+        Appparam.setProvince(param.getProvince());//省份
+        ResultMsg rs =setPwd(request,Appparam);
         return rs;
     }
 
@@ -93,7 +101,7 @@ public class AppController {
     public ResultMsg getVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
-        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
+        Integer userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
         if(null!=userid){
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("该手机号已注册！");
@@ -123,6 +131,14 @@ public class AppController {
     @ResponseBody
     public ResultMsg setPwd(HttpServletRequest request,AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
+        /////////////////检查是否注册过，手机号存在则代表注册过，那么只需要修改
+        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
+        if(null!=userid){
+            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            rs.setErrmsg("该手机号已注册！");
+            return rs;
+        }
+        /////////////
         TUsersExt user=kkService.registerUser(param);
         String uid=user.getUid().toString();
         String appToken=redisService.get(uid);

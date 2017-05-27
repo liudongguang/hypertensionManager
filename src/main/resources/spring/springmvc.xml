@@ -85,6 +85,8 @@
             <mvc:exclude-mapping path="/appHandler/resetPwd"/>
             <mvc:exclude-mapping path="/appHandler/testRedis"/>
             <mvc:exclude-mapping path="/appHandler/loginout"/>
+            <mvc:exclude-mapping path="/appHandler/isOrNoWxLogin"/>
+            <mvc:exclude-mapping path="/appHandler/wxLogin"/>
             <!---->
 
             <mvc:exclude-mapping path="/appHandler/disclaimer"/>

@@ -10,6 +10,61 @@ public class AppParamVo {
     private String name;//姓名
     private Integer uid;//用户id
 
+    private int state=1;//1.普通注册  2.微信注册
+    private String headimageurl;//头像
+    private String sex;
+    private String openid;
+    private String city;
+    private String province;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getHeadimageurl() {
+        return headimageurl;
+    }
+
+    public void setHeadimageurl(String headimageurl) {
+        this.headimageurl = headimageurl;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public String getGetVerificationCode() {
         return getVerificationCode;
     }

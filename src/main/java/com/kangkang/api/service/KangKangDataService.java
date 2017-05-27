@@ -80,4 +80,6 @@ public interface KangKangDataService {
      * @return
      */
     TUsers isBindedByUid(TUsers user);
+
+    Integer getUserByPhoneNumberForRegist(String mobile);
 }

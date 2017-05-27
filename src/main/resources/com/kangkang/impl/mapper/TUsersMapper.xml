@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangkang.impl.mapper.TUsersMapper">
-    <resultMap id="BaseResultMap" type="com.kangkang.api.po.TUsers">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="uid" jdbcType="INTEGER" property="uid"/>
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="imei" jdbcType="VARCHAR" property="imei"/>
-        <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="sex" jdbcType="VARCHAR" property="sex"/>
-        <result column="rongid" jdbcType="VARCHAR" property="rongid"/>
-        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
-        <result column="registphone" jdbcType="VARCHAR" property="registphone"/>
-        <result column="rytoken" jdbcType="VARCHAR" property="rytoken"/>
-        <result column="age" jdbcType="INTEGER" property="age"/>
-        <result column="headimageurl" jdbcType="VARCHAR" property="headimageurl"/>
-        <result column="address" jdbcType="VARCHAR" property="address"/>
-        <result column="birthday" jdbcType="DATE" property="birthday"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.kangkang.api.po.TUsers">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="rongid" jdbcType="VARCHAR" property="rongid" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="registphone" jdbcType="VARCHAR" property="registphone" />
+    <result column="rytoken" jdbcType="VARCHAR" property="rytoken" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="headimageurl" jdbcType="VARCHAR" property="headimageurl" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+  </resultMap>
     <select id="selectUidByAcceptkkdata" parameterType="com.kangkang.api.po.Acceptkkdata" resultType="int">
        select uid from t_users where sn=#{kksn}
   </select>
     <select id="getUserByPhoneNumber" resultType="int">
        select uid from t_users where registphone=#{mobile}
     </select>
-    <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo"
-            resultType="com.kangkang.api.vo.TUsersExt">
+    <select id="getUserByPhoneNumberForRegist" resultType="int">
+        select uid from t_users where registphone=#{mobile} and password is not null
+    </select>
+
+    <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo" resultType="com.kangkang.api.vo.TUsersExt">
         select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users WHERE
         registphone=#{mobile} and password=#{password}
   </select>
-    <select id="selectUserByWXOpenID" parameterType="com.kangkang.api.vo.WXReqParam"
-            resultType="com.kangkang.api.vo.TUsersExt">
-        select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users WHERE
-        registphone=#{mobile} and password=#{password}
+    <select id="selectUserByWXOpenID" parameterType="com.kangkang.api.vo.WXReqParam" resultType="com.kangkang.api.vo.TUsersExt">
+        select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from hypertensionmanager.t_users where openid=#{openid}
     </select>
 
     <select id="getPatientUserByrongyunid" resultMap="BaseResultMap">
@@ -76,11 +81,11 @@
     <select id="selectAllForPatientListList" resultMap="BaseResultMap">
         select uid,sn,name,registphone,birthday,sex,age from t_users   order by uid desc
     </select>
-    <select id="selectUidByPhone" resultType="int" parameterType="com.kangkang.api.vo.SavePatientParam">
+    <select id="selectUidByPhone" parameterType="com.kangkang.api.vo.SavePatientParam" resultType="int">
         select uid from t_users where registphone=#{registphone}
         <if test="uid!=null">and uid!=#{uid}</if>
     </select>
-    <select id="selectPatientForBind" resultType="com.kangkang.api.vo.SavePatientParam" parameterType="int">
+    <select id="selectPatientForBind" parameterType="int" resultType="com.kangkang.api.vo.SavePatientParam">
         SELECT device.*,patient.uid,patient.name,patient.registphone,patient.sex,patient.birthday FROM hypertensionmanager.t_users patient left join
 (
 SELECT landlog.patientid,landlog.deviceid as shebeiUID,repertory.sn as shebeiSN,landlog.zjstart as zjstart,landlog.zjend as zjend,landlog.beizhu as beizhu,repertory.alias as shebeiName,landlog.returnstate

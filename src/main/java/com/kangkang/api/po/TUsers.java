@@ -83,6 +83,26 @@ public class TUsers {
     private Date birthday;
 
     /**
+     * 微信昵称
+     */
+    private String nickname;
+
+    /**
+     * 微信openid
+     */
+    private String openid;
+
+    /**
+     * 所在城市
+     */
+    private String city;
+
+    /**
+     * 所在省份
+     */
+    private String province;
+
+    /**
      * @return uid
      */
     public Integer getUid() {
@@ -348,24 +368,75 @@ public class TUsers {
         this.birthday = birthday;
     }
 
-    @Override
-    public String toString() {
-        return "TUsers{" +
-                "uid=" + uid +
-                ", sn='" + sn + '\'' +
-                ", imei='" + imei + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", rongid='" + rongid + '\'' +
-                ", createtime=" + createtime +
-                ", registphone='" + registphone + '\'' +
-                ", rytoken='" + rytoken + '\'' +
-                ", age=" + age +
-                ", headimageurl='" + headimageurl + '\'' +
-                ", address='" + address + '\'' +
-                ", birthday=" + birthday +
-                '}';
+    /**
+     * 获取微信昵称
+     *
+     * @return nickname - 微信昵称
+     */
+    public String getNickname() {
+        return nickname;
+    }
+
+    /**
+     * 设置微信昵称
+     *
+     * @param nickname 微信昵称
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    /**
+     * 获取微信openid
+     *
+     * @return openid - 微信openid
+     */
+    public String getOpenid() {
+        return openid;
+    }
+
+    /**
+     * 设置微信openid
+     *
+     * @param openid 微信openid
+     */
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    /**
+     * 获取所在城市
+     *
+     * @return city - 所在城市
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * 设置所在城市
+     *
+     * @param city 所在城市
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * 获取所在省份
+     *
+     * @return province - 所在省份
+     */
+    public String getProvince() {
+        return province;
+    }
+
+    /**
+     * 设置所在省份
+     *
+     * @param province 所在省份
+     */
+    public void setProvince(String province) {
+        this.province = province;
     }
 }

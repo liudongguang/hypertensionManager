@@ -67,4 +67,17 @@ public class WXReqParam{
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+    @Override
+    public String toString() {
+        return "WXReqParam{" +
+                "nickname='" + nickname + '\'' +
+                ", headimgurl='" + headimgurl + '\'' +
+                ", sex='" + sex + '\'' +
+                ", openid='" + openid + '\'' +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", mobile='" + mobile + '\'' +
+                '}';
+    }
 }
