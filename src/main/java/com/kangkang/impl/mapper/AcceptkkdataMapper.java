@@ -19,4 +19,6 @@ public interface AcceptkkdataMapper extends Mapper<Acceptkkdata> {
     Date getgetLastDateByPatientID(AppstatisticsParam param);
 
     List<Acceptkkdata> getMeasureDateByBetDate(AppstatisticsParam param);
+
+    int dataCountByDays(AppstatisticsParam param);
 }

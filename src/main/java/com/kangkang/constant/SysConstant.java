@@ -32,5 +32,7 @@ public interface SysConstant {
     int DeviceRepertory_DESTROY_NO=1;
     int DeviceRepertory_DESTROY_YES=2;
 
-    String HighchartsConfig_NULLTITLE="无展示数据！";
+    String HighchartsConfig_NULLTITLE="未测量";
+    int Statistics_DAYS_WEEK=7;
+    int Statistics_DAYS_MONTH=30;
 }
