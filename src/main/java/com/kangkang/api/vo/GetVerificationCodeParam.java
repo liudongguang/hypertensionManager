@@ -8,6 +8,7 @@ public class GetVerificationCodeParam {
     private String mobile;
     private String verificationcode;  //手机发来的验证码
 
+
     public Integer getUid() {
         return uid;
     }

@@ -37,6 +37,50 @@ public class AppController {
     private WebManagerService webManagerService;
     @Autowired
     private AppDoctorService appDoctorService;
+
+    /**
+     * 是否微信注册过
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/isOrNoWxLogin")
+    @ResponseBody
+    public ResultMsg isOrNoWxLogin(HttpServletRequest request,WXReqParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        TUsersExt user=appPatientService.selectUserByWxOpenID(param);
+        if(user!=null){
+            String uidforwx=user.getUid().toString();
+            String appToken=redisService.get(uidforwx);
+            if(appToken==null){
+                appToken=UUID.randomUUID().toString();
+                redisService.add(uidforwx, appToken, 60*24*30);
+            }
+            user.setApptoken(appToken);
+            rs.setData(user);
+        }else{
+            rs.setErrcode(1);
+            rs.setErrmsg("微信未注册！");
+        }
+        return rs;
+    }
+
+    /**
+     * 注册微信用户
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/wxLogin")
+    @ResponseBody
+    public ResultMsg wxLogin(HttpServletRequest request,WXReqParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+
+        return rs;
+    }
+
     /**
      * 注册获取验证码
      * @param request

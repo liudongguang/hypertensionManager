@@ -3,9 +3,7 @@ package com.kangkang.api.service;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.TUsers;
-import com.kangkang.api.vo.GetHomePhotoAddressRs;
-import com.kangkang.api.vo.GetVerificationCodeParam;
-import com.kangkang.api.vo.MyAsingleRecordRs;
+import com.kangkang.api.vo.*;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,4 +66,11 @@ public interface AppPatientService {
     PageInfo<TUsers> patientList(PageParam pageParam);
 
     int beforeIM(Integer doctorid, Integer uid);
+
+    /**
+     * 通过微信openid登陆
+     * @param param
+     * @return
+     */
+    TUsersExt selectUserByWxOpenID(WXReqParam param);
 }

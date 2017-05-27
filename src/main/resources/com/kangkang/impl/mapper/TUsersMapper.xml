@@ -32,6 +32,12 @@
         select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users WHERE
         registphone=#{mobile} and password=#{password}
   </select>
+    <select id="selectUserByWXOpenID" parameterType="com.kangkang.api.vo.WXReqParam"
+            resultType="com.kangkang.api.vo.TUsersExt">
+        select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users WHERE
+        registphone=#{mobile} and password=#{password}
+    </select>
+
     <select id="getPatientUserByrongyunid" resultMap="BaseResultMap">
         select name,headimageurl from t_users where rongid=#{rongyunid}
     </select>

@@ -6,9 +6,7 @@ import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.HytbPatientImlog;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppPatientService;
-import com.kangkang.api.vo.GetHomePhotoAddressRs;
-import com.kangkang.api.vo.GetVerificationCodeParam;
-import com.kangkang.api.vo.MyAsingleRecordRs;
+import com.kangkang.api.vo.*;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.HytbPatientImlogMapper;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
@@ -119,5 +117,10 @@ public class AppPatientServiceImpl implements AppPatientService {
             imlog.setSettime(new Date());
             return patientImLogDao.insertSelective(imlog);
         }
+    }
+
+    @Override
+    public TUsersExt selectUserByWxOpenID(WXReqParam param) {
+        return userDao.selectUserByWXOpenID(param);
     }
 }

@@ -72,4 +72,6 @@ public interface TUsersMapper extends Mapper<TUsers> {
      * @return
      */
     List<TUsers> patientList();
+
+    TUsersExt selectUserByWXOpenID(WXReqParam param);
 }
