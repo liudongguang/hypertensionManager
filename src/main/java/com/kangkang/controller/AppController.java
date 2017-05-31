@@ -101,11 +101,22 @@ public class AppController {
     public ResultMsg getVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
-        Integer userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
-        if(null!=userid){
-            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
-            rs.setErrmsg("该手机号已注册！");
-            return rs;
+        Integer userid=null;
+        if(param.getOpenid()==null){
+            userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
+            if(null!=userid){
+                rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+                rs.setErrmsg("该手机号已注册！");
+                return rs;
+            }
+        }else{
+            //微信情况
+            userid=kkService.getUserByOpenIDForRegistWX(param.getOpenid());
+            if(null!=userid){
+                rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+                rs.setErrmsg("微信已注册！");
+                return rs;
+            }
         }
         //2.未注册发送短信验证码
         StringBuilder sendmsg=new StringBuilder("验证码为：");
@@ -131,8 +142,14 @@ public class AppController {
     @ResponseBody
     public ResultMsg setPwd(HttpServletRequest request,AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        /////////////////检查是否注册过，手机号存在则代表注册过，那么只需要修改
-        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
+        /////////////////检查是否注册过，手机号存在并且密码不为空时
+        Integer userid=null;
+        if(param.getState()==1){
+            userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
+        }else{
+            //微信情况
+            userid=kkService.getUserByOpenIDForRegistWX(param.getOpenid());
+        }
         if(null!=userid){
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("该手机号已注册！");
@@ -147,11 +164,17 @@ public class AppController {
             redisService.add(uid, appToken, 60*24*30);
         }
         user.setApptoken(appToken);
-        if(user.getRytoken()!=null){
-            rs.setData(user);
+        //普通注册，不是修改状态
+        if(param.getState()==1&&!param.isUpdateState()){
+            if(user.getRytoken()!=null){
+                rs.setData(user);
+            }else{
+                rs.setErrcode(1);
+                rs.setErrmsg("注册融云消息服务失败！");
+            }
         }else{
-            rs.setErrcode(1);
-            rs.setErrmsg("注册融云消息服务失败！");
+            //微信的时候
+            rs.setData(user);
         }
         return rs;
     }
@@ -384,6 +407,13 @@ public class AppController {
     @ResponseBody
     public ResultMsg modifyPhoneForVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
+        //1.判断是否注册
+        Integer    userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
+        if(null!=userid){
+            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+            rs.setErrmsg("该手机号已注册！");
+            return rs;
+        }
         //2.未注册发送短信验证码
         StringBuilder sendmsg=new StringBuilder("验证码为：");
         sendmsg.append(param.getVerificationcode());
@@ -528,6 +558,24 @@ public class AppController {
         return rs;
     }
 
+    /**
+     * 修改密码
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/settingPwd")
+    @ResponseBody
+    public ResultMsg settingPwd(HttpServletRequest request,AppParamVo param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int updateNum=kkService.resetPwd(param);
+        if(updateNum==0){
+            rs.setErrcode(1);
+            rs.setErrmsg("设置密码失败！");
+        }
+        return rs;
+    }
     /////
     @RequestMapping(value = "/testRedis")
     @ResponseBody

@@ -1,6 +1,7 @@
 package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ChangePasswordParam;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorListRsVo;
@@ -33,4 +34,11 @@ public interface AppDoctorService {
      * @return
      */
     PageInfo<PatientListRsVo> patientList(Integer uid);
+
+    /**
+     * 修改密码
+     * @param param
+     * @return
+     */
+    String changePassword(ChangePasswordParam param);
 }

@@ -60,47 +60,50 @@ public class KangKangDataServiceImpl implements KangKangDataService {
 
     @Override
     public TUsersExt registerUser(AppParamVo param) throws AesException {
-        //如果手机号已存在，则进行更新
-        Integer uid = getUserByPhoneNumber(param.getMobile());
         TUsersExt user = new TUsersExt();
         String phone = param.getMobile();
-        if (uid != null) {
-            user.setUid(uid);
-            user.setPassword(param.getPassword());
-            usersMapper.updateByPrimaryKeySelective(user);
-        } else {
-            final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist(phone, phone);
-            if (200 == ryrsObj.getCode()) {
-                user.setUsername(phone);
-                user.setRegistphone(ryrsObj.getUserId());
-                user.setCreatetime(new Date());
-                user.setRytoken(ryrsObj.getToken());
-                user.setRongid(phone);
-                if (param.getHeadimageurl() == null) {
-                    user.setHeadimageurl(SysConstant.DEFAULT_HEADIMG);
-                } else {
-                    user.setHeadimageurl(param.getHeadimageurl());
-                }
-                if (param.getState() == 1) {
-                    user.setName(phone);
-                    user.setPassword(param.getPassword());
-                } else if (param.getState() == 2) {//不设置密码
-                    user.setName(param.getName());
-                    if (param.getSex() != null) {
-                        if (param.getSex().equals("1")) {
-                            user.setSex("男");
-                        } else {
-                            user.setSex("女");
-                        }
-                    }
-                    user.setOpenid(param.getOpenid());
-                    user.setCity(param.getCity());
-                    user.setProvince(param.getProvince());
-
-                }
-                usersMapper.insertSelective(user);
-                user.setPassword(null);
+        //普通注册
+        final RongYunJsonRsInfo ryrsObj = rongYunServie.ryRegist(phone, phone);
+        if (200 == ryrsObj.getCode()) {
+            user.setUsername(phone);
+            user.setRegistphone(ryrsObj.getUserId());
+            user.setCreatetime(new Date());
+            user.setRytoken(ryrsObj.getToken());
+            user.setRongid(phone);
+            if (param.getHeadimageurl() == null) {
+                user.setHeadimageurl(SysConstant.DEFAULT_HEADIMG);
+            } else {
+                user.setHeadimageurl(param.getHeadimageurl());
             }
+            if (param.getState() == 1) {
+                user.setName(phone);
+                user.setPassword(param.getPassword());
+            } else if (param.getState() == 2) {//不设置密码
+                user.setName(param.getName());
+                if (param.getSex() != null) {
+                    if (param.getSex().equals("1")) {
+                        user.setSex("男");
+                    } else {
+                        user.setSex("女");
+                    }
+                }
+                user.setOpenid(param.getOpenid());
+                user.setCity(param.getCity());
+                user.setProvince(param.getProvince());
+            }
+            //1.如果是微信（手机号已注册，修改。手机号未注册，增加）
+            //2.普通用注册（手机号已注册，修改。手机号未注册，增加）
+            Integer userid=getUserByPhoneNumber(param.getMobile());
+            if(userid!=null){
+                user.setUid(userid);
+                user.setName(null);
+                user.setHeadimageurl(null);
+                user.setSex(null);
+                usersMapper.updateByPrimaryKeySelective(user);
+            }else{
+                usersMapper.insertSelective(user);
+            }
+            user.setPassword(null);
         }
         return user;
     }
@@ -135,5 +138,8 @@ public class KangKangDataServiceImpl implements KangKangDataService {
         return usersMapper.isBindedByUid(user);
     }
 
-
+    @Override
+    public Integer getUserByOpenIDForRegistWX(String openid) {
+        return usersMapper.getUserByOpenIDForRegistWX(openid);
+    }
 }

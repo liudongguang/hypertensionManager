@@ -1,6 +1,7 @@
 package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ChangePasswordParam;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppDoctorService;
@@ -190,4 +191,24 @@ public class AppDoctorController {
         /////
         return rs;
     }
+
+    /**
+     * 根据原密码修改密码
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/changePassword")
+    @ResponseBody
+    public ResultMsg changePassword(HttpServletRequest request, ChangePasswordParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        String errorMSG = appDoctorService.changePassword(param);
+        if (errorMSG !=null) {
+            rs.setErrcode(1);
+            rs.setErrmsg(errorMSG);
+        }
+        return rs;
+    }
+
 }

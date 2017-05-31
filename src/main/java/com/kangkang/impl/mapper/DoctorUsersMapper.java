@@ -1,5 +1,6 @@
 package com.kangkang.impl.mapper;
 
+import com.kangkang.api.bo.ChangePasswordParam;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.vo.AppDoctorParamVo;
 import com.kangkang.api.vo.DoctorListRsVo;
@@ -27,4 +28,8 @@ public interface DoctorUsersMapper extends Mapper<DoctorUsers> {
     DoctorUsers getDoctorHeadImgAndNameByRongYunID(String userId);
 
     List<DoctorListRsVo> doctorList();
+
+    Integer selectUidByUidAndOldPass(ChangePasswordParam param);
+
+    int updatePassByOldPass(ChangePasswordParam param);
 }

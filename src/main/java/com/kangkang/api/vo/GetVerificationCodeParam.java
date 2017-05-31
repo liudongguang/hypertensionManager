@@ -7,7 +7,15 @@ public class GetVerificationCodeParam {
     private Integer uid;//唯一标识
     private String mobile;
     private String verificationcode;  //手机发来的验证码
+    private String openid;//微信openid
 
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
     public Integer getUid() {
         return uid;

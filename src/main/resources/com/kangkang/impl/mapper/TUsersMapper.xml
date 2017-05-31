@@ -34,6 +34,9 @@
     <select id="getUserByPhoneNumberForRegist" resultType="int">
         select uid from t_users where registphone=#{mobile} and password is not null
     </select>
+    <select id="getUserByOpenIDForRegistWX" resultType="int">
+        select uid from t_users where openid=#{openid}
+    </select>
 
     <select id="selectUserByMobileAndPass" parameterType="com.kangkang.api.vo.AppParamVo" resultType="com.kangkang.api.vo.TUsersExt">
         select uid,sn,imei,username,name,rongid,rytoken,registphone,rongid,headimageurl from t_users WHERE
@@ -75,7 +78,7 @@
         select uid,name,sex,birthday,age,address,headimageurl,registphone,rongid from  t_users  where uid=#{uid}
     </select>
     <update id="updateUserPhone" parameterType="com.kangkang.api.vo.GetVerificationCodeParam">
-         update t_users set registphone=#{mobile} where uid=#{uid}
+         update t_users set registphone=#{mobile},username=#{mobile} where uid=#{uid}
     </update>
     <!--     -->
     <select id="selectAllForPatientListList" resultMap="BaseResultMap">

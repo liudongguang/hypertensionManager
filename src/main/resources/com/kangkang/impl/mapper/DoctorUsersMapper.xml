@@ -31,7 +31,7 @@
         select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg from doctor_users where (gonghao=#{username} and password=#{password}) or ( username=#{username} and password=#{password} )
     </select>
     <select id="getUserInfoByUid" resultMap="BaseResultMap">
-         select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg,imgpici from doctor_users  where uid=#{uid}
+         select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg,imgpici,mobile from doctor_users  where uid=#{uid}
     </select>
 
     <select id="selectUidByUserName" parameterType="com.kangkang.api.po.DoctorUsers" resultType="int">
@@ -48,4 +48,10 @@
     <select id="doctorList" resultType="com.kangkang.api.vo.DoctorListRsVo">
         select uid,username,rongid,rytoken,name,keshi,workdanwei,zhicheng,gonghao,headimg from doctor_users order by name
     </select>
+    <select id="selectUidByUidAndOldPass" resultType="int" parameterType="com.kangkang.api.bo.ChangePasswordParam">
+        select uid from doctor_users where uid=#{uid} and password=#{password}
+    </select>
+    <update id="updatePassByOldPass" parameterType="com.kangkang.api.bo.ChangePasswordParam">
+        update doctor_users set password=#{newpassword} where uid=#{uid}
+    </update>
 </mapper>

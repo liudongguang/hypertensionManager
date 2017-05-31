@@ -82,4 +82,6 @@ public interface KangKangDataService {
     TUsers isBindedByUid(TUsers user);
 
     Integer getUserByPhoneNumberForRegist(String mobile);
+
+    Integer getUserByOpenIDForRegistWX(String openid);
 }

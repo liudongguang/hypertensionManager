@@ -2,6 +2,7 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ChangePasswordParam;
 import com.kangkang.api.bo.FileUploadParam;
 import com.kangkang.api.po.DoctorUsers;
 import com.kangkang.api.service.AppDoctorService;
@@ -81,5 +82,21 @@ public class AppDoctorServiceImpl implements AppDoctorService {
     public PageInfo<PatientListRsVo> patientList(Integer uid) {
         PageInfo<PatientListRsVo> pageInfo = PageHelper.startPage(1, 50, true).doSelectPageInfo(() -> patientImLogDao.patientList());
         return pageInfo;
+    }
+
+    @Override
+    public String changePassword(ChangePasswordParam param) {
+        //1.根据uid 原密码获取uid
+        Integer uid=doctorUsersDao.selectUidByUidAndOldPass(param);
+        //2.修改密码
+        if(uid!=null){
+           int updateNum=  doctorUsersDao.updatePassByOldPass(param);
+           if(updateNum==1){
+               return null;
+           }
+        }else{
+            return "密码错误！";
+        }
+        return "修改失败！";
     }
 }
