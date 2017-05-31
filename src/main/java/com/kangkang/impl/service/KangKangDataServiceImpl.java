@@ -120,6 +120,8 @@ public class KangKangDataServiceImpl implements KangKangDataService {
 
     @Override
     public int relevanceDevice(TUsers user) {
+        ////////若在库存，添加绑定记录
+
         return usersMapper.relevanceDevice(user);
     }
 

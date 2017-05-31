@@ -85,6 +85,7 @@ public class DeviceServiceImpl implements DeviceService {
     public int destroyDeviceById(HytbDeviceRepertory device) {
         //解除用户绑定
         int updateNum=userDao.unBindedDeviceBySN(device.getSn());
+        int updateNum2=deviceLandlogDao.unBindedDevice(device);
         return deviceRepertoryDao.destroyDeviceById(device);
     }
 
