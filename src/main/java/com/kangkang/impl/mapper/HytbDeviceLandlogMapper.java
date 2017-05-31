@@ -1,7 +1,7 @@
 package com.kangkang.impl.mapper;
 
-import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.HytbDeviceLandlog;
+import com.kangkang.api.po.HytbDeviceRepertory;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -24,4 +24,6 @@ public interface HytbDeviceLandlogMapper extends Mapper<HytbDeviceLandlog> {
     int updateBindDeviceState(HytbDeviceLandlog currentlandlog);
 
     List<HytbDeviceLandlog> getDeviceLogsPageInfoByPatientID(Integer patientid);
+
+    int unBindedDevice(HytbDeviceRepertory device);
 }

@@ -165,7 +165,6 @@ task delWAR (dependsOn:shutdownServer){
             session(remotes.depServer) {
                 println 'delWAR run.....'
                 execute '''#!/bin/sh  
-                        rm -rf /opt/javaproject/apache-tomcat-9.0.0.M19//webapps/hypertensionManager  
                         rm -f /opt/javaproject/apache-tomcat-9.0.0.M19//webapps/hypertensionManager.war  
                     '''
             }

@@ -91,6 +91,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public int unbindDeviceById(HytbDeviceRepertory device) {
         int updateNum=userDao.unBindedDeviceBySN(device.getSn());
+        int updateNum2=deviceLandlogDao.unBindedDevice(device);
         return deviceRepertoryDao.unbindDeviceById(device);
     }
 }
