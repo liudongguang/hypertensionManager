@@ -19,6 +19,8 @@
   </update>
     <select id="patientList" resultType="com.kangkang.api.vo.PatientListRsVo">
       SELECT imlog.patientidnamepinyin as firstLetter,patient.name,patient.uid as patientuid,patient.headimageurl   FROM hytb_patient_imlog imlog
-         left join t_users patient on imlog.patientid=patient.uid order by settime,patientidnamepinyin DESC
+         left join t_users patient on imlog.patientid=patient.uid
+         where imlog.doctorid=#{doctoruid}
+         order by settime,patientidnamepinyin DESC
   </select>
 </mapper>

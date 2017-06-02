@@ -13,5 +13,5 @@ public interface HytbPatientImlogMapper extends Mapper<HytbPatientImlog> {
 
     int updateSetTimeByuid(@Param("loguid")Integer loguid,@Param("nowDate")Date nowDate);
 
-    List<PatientListRsVo> patientList();
+    List<PatientListRsVo> patientList(Integer doctoruid);
 }

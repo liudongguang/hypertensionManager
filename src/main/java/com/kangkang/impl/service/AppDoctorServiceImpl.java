@@ -79,8 +79,8 @@ public class AppDoctorServiceImpl implements AppDoctorService {
     }
 
     @Override
-    public PageInfo<PatientListRsVo> patientList(Integer uid) {
-        PageInfo<PatientListRsVo> pageInfo = PageHelper.startPage(1, 50, true).doSelectPageInfo(() -> patientImLogDao.patientList());
+    public PageInfo<PatientListRsVo> patientList(Integer doctoruid) {
+        PageInfo<PatientListRsVo> pageInfo = PageHelper.startPage(1, 50, true).doSelectPageInfo(() -> patientImLogDao.patientList(doctoruid));
         return pageInfo;
     }
 

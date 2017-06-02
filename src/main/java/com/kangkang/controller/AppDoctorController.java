@@ -156,6 +156,7 @@ public class AppDoctorController {
      * @param request
      * @return
      * @throws Exception
+     * uid医生id
      */
     @RequestMapping(value = "/patientList")
     @ResponseBody
