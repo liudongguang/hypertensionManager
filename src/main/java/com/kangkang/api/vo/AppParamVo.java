@@ -16,16 +16,7 @@ public class AppParamVo {
     private String openid;
     private String city;
     private String province;
-    ////
-    private boolean updateState=false;
 
-    public boolean isUpdateState() {
-        return updateState;
-    }
-
-    public void setUpdateState(boolean updateState) {
-        this.updateState = updateState;
-    }
 
     public String getSex() {
         return sex;

@@ -29,10 +29,13 @@ public interface SysConstant {
     int DEVICE_LAND_RETURN=2;//归还
     int DEVICE_LAND_REPLACE=3;//替换
 
-    int DeviceRepertory_DESTROY_NO=1;
-    int DeviceRepertory_DESTROY_YES=2;
+    int DeviceRepertory_DESTROY_NO=1; //未销毁
+    int DeviceRepertory_DESTROY_YES=2;//已销毁
 
     String HighchartsConfig_NULLTITLE="未测量";
     int Statistics_DAYS_WEEK=7;
     int Statistics_DAYS_MONTH=30;
+
+    int ACCEPT_DATA_TYPE_KK=1;//康康
+    int ACCEPT_DATA_TYPE_SD=2;//手动
 }

@@ -18,6 +18,15 @@ public class MyAsingleRecordRs {
     private String lowVoltageValue;//低压值 diastolicpressure
     private String heartrate;//心率
     private String bloodPressureState;//血压状态
+    private Integer source;//来源 1.康康  2.手动
+
+    public Integer getSource() {
+        return source;
+    }
+
+    public void setSource(Integer source) {
+        this.source = source;
+    }
 
     public String getTesttimeStr() {
         return testtimeStr;

@@ -1,6 +1,7 @@
 package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ManuallyEnterParam;
 import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.*;
@@ -73,4 +74,11 @@ public interface AppPatientService {
      * @return
      */
     TUsersExt selectUserByWxOpenID(WXReqParam param);
+
+    /**
+     * 手动输入血压数据
+
+     * @return
+     */
+    int manuallyEnter(ManuallyEnterParam param);
 }

@@ -17,4 +17,6 @@ public interface HytbDeviceRepertoryMapper extends Mapper<HytbDeviceRepertory> {
     int destroyDeviceById(HytbDeviceRepertory device);
 
     int unbindDeviceById(HytbDeviceRepertory device);
+
+    HytbDeviceRepertory getDeviceBySN(String sn);
 }

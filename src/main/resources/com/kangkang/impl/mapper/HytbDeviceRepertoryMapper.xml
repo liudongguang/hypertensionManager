@@ -25,6 +25,9 @@ order by shebei.uid desc
         select uid from hytb_device_repertory where sn=#{sn}
         <if test="uid!=null">and uid!=#{uid}</if>
     </select>
+    <select id="getDeviceBySN" resultMap="BaseResultMap" parameterType="string">
+        select uid,landlogid,destroy from  hytb_device_repertory where sn=#{sn}
+    </select>
 
     <update id="saveLandIDForBind" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
         update hytb_device_repertory set landlogid=#{landlogid} where uid=#{uid}

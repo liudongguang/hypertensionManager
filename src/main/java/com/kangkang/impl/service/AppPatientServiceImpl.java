@@ -2,11 +2,14 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ManuallyEnterParam;
 import com.kangkang.api.bo.UpdatePasswordParam;
+import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbPatientImlog;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.AppPatientService;
 import com.kangkang.api.vo.*;
+import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.HytbPatientImlogMapper;
 import com.kangkang.impl.mapper.SysLunboimgsMapper;
@@ -38,6 +41,8 @@ public class AppPatientServiceImpl implements AppPatientService {
 
     @Autowired
     private HytbPatientImlogMapper patientImLogDao;
+    @Autowired
+    private AcceptkkdataMapper acceptkkdataMapper;
 
     @Override
     public List<GetHomePhotoAddressRs> getHomePhotoAddress() {
@@ -120,5 +125,23 @@ public class AppPatientServiceImpl implements AppPatientService {
     @Override
     public TUsersExt selectUserByWxOpenID(WXReqParam param) {
         return userDao.selectUserByWXOpenID(param);
+    }
+
+    @Override
+    public int manuallyEnter(ManuallyEnterParam param) {
+        Acceptkkdata accData=new Acceptkkdata();
+        accData.setSource(SysConstant.ACCEPT_DATA_TYPE_SD);
+        accData.setUserid(param.getUid());
+        accData.setSystolicpressure(param.getMaxPressure());
+        accData.setDiastolicpressure(param.getMinPressure());
+        accData.setPulse(param.getHeartRate());
+        accData.setKktime(new Date());
+        accData.setKklevel("-1");
+        accData.setImei("-1");
+        accData.setKkmode("-1");
+        accData.setKksn("-1");
+        accData.setKkkey("-1");
+        accData.setKkunique("-1");
+        return  acceptkkdataMapper.insertSelective(accData);
     }
 }

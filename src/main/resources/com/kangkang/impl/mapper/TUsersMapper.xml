@@ -55,7 +55,7 @@
     <update id="relevanceDevice" parameterType="com.kangkang.api.po.TUsers">
        update t_users set sn=#{sn},imei=#{imei} where uid=#{uid}
   </update>
-    <select id="isBindedBySN" parameterType="com.kangkang.api.po.TUsers" resultMap="BaseResultMap">
+  <select id="isBindedBySN" parameterType="com.kangkang.api.po.TUsers" resultMap="BaseResultMap">
        select uid from t_users where sn=#{sn}
   </select>
     <update id="unBindedDevice" parameterType="com.kangkang.api.po.TUsers">

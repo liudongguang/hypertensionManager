@@ -58,7 +58,7 @@ public interface KangKangDataService {
      * @param user
      * @return
      */
-    int relevanceDevice(TUsers user);
+    String relevanceDevice(TUsers user);
 
     /**
      * 获取绑定用户通过设备好

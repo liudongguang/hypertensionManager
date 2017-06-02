@@ -1,6 +1,7 @@
 package com.kangkang.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.ManuallyEnterParam;
 import com.kangkang.api.bo.UpdatePasswordParam;
 import com.kangkang.api.po.*;
 import com.kangkang.api.service.*;
@@ -40,6 +41,7 @@ public class AppController {
 
     /**
      * 是否微信注册过
+     *
      * @param request
      * @param param
      * @return
@@ -47,19 +49,19 @@ public class AppController {
      */
     @RequestMapping(value = "/isOrNoWxLogin")
     @ResponseBody
-    public ResultMsg isOrNoWxLogin(HttpServletRequest request,WXReqParam param) throws Exception {
+    public ResultMsg isOrNoWxLogin(HttpServletRequest request, WXReqParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        TUsersExt user=appPatientService.selectUserByWxOpenID(param);
-        if(user!=null){
-            String uidforwx=user.getUid().toString();
-            String appToken=redisService.get(uidforwx);
-            if(appToken==null){
-                appToken=UUID.randomUUID().toString();
-                redisService.add(uidforwx, appToken, 60*24*30);
+        TUsersExt user = appPatientService.selectUserByWxOpenID(param);
+        if (user != null) {
+            String uidforwx = user.getUid().toString();
+            String appToken = redisService.get(uidforwx);
+            if (appToken == null) {
+                appToken = UUID.randomUUID().toString();
+                redisService.add(uidforwx, appToken, 60 * 24 * 30);
             }
             user.setApptoken(appToken);
             rs.setData(user);
-        }else{
+        } else {
             rs.setErrcode(1);
             rs.setErrmsg("微信未注册！");
         }
@@ -68,6 +70,7 @@ public class AppController {
 
     /**
      * 注册微信用户
+     *
      * @param request
      * @param param
      * @return
@@ -75,8 +78,8 @@ public class AppController {
      */
     @RequestMapping(value = "/wxLogin")
     @ResponseBody
-    public ResultMsg wxLogin(HttpServletRequest request,WXReqParam param) throws Exception {
-        AppParamVo Appparam=new AppParamVo();
+    public ResultMsg wxLogin(HttpServletRequest request, WXReqParam param) throws Exception {
+        AppParamVo Appparam = new AppParamVo();
         Appparam.setMobile(param.getMobile());//手机号
         Appparam.setName(param.getNickname());//昵称
         Appparam.setState(2);//标识微信注册
@@ -85,12 +88,14 @@ public class AppController {
         Appparam.setOpenid(param.getOpenid());//微信openid
         Appparam.setCity(param.getCity());//城市
         Appparam.setProvince(param.getProvince());//省份
-        ResultMsg rs =setPwd(request,Appparam);
+        Appparam.setPassword(param.getPassword());
+        ResultMsg rs = setPwd(request, Appparam);
         return rs;
     }
 
     /**
      * 注册获取验证码
+     *
      * @param request
      * @param param
      * @return
@@ -98,12 +103,12 @@ public class AppController {
      */
     @RequestMapping(value = "/getVerificationCode")
     @ResponseBody
-    public ResultMsg getVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+    public ResultMsg getVerificationCode(HttpServletRequest request, GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
         Integer userid=null;
         if(param.getOpenid()==null){
-            userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
+            userid=kkService.getUserByPhoneNumber(param.getMobile());
             if(null!=userid){
                 rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
                 rs.setErrmsg("该手机号已注册！");
@@ -111,6 +116,12 @@ public class AppController {
             }
         }else{
             //微信情况
+            userid=kkService.getUserByPhoneNumber(param.getMobile());
+            if(null!=userid){
+                rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
+                rs.setErrmsg("该手机号已注册！");
+                return rs;
+            }
             userid=kkService.getUserByOpenIDForRegistWX(param.getOpenid());
             if(null!=userid){
                 rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
@@ -119,13 +130,13 @@ public class AppController {
             }
         }
         //2.未注册发送短信验证码
-        StringBuilder sendmsg=new StringBuilder("验证码为：");
+        StringBuilder sendmsg = new StringBuilder("验证码为：");
         sendmsg.append(param.getVerificationcode());
-        MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
-        if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
+        MsgResult msgrs = PeonyMessageUtil.sendMessage(param.getMobile(), sendmsg.toString());
+        if (SysConstant.PEONYMSG_SUCCESS_CODE != msgrs.getCode()) {
             rs.setErrcode(msgrs.getCode());
             rs.setErrmsg(msgrs.getMessage());
-            if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
+            if (SysConstant.ResultMsg_FAIL_PHONEERR == msgrs.getCode()) {
                 rs.setErrmsg("手机号错误！");
             }
         }
@@ -134,79 +145,56 @@ public class AppController {
 
     /**
      * 注册
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/setPwd")
     @ResponseBody
-    public ResultMsg setPwd(HttpServletRequest request,AppParamVo param) throws Exception {
+    public ResultMsg setPwd(HttpServletRequest request, AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        /////////////////检查是否注册过，手机号存在并且密码不为空时
-        Integer userid=null;
-        if(param.getState()==1){
-            userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
-        }else{
-            //微信情况
-            userid=kkService.getUserByOpenIDForRegistWX(param.getOpenid());
-        }
-        if(null!=userid){
-            rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
-            rs.setErrmsg("该手机号已注册！");
-            return rs;
-        }
-        /////////////
-        TUsersExt user=kkService.registerUser(param);
-        String uid=user.getUid().toString();
-        String appToken=redisService.get(uid);
-        if(appToken==null){
-            appToken=UUID.randomUUID().toString();
-            redisService.add(uid, appToken, 60*24*30);
+        TUsersExt user = kkService.registerUser(param);
+        String uid = user.getUid().toString();
+        String appToken = redisService.get(uid);
+        if (appToken == null) {
+            appToken = UUID.randomUUID().toString();
+            redisService.add(uid, appToken, 60 * 24 * 30);
         }
         user.setApptoken(appToken);
-        //普通注册，不是修改状态
-        if(param.getState()==1&&!param.isUpdateState()){
-            if(user.getRytoken()!=null){
-                rs.setData(user);
-            }else{
-                rs.setErrcode(1);
-                rs.setErrmsg("注册融云消息服务失败！");
-            }
-        }else{
-            //微信的时候
-            rs.setData(user);
-        }
+        rs.setData(user);
         return rs;
     }
 
 
     /**
      * 登陆
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/login")
     @ResponseBody
-    public ResultMsg login(HttpServletRequest request,AppParamVo param) throws Exception {
+    public ResultMsg login(HttpServletRequest request, AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        Integer userid=kkService.getUserByPhoneNumber(param.getMobile());
-        if(userid==null){
+        Integer userid = kkService.getUserByPhoneNumber(param.getMobile());
+        if (userid == null) {
             rs.setErrcode(1);
             rs.setErrmsg("用户未注册！");
             return rs;
         }
-        TUsersExt user=kkService.login(param);
-        if(user!=null){
-            String uid=user.getUid().toString();
-            String appToken=redisService.get(uid);
-            if(appToken==null){
-                appToken=UUID.randomUUID().toString();
-                redisService.add(uid, appToken, 60*24*30);
+        TUsersExt user = kkService.login(param);
+        if (user != null) {
+            String uid = user.getUid().toString();
+            String appToken = redisService.get(uid);
+            if (appToken == null) {
+                appToken = UUID.randomUUID().toString();
+                redisService.add(uid, appToken, 60 * 24 * 30);
             }
             user.setApptoken(appToken);
             rs.setData(user);
-        }else{
+        } else {
             rs.setErrcode(1);
             rs.setErrmsg("用户名或密码错误！");
         }
@@ -215,6 +203,7 @@ public class AppController {
 
     /**
      * 退出登陆
+     *
      * @param request
      * @param param
      * @return
@@ -222,13 +211,15 @@ public class AppController {
      */
     @RequestMapping(value = "/loginout")
     @ResponseBody
-    public ResultMsg loginout(HttpServletRequest request,AppParamVo param) throws Exception {
+    public ResultMsg loginout(HttpServletRequest request, AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
         redisService.del(param.getUid().toString());
         return rs;
     }
+
     /**
      * 忘记密码的发送验证码
+     *
      * @param request
      * @param param
      * @return
@@ -236,23 +227,25 @@ public class AppController {
      */
     @RequestMapping(value = "/forgetPwd")
     @ResponseBody
-    public ResultMsg forgetPwd(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+    public ResultMsg forgetPwd(HttpServletRequest request, GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //2.未注册发送短信验证码
-        StringBuilder sendmsg=new StringBuilder("验证码为：");
+        StringBuilder sendmsg = new StringBuilder("验证码为：");
         sendmsg.append(param.getVerificationcode());
-        MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
-        if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
+        MsgResult msgrs = PeonyMessageUtil.sendMessage(param.getMobile(), sendmsg.toString());
+        if (SysConstant.PEONYMSG_SUCCESS_CODE != msgrs.getCode()) {
             rs.setErrmsg(msgrs.getMessage());
             rs.setErrcode(msgrs.getCode());
-            if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
+            if (SysConstant.ResultMsg_FAIL_PHONEERR == msgrs.getCode()) {
                 rs.setErrmsg("手机号错误！");
             }
         }
         return rs;
     }
+
     /**
      * 忘记密码
+     *
      * @param request
      * @param param
      * @return
@@ -260,10 +253,10 @@ public class AppController {
      */
     @RequestMapping(value = "/resetPwd")
     @ResponseBody
-    public ResultMsg resetPwd(HttpServletRequest request,AppParamVo param) throws Exception {
+    public ResultMsg resetPwd(HttpServletRequest request, AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        int updateNum=kkService.resetPwd(param);
-        if(updateNum==0){
+        int updateNum = kkService.resetPwd(param);
+        if (updateNum == 0) {
             rs.setErrcode(1);
             rs.setErrmsg("设置密码失败！");
         }
@@ -272,6 +265,7 @@ public class AppController {
 
     /**
      * 绑定设备
+     *
      * @param request
      * @param user
      * @return
@@ -279,23 +273,25 @@ public class AppController {
      */
     @RequestMapping(value = "/relevanceDevice")
     @ResponseBody
-    public ResultMsg relevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+    public ResultMsg relevanceDevice(HttpServletRequest request, TUsers user) throws Exception {
         ResultMsg rs = new ResultMsg();
-        TUsers bindUser=kkService.isBindedBySN(user);
-        if(bindUser!=null){
+        TUsers bindUser = kkService.isBindedBySN(user);
+        if (bindUser != null) {
             rs.setErrcode(1);
             rs.setErrmsg("设备已经被绑定，绑定失败！");
             return rs;
         }
-        int updateNum=kkService.relevanceDevice(user);
-        if(updateNum==0){
+        String errorinfo = kkService.relevanceDevice(user);
+        if (errorinfo != null) {
             rs.setErrcode(1);
-            rs.setErrmsg("绑定失败！");
+            rs.setErrmsg(errorinfo);
         }
         return rs;
     }
+
     /**
-     * 绑定设备
+     * 解绑设备
+     *
      * @param request
      * @param user
      * @return
@@ -303,10 +299,10 @@ public class AppController {
      */
     @RequestMapping(value = "/unrelevanceDevice")
     @ResponseBody
-    public ResultMsg unrelevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+    public ResultMsg unrelevanceDevice(HttpServletRequest request, TUsers user) throws Exception {
         ResultMsg rs = new ResultMsg();
-        int updateNum=kkService.unBindedDevice(user);
-        if(updateNum==0){
+        int updateNum = kkService.unBindedDevice(user);
+        if (updateNum == 0) {
             rs.setErrcode(1);
             rs.setErrmsg("解绑失败！");
         }
@@ -315,6 +311,7 @@ public class AppController {
 
     /**
      * 判断是否关联设备
+     *
      * @param request
      * @param user
      * @return
@@ -322,13 +319,13 @@ public class AppController {
      */
     @RequestMapping(value = "/judgeRelevanceDevice")
     @ResponseBody
-    public ResultMsg judgeRelevanceDevice(HttpServletRequest request,TUsers user) throws Exception {
+    public ResultMsg judgeRelevanceDevice(HttpServletRequest request, TUsers user) throws Exception {
         ResultMsg rs = new ResultMsg();
-        TUsers bindUser=kkService.isBindedByUid(user);
-        if(bindUser==null){
+        TUsers bindUser = kkService.isBindedByUid(user);
+        if (bindUser == null) {
             rs.setErrcode(1);
             rs.setErrmsg("未关联设备！");
-        }else{
+        } else {
             rs.setData(bindUser);
         }
         return rs;
@@ -336,6 +333,7 @@ public class AppController {
 
     /**
      * 获取轮播图
+     *
      * @param request
      * @return
      * @throws Exception
@@ -344,28 +342,30 @@ public class AppController {
     @ResponseBody
     public ResultMsg getHomePhotoAddress(HttpServletRequest request) throws Exception {
         ResultMsg rs = new ResultMsg();
-        List<GetHomePhotoAddressRs> rsList=appPatientService.getHomePhotoAddress();
+        List<GetHomePhotoAddressRs> rsList = appPatientService.getHomePhotoAddress();
         rs.setData(rsList);
         return rs;
     }
 
     /**
      * 记录    需要把用户头像联合查询出来
+     *
      * @param request
      * @return
      * @throws Exception
      */
     @RequestMapping(value = "/myAsingleRecord")
     @ResponseBody
-    public ResultMsg myAsingleRecord(HttpServletRequest request,Integer uid) throws Exception {
+    public ResultMsg myAsingleRecord(HttpServletRequest request, Integer uid) throws Exception {
         ResultMsg rs = new ResultMsg();
-        List<MyAsingleRecordRs> rsList=appPatientService.getAsingleRecord(uid);
+        List<MyAsingleRecordRs> rsList = appPatientService.getAsingleRecord(uid);
         rs.setData(rsList);
         return rs;
     }
 
     /**
      * 获取个人信息
+     *
      * @param request
      * @param uid
      * @return
@@ -373,15 +373,16 @@ public class AppController {
      */
     @RequestMapping(value = "/userInfo")
     @ResponseBody
-    public ResultMsg userInfo(HttpServletRequest request,Integer uid) throws Exception {
+    public ResultMsg userInfo(HttpServletRequest request, Integer uid) throws Exception {
         ResultMsg rs = new ResultMsg();
-        TUsers user=appPatientService.getPatientUserById(uid);
+        TUsers user = appPatientService.getPatientUserById(uid);
         rs.setData(user);
         return rs;
     }
 
     /**
      * 修改个人用户信息
+     *
      * @param request
      * @param user
      * @return
@@ -389,15 +390,16 @@ public class AppController {
      */
     @RequestMapping(value = "/modifyUserInfo")
     @ResponseBody
-    public ResultMsg modifyUserInfo(HttpServletRequest request,TUsers user) throws Exception {
+    public ResultMsg modifyUserInfo(HttpServletRequest request, TUsers user) throws Exception {
         ResultMsg rs = new ResultMsg();
-        user=appPatientService.modifyUserInfo(request,user);
+        user = appPatientService.modifyUserInfo(request, user);
         rs.setData(user);
         return rs;
     }
 
     /**
      * 修改手机号获取验证码
+     *
      * @param request
      * @param param
      * @return
@@ -405,23 +407,23 @@ public class AppController {
      */
     @RequestMapping(value = "/modifyPhoneForVerificationCode")
     @ResponseBody
-    public ResultMsg modifyPhoneForVerificationCode(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+    public ResultMsg modifyPhoneForVerificationCode(HttpServletRequest request, GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
         //1.判断是否注册
-        Integer    userid=kkService.getUserByPhoneNumberForRegist(param.getMobile());
-        if(null!=userid){
+        Integer userid = kkService.getUserByPhoneNumberForRegist(param.getMobile());
+        if (null != userid) {
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("该手机号已注册！");
             return rs;
         }
         //2.未注册发送短信验证码
-        StringBuilder sendmsg=new StringBuilder("验证码为：");
+        StringBuilder sendmsg = new StringBuilder("验证码为：");
         sendmsg.append(param.getVerificationcode());
-        MsgResult msgrs=PeonyMessageUtil.sendMessage(param.getMobile(),sendmsg.toString());
-        if(SysConstant.PEONYMSG_SUCCESS_CODE!=msgrs.getCode()){
+        MsgResult msgrs = PeonyMessageUtil.sendMessage(param.getMobile(), sendmsg.toString());
+        if (SysConstant.PEONYMSG_SUCCESS_CODE != msgrs.getCode()) {
             rs.setErrcode(msgrs.getCode());
             rs.setErrmsg(msgrs.getMessage());
-            if(SysConstant.ResultMsg_FAIL_PHONEERR==msgrs.getCode()){
+            if (SysConstant.ResultMsg_FAIL_PHONEERR == msgrs.getCode()) {
                 rs.setErrmsg(" 手机号错误！");
             }
         }
@@ -430,6 +432,7 @@ public class AppController {
 
     /**
      * 修改成新手机号
+     *
      * @param request
      * @param param
      * @return
@@ -437,16 +440,17 @@ public class AppController {
      */
     @RequestMapping(value = "/verificationCodeAccordModifyPhone")
     @ResponseBody
-    public ResultMsg verificationCodeAccordModifyPhone(HttpServletRequest request,GetVerificationCodeParam param) throws Exception {
+    public ResultMsg verificationCodeAccordModifyPhone(HttpServletRequest request, GetVerificationCodeParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        int i=appPatientService.updateUserPhone(param);
-        if(i==0){
+        int i = appPatientService.updateUserPhone(param);
+        if (i == 0) {
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg("修改失败！");
         }
         return rs;
     }
-   //////////健康资讯
+
+    //////////健康资讯
     @RequestMapping(value = "/informationList")
     @ResponseBody
     public ResultMsg informationList(HttpServletRequest request, PageParam pageParam) throws Exception {
@@ -457,12 +461,14 @@ public class AppController {
         /////
         return rs;
     }
+
     @RequestMapping(value = "/informationDetails")
     public String informationDetails(HttpServletRequest request, Integer uidparam) throws Exception {
         HytbZixunHealthinquiry faq = webManagerService.getHealthInquiryByID(uidparam);
         request.setAttribute("obj", faq);
         return "/zixun/healthInquiry/dis.jsp";
     }
+
     /////////////意见反馈 start
     @RequestMapping(value = "/feedBack")
     public String feedBack(HttpServletRequest request) throws Exception {
@@ -474,24 +480,26 @@ public class AppController {
     @ResponseBody
     public ResultMsg saveAppfeedback(HttpServletRequest request, FeedbackParam param) throws Exception {
         param.setRequest(request);
-        ResultMsg rs=new ResultMsg();
-        int i = webManagerService.saveFeedback(request,param);
+        ResultMsg rs = new ResultMsg();
+        int i = webManagerService.saveFeedback(request, param);
         return rs;
     }
+
     ////意见反馈end
     //免责声明
     @RequestMapping(value = "/disclaimer")
-    public String  disclaimer(HttpServletRequest request) throws Exception {
-        HytbZixunDisclaimer obj=webManagerService.getDisclaimer();
-        request.setAttribute("obj",obj);
+    public String disclaimer(HttpServletRequest request) throws Exception {
+        HytbZixunDisclaimer obj = webManagerService.getDisclaimer();
+        request.setAttribute("obj", obj);
         return "/zixun/disclaimer/dis.jsp";
     }
+
     //////
     /////常见问题start
     @RequestMapping(value = "/commonProblems")
     @ResponseBody
     public ResultMsg commonProblems(HttpServletRequest request, PageParam pageParam) throws Exception {
-        ResultMsg rs=new ResultMsg();
+        ResultMsg rs = new ResultMsg();
         PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam);
         rs.setData(faqpageInfo);
         /////
@@ -508,6 +516,7 @@ public class AppController {
 
     /**
      * 修改密码
+     *
      * @param request
      * @param param
      * @return
@@ -515,10 +524,10 @@ public class AppController {
      */
     @RequestMapping(value = "/modifyPwd")
     @ResponseBody
-    public ResultMsg modifyPwd(HttpServletRequest request,UpdatePasswordParam param) throws Exception {
-        ResultMsg rs=new ResultMsg();
-        String errorMsg=appPatientService.modifyPwd(param);
-        if(errorMsg!=null){
+    public ResultMsg modifyPwd(HttpServletRequest request, UpdatePasswordParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        String errorMsg = appPatientService.modifyPwd(param);
+        if (errorMsg != null) {
             rs.setErrcode(SysConstant.ResultMsg_FAIL_CODE);
             rs.setErrmsg(errorMsg);
         }
@@ -527,6 +536,7 @@ public class AppController {
 
     /**
      * 根据荣云id获取头像跟姓名
+     *
      * @param request
      * @param userId
      * @return
@@ -536,13 +546,14 @@ public class AppController {
     @ResponseBody
     public ResultMsg getDoctorHeadImgAndNameByRongYunID(HttpServletRequest request, String userId) throws Exception {
         ResultMsg rs = new ResultMsg();
-        DoctorUsers user=appDoctorService.getDoctorHeadImgAndNameByRongYunID(userId);
+        DoctorUsers user = appDoctorService.getDoctorHeadImgAndNameByRongYunID(userId);
         rs.setData(user);
         return rs;
     }
 
     /**
      * 获取医生列表
+     *
      * @param request
      * @param pageParam
      * @return
@@ -551,7 +562,7 @@ public class AppController {
     @RequestMapping(value = "/doctorList")
     @ResponseBody
     public ResultMsg doctorList(HttpServletRequest request, PageParam pageParam) throws Exception {
-        ResultMsg rs=new ResultMsg();
+        ResultMsg rs = new ResultMsg();
         PageInfo<DoctorListRsVo> pageinfo = appDoctorService.doctorList(pageParam);
         rs.setData(pageinfo);
         /////
@@ -560,6 +571,7 @@ public class AppController {
 
     /**
      * 修改密码
+     *
      * @param request
      * @param param
      * @return
@@ -567,15 +579,16 @@ public class AppController {
      */
     @RequestMapping(value = "/settingPwd")
     @ResponseBody
-    public ResultMsg settingPwd(HttpServletRequest request,AppParamVo param) throws Exception {
+    public ResultMsg settingPwd(HttpServletRequest request, AppParamVo param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        int updateNum=kkService.resetPwd(param);
-        if(updateNum==0){
+        int updateNum = kkService.resetPwd(param);
+        if (updateNum == 0) {
             rs.setErrcode(1);
             rs.setErrmsg("设置密码失败！");
         }
         return rs;
     }
+
     /////
     @RequestMapping(value = "/testRedis")
     @ResponseBody
@@ -594,6 +607,7 @@ public class AppController {
 
     /**
      * 点开医生头像聊天时调用
+     *
      * @param request
      * @param doctorid
      * @param uid
@@ -602,9 +616,25 @@ public class AppController {
      */
     @RequestMapping(value = "/beforeIM")
     @ResponseBody
-    public ResultMsg beforeIM(HttpServletRequest request,Integer doctorid,Integer uid) throws Exception {
-        ResultMsg rs=new ResultMsg();
-         int handlerNum=appPatientService.beforeIM(doctorid,uid);
+    public ResultMsg beforeIM(HttpServletRequest request, Integer doctorid, Integer uid) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int handlerNum = appPatientService.beforeIM(doctorid, uid);
+        /////
+        return rs;
+    }
+
+    /**
+     * 手动输入血压数据
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/manuallyEnter")
+    @ResponseBody
+    public ResultMsg manuallyEnter(HttpServletRequest request, ManuallyEnterParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        int handlerNum = appPatientService.manuallyEnter(param);
         /////
         return rs;
     }

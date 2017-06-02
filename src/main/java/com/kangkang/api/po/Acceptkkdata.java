@@ -1,7 +1,8 @@
 package com.kangkang.api.po;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "acceptkkdata")
 public class Acceptkkdata {
@@ -59,6 +60,11 @@ public class Acceptkkdata {
      * 用户id
      */
     private Integer userid;
+
+    /**
+     * 来源1.康康  2 手动输入
+     */
+    private Integer source;
 
     /**
      * @return uid
@@ -266,5 +272,23 @@ public class Acceptkkdata {
      */
     public void setUserid(Integer userid) {
         this.userid = userid;
+    }
+
+    /**
+     * 获取来源1.康康  2 手动输入
+     *
+     * @return source - 来源1.康康  2 手动输入
+     */
+    public Integer getSource() {
+        return source;
+    }
+
+    /**
+     * 设置来源1.康康  2 手动输入
+     *
+     * @param source 来源1.康康  2 手动输入
+     */
+    public void setSource(Integer source) {
+        this.source = source;
     }
 }
