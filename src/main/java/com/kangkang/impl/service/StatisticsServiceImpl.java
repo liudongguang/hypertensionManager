@@ -2,6 +2,7 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.bo.StatisicsBaseInfo;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.service.StatisticsService;
 import com.kangkang.api.util.HighChartUtils;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by LiuDongguang on 2017/5/25.
@@ -50,6 +53,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
         return rs;
     }
+
     private final  Boolean isHaveDataByDays(AppstatisticsParam param,int days) {
         if(param.getSearchDate()==null){
             return null;
@@ -136,11 +140,67 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public HighchartsConfig displayWeekChat(AppstatisticsParam param) {
         //1.查看区间有没有数据
+        Date now=new Date();
+        param.setSearchDate(now);
         if(isHaveDataByDays(param,SysConstant.Statistics_DAYS_WEEK)){
-        //2.根据当前日期获取前七天的日期
-           List<DayAndWeek> weekDays=DateUtil.getDaysByDateAndNeedDays(param.getSearchDate(),SysConstant.Statistics_DAYS_WEEK);
+            Date[] bwdate = DateUtil.getBeforeDATEBetween(param.getSearchDate(),SysConstant.Statistics_DAYS_WEEK);
+            param.setStart(bwdate[0]);
+            param.setEnd(bwdate[1]);
+            StringBuilder title=new StringBuilder();
+            title.append(DateFormatUtils.format(param.getStart(), DateUtil.yyyy_MM_dd)).append("-").append(DateFormatUtils.format(param.getEnd(), DateUtil.yyyy_MM_dd)).append(" 周血压图");
+            HighchartsConfig hcfg= HighChartUtils.createBasicChat(title.toString(),"血压/心率值");
+            List<String> xAxisCategories=new ArrayList<>();//横轴
+            List<Double> shousuoL=new ArrayList<>();
+            List<Double> shuzhangL=new ArrayList<>();
+            List<Double> xinlvL=new ArrayList<>();
+            //2.获取七天数据
+            List<StatisicsBaseInfo> rslist = acckkDao.getMeasureDateByBetDate2(param);
+            //计算出三者的平均数
+            Map<String, Double> heartavg = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfo::getWeekStr, Collectors.averagingInt(StatisicsBaseInfo::getPulse)));
+            Map<String, Double> shousuo = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfo::getWeekStr, Collectors.averagingInt(StatisicsBaseInfo::getSystolicpressure)));
+            Map<String, Double> shuzhang = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfo::getWeekStr, Collectors.averagingInt(StatisicsBaseInfo::getDiastolicpressure)));
+            List<DayAndWeek> daysByDateAndNeedDays = DateUtil.getDaysByDateAndNeedDays(now, SysConstant.Statistics_DAYS_WEEK);
+            daysByDateAndNeedDays.forEach(dw->{
+                String week=dw.getWeek();
+                StringBuilder dateAndWeek=new StringBuilder(DateFormatUtils.format(dw.getDay(), DateUtil.yyyy_MM_dd));
+                dateAndWeek.append("[").append(week).append("]");
+                Double heartAVG=heartavg.get(week);
+                if(heartAVG!=null){
+                  double shousuoavg=shousuo.get(week);
+                  double shuzhangavg=shuzhang.get(week);
+                    xAxisCategories.add(dateAndWeek.toString());
+                    shousuoL.add(shousuoavg);
+                    shuzhangL.add(shuzhangavg);
+                    xinlvL.add(heartAVG);
+                }else{
+                    xAxisCategories.add(dateAndWeek.toString());
+                    shousuoL.add(0d);
+                    shuzhangL.add(0d);
+                    xinlvL.add(0d);
+                }
+            });
+            hcfg.getxAxis().setCategories(xAxisCategories);
+            Series shousuoSeries=new Series();
+            shousuoSeries.setName("收缩压");
+            shousuoSeries.setType("spline");
+            shousuoSeries.setData(shousuoL);
 
+            Series shuzhangSeries=new Series();
+            shuzhangSeries.setName("舒张压");
+            shuzhangSeries.setType("spline");
+            shuzhangSeries.setData(shuzhangL);
+
+            Series xinlvSeries=new Series();
+            xinlvSeries.setName("心率");
+            xinlvSeries.setType("column");
+            xinlvSeries.setData(xinlvL);
+            List<Series> series=hcfg.getSeries();
+            series.add(xinlvSeries);//先添加的在下面
+            series.add(shousuoSeries);
+            series.add(shuzhangSeries);
+            return hcfg;
+        }else{
+            return HighchartsConfig.getNullcig();
         }
-        return null;
     }
 }

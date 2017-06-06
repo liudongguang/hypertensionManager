@@ -52,7 +52,7 @@ public class DateUtil {
             DayAndWeek dw=new DayAndWeek();
             dw.setDay(cl.getTime());
             dw.setWeek(week[cl.get(Calendar.DAY_OF_WEEK)-1]);
-            System.out.println(dw);
+            list.add(dw);
         }
         return list;
     }
@@ -244,4 +244,9 @@ public class DateUtil {
     }
 
 
+    public static String getWeekStrByData(Date kktime) {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(kktime);
+        return week[cl.get(Calendar.DAY_OF_WEEK)-1];
+    }
 }

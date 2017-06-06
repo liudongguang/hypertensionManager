@@ -38,6 +38,10 @@
     <select id="getMeasureDateByBetDate" parameterType="com.kangkang.api.vo.AppstatisticsParam" resultMap="BaseResultMap">
          select * from acceptkkdata where userid=#{patientid} and kktime BETWEEN #{start} AND #{end} order by kktime asc
     </select>
+  <select id="getMeasureDateByBetDate2" parameterType="com.kangkang.api.vo.AppstatisticsParam" resultType="com.kangkang.api.bo.StatisicsBaseInfo">
+    select * from acceptkkdata where userid=#{patientid} and kktime BETWEEN #{start} AND #{end} order by kktime asc
+  </select>
+
     <select id="dataCountByDays" parameterType="com.kangkang.api.vo.AppstatisticsParam" resultType="int">
         select count(1) from acceptkkdata where userid=#{patientid} and kktime BETWEEN #{start} AND #{end}
     </select>

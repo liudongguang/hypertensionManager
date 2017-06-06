@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="assets/css/gdh/appstatistics.css">
 </head>
 <body>
+<input type="hidden" value="${param.patientid}" id="patientUID"/>
+<input type="hidden" id="basePath" value="${pageContext.request.contextPath }/"/>
 <div style="padding: 10px 0;" class="am-u-sm-12 am-margin-bottom am-margin-top">
     <div class="divs1 am-u-sm-12 am-margin-bottom">
         <img class="am-margin-left imgs1" src="assets/images/date.png" alt=""/>
@@ -26,57 +28,18 @@
         <span class="spans2 am-margin-right"><a href="jsppage/appstatistics/monthpressure.jsp">最近一月</a></span>
     </div>
 </div>
-<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
 <div id="container" style="width: 100%;height:400px"></div>
-<script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
+<script src="assets/js/jquery-3.2.0.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/handlebars.min.js"></script>
+<script src="assets/js/amazeui.widgets.helper.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/bootstrap3.3.7.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/templatemo_script.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/moment.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/bootstrap-datetimepicker.min.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
 <script language="javascript" type="text/javascript" src="assets/Highcharts/highcharts.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#container').highcharts({
-            title: {
-                text: ''
-            },
-            xAxis: {
-                categories: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            },
-            yAxis: {
-                title: {
-                    text: '血压/心率值',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-            },
-
-            plotOptions: {
-                series: {
-                    stacking: 'normal'
-                }
-            },
-            series: [{
-                type: 'column',
-                name: '心率',
-                data: [70, 80, 73, 78, 64, 62, 60]
-            }, {
-                name: '收缩压',
-                type: 'spline',
-                data: [121, 126, 135, 140, 120, 120, 115],
-                tooltip: {
-                    valueSuffix: ''
-                }
-            }, {
-                name: '舒张压',
-                type: 'spline',
-                data: [60, 68, 72, 80, 65, 65, 64],
-                tooltip: {
-                    valueSuffix: ''
-                }
-            }],
-            credits: {
-                enabled: false
-            }
-        });
-    });
-</script>
+<script src="assets/js/jsppage/appstatistics/weekpressure.js"></script>
 </body>
 </html>

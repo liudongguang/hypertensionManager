@@ -117,4 +117,10 @@ public class AppstatisticsController {
         rs.setData(hcfg);
         return rs;
     }
+
+    @RequestMapping(value = "/enterweekpressure")
+    public String enterweekpressure(HttpServletRequest request, AppstatisticsParam param) throws Exception {
+        return "/jsppage/appstatistics/weekpressure.jsp";
+    }
+
 }
