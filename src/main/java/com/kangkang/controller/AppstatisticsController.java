@@ -122,5 +122,25 @@ public class AppstatisticsController {
     public String enterweekpressure(HttpServletRequest request, AppstatisticsParam param) throws Exception {
         return "/jsppage/appstatistics/weekpressure.jsp";
     }
+    /**
+     * 月统计图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/displayMonthChat")
+    @ResponseBody
+    public ResultMsg displayMonthChat(HttpServletRequest request, AppstatisticsParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        HighchartsConfig hcfg= statisticsService.displayMonthChat(param);
+        rs.setData(hcfg);
+        return rs;
+    }
+
+    @RequestMapping(value = "/enterMonthpressure")
+    public String enterMonthpressure(HttpServletRequest request, AppstatisticsParam param) throws Exception {
+        return "/jsppage/appstatistics/monthpressure.jsp";
+    }
 
 }

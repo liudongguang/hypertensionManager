@@ -21,4 +21,9 @@ public class HighChartUtils {
         yAxis.getTitle().setText(yAxisTitle);
         return config;
     }
+    public final static HighchartsConfig createBasicChat(String title,String yAxisTitle,boolean inverted){
+        HighchartsConfig config = createBasicChat(title,yAxisTitle);
+        config.getChart().setInverted(inverted);
+        return config;
+    }
 }

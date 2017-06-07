@@ -11,6 +11,15 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class XAxis {
     private List<String> categories=new ArrayList<>();
+    private Axis_labels labels=new Axis_labels();
+
+    public Axis_labels getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Axis_labels labels) {
+        this.labels = labels;
+    }
 
     public List<String> getCategories() {
         return categories;

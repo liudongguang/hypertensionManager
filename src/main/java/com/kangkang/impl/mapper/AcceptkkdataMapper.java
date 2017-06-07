@@ -1,6 +1,7 @@
 package com.kangkang.impl.mapper;
 
 import com.kangkang.api.bo.StatisicsBaseInfo;
+import com.kangkang.api.bo.StatisicsBaseInfoForMonth;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.vo.AppstatisticsParam;
@@ -24,4 +25,6 @@ public interface AcceptkkdataMapper extends Mapper<Acceptkkdata> {
     int dataCountByDays(AppstatisticsParam param);
 
     List<StatisicsBaseInfo> getMeasureDateByBetDate2(AppstatisticsParam param);
+
+    List<StatisicsBaseInfoForMonth> getMeasureMothDataByDate(AppstatisticsParam param);
 }

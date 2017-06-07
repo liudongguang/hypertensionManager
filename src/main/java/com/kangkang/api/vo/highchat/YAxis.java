@@ -12,6 +12,16 @@ import java.util.List;
 public class YAxis {
     private Title title=new Title();
     private List<YAxis_PlotLine> plotLines=new ArrayList<>();
+    private Axis_labels labels=new Axis_labels();
+
+
+    public Axis_labels getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Axis_labels labels) {
+        this.labels = labels;
+    }
 
     public Title getTitle() {
         return title;

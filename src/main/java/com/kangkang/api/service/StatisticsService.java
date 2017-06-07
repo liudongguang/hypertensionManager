@@ -41,4 +41,11 @@ public interface StatisticsService {
      * @return
      */
     HighchartsConfig displayWeekChat(AppstatisticsParam param);
+
+    /**
+     * 月统计图
+     * @param param
+     * @return
+     */
+    HighchartsConfig displayMonthChat(AppstatisticsParam param);
 }

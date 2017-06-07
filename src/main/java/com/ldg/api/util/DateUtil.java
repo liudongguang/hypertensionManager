@@ -16,6 +16,7 @@ public class DateUtil {
     public static final String yyyyMMddHHmmss = "yyyyMMddHHmmss";
     public static final String yyyyMMdd = "yyyyMMdd";
     public static final String yyyy = "yyyy";
+    public static final String dd = "dd";
     public static final String yyyyMM = "yyyyMM";
     public static final String yyyy_MM_dd = "yyyy-MM-dd";
     public static final String HH_mm_ss = "HH:mm:ss";
@@ -221,6 +222,7 @@ public class DateUtil {
         return range;
     }
 
+
     public static String getNextDay() {
         Calendar cl = Calendar.getInstance();
         cl.add(Calendar.DAY_OF_MONTH, 1);
@@ -243,10 +245,16 @@ public class DateUtil {
         return (endDate.get(Calendar.YEAR) - startDate.get(Calendar.YEAR));
     }
 
-
+    /**
+     * 获取星期几
+     * @return
+     */
     public static String getWeekStrByData(Date kktime) {
         Calendar cl = Calendar.getInstance();
         cl.setTime(kktime);
         return week[cl.get(Calendar.DAY_OF_WEEK)-1];
+    }
+    public static String getDayStrByData(Date kktime) {
+        return DateFormatUtils.format(kktime,DateUtil.dd);
     }
 }

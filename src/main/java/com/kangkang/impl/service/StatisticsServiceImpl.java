@@ -3,6 +3,7 @@ package com.kangkang.impl.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.bo.StatisicsBaseInfo;
+import com.kangkang.api.bo.StatisicsBaseInfoForMonth;
 import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.service.StatisticsService;
 import com.kangkang.api.util.HighChartUtils;
@@ -174,6 +175,71 @@ public class StatisticsServiceImpl implements StatisticsService {
                     xinlvL.add(heartAVG);
                 }else{
                     xAxisCategories.add(dateAndWeek.toString());
+                    shousuoL.add(0d);
+                    shuzhangL.add(0d);
+                    xinlvL.add(0d);
+                }
+            });
+            hcfg.getxAxis().setCategories(xAxisCategories);
+            Series shousuoSeries=new Series();
+            shousuoSeries.setName("收缩压");
+            shousuoSeries.setType("spline");
+            shousuoSeries.setData(shousuoL);
+
+            Series shuzhangSeries=new Series();
+            shuzhangSeries.setName("舒张压");
+            shuzhangSeries.setType("spline");
+            shuzhangSeries.setData(shuzhangL);
+
+            Series xinlvSeries=new Series();
+            xinlvSeries.setName("心率");
+            xinlvSeries.setType("column");
+            xinlvSeries.setData(xinlvL);
+            List<Series> series=hcfg.getSeries();
+            series.add(xinlvSeries);//先添加的在下面
+            series.add(shousuoSeries);
+            series.add(shuzhangSeries);
+            return hcfg;
+        }else{
+            return HighchartsConfig.getNullcig();
+        }
+    }
+
+    @Override
+    public HighchartsConfig displayMonthChat(AppstatisticsParam param) {
+        //1.查看区间有没有数据
+        Date now=new Date();
+        param.setSearchDate(now);
+        if(isHaveDataByDays(param,SysConstant.Statistics_DAYS_MONTH)){
+            Date[] bwdate = DateUtil.getBeforeDATEBetween(param.getSearchDate(),SysConstant.Statistics_DAYS_MONTH);
+            param.setStart(bwdate[0]);
+            param.setEnd(bwdate[1]);
+            StringBuilder title=new StringBuilder();
+            title.append(DateFormatUtils.format(param.getStart(), DateUtil.yyyy_MM_dd)).append("-").append(DateFormatUtils.format(param.getEnd(), DateUtil.yyyy_MM_dd)).append(" 月血压图");
+            HighchartsConfig hcfg= HighChartUtils.createBasicChat(title.toString(),"血压/心率值",true);//反转
+            List<String> xAxisCategories=new ArrayList<>();//横轴
+            List<Double> shousuoL=new ArrayList<>();
+            List<Double> shuzhangL=new ArrayList<>();
+            List<Double> xinlvL=new ArrayList<>();
+            //2.获取七天数据
+            List<StatisicsBaseInfoForMonth> rslist = acckkDao.getMeasureMothDataByDate(param);
+            //计算出三者的平均数
+            Map<String, Double> heartavg = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfoForMonth::getDayNum, Collectors.averagingInt(StatisicsBaseInfoForMonth::getPulse)));
+            Map<String, Double> shousuo = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfoForMonth::getDayNum, Collectors.averagingInt(StatisicsBaseInfoForMonth::getSystolicpressure)));
+            Map<String, Double> shuzhang = rslist.stream().collect(Collectors.groupingBy(StatisicsBaseInfoForMonth::getDayNum, Collectors.averagingInt(StatisicsBaseInfoForMonth::getDiastolicpressure)));
+            List<DayAndWeek> daysByDateAndNeedDays = DateUtil.getDaysByDateAndNeedDays(now, SysConstant.Statistics_DAYS_MONTH);
+            daysByDateAndNeedDays.forEach(dw->{
+               String day=DateUtil.getDayStrByData(dw.getDay());
+                Double heartAVG=heartavg.get(day);
+                if(heartAVG!=null){
+                    double shousuoavg=shousuo.get(day);
+                    double shuzhangavg=shuzhang.get(day);
+                    xAxisCategories.add(day);
+                    shousuoL.add(shousuoavg);
+                    shuzhangL.add(shuzhangavg);
+                    xinlvL.add(heartAVG);
+                }else{
+                    xAxisCategories.add(day);
                     shousuoL.add(0d);
                     shuzhangL.add(0d);
                     xinlvL.add(0d);

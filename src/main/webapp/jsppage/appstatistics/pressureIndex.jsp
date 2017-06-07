@@ -38,7 +38,7 @@
     </div>
     <div class="divs2 am-u-sm-12 am-margin-bottom">
         <span class="spans1 am-margin-left"><a href="appstatistics/enterweekpressure?patientid=${param.patientid}">最近一周</a></span>
-        <span class="spans2 am-margin-right"><a href="jsppage/appstatistics/monthpressure.jsp">最近一月</a></span>
+        <span class="spans2 am-margin-right"><a href="appstatistics/enterMonthpressure?patientid=${param.patientid}">最近一月</a></span>
     </div>
     <!--内容列表开始-->
     <div class="am-margin-top">

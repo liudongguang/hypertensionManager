@@ -18,7 +18,7 @@ public class HighchartsConfig{
     public static HighchartsConfig getNullcig() {
         return nullcig;
     }
-
+    private Chart chart=new Chart();
     private Credits credits=new Credits();
     private Title title=new Title();
     private Subtitle subtitle=new Subtitle();
@@ -27,7 +27,15 @@ public class HighchartsConfig{
     private Tooltip tooltip=new Tooltip();
     private Legend legend=new Legend();
     private List<Series> series=new ArrayList<>();
-    private PlotOptions plotOptions=new PlotOptions();
+    private PlotOptions plotOptions;
+
+    public Chart getChart() {
+        return chart;
+    }
+
+    public void setChart(Chart chart) {
+        this.chart = chart;
+    }
 
     public PlotOptions getPlotOptions() {
         return plotOptions;

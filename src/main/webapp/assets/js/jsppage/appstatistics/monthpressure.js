@@ -1,7 +1,5 @@
 $(function () {
-
     var datepickerOpt = {
-        useCurrent:false, //选中值不填写值到输入框
         format: 'YYYY-MM-DD',
         ignoreReadonly:true  //配合readonly
     }
@@ -12,14 +10,18 @@ $(function () {
             shade: [0.8, '#fff']
             // 0.1透明度的白色背景
         });
-
         window.location.href=basePath+"/appstatistics/enterDisplayDayChat?patientid="+patientid+"&searchDate="+currentDate;
     });
     $("#dateimgID").click(function () {
         $("#searchDateID").focus();
-    });
+    })
     var patientid=$("#patientUID").val();
-    jumpPageNoAuthorityForHandlerNoContainer("/appstatistics/displayWeekChat?patientid="+patientid,function(data) {
+    var currentDate=$("#currentDateID").val();
+    jumpPageNoAuthorityForHandlerNoContainer("/appstatistics/displayMonthChat?patientid="+patientid+"&searchDate="+currentDate,function(data) {
+
         var chart = new Highcharts.Chart('container',data.data);
+    });
+    $("#listLogID").click(function () {
+        window.location.href="appstatistics/getKKDataByPatientidAndSearchDate?patientid="+patientid+"&searchDate="+currentDate;
     });
 });
