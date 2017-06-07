@@ -30,7 +30,7 @@
     <div style="width: 100%;border-top: solid 1px #aaa;border-bottom: solid 1px #aaa;padding: 10px 0;"
          class="am-u-sm-12 am-margin-bottom">
         <span class="spans1 am-margin-left"><a href="appstatistics/enterweekpressure?patientid=${param.patientid}">最近一周</a></span>
-        <span class="spans2 am-margin-right"><a href="jsppage/appstatistics/monthpressure.jsp">最近一月</a></span>
+        <span class="spans2 am-margin-right"><a href="appstatistics/enterMonthpressure?patientid=${param.patientid}">最近一月</a></span>
     </div>
 </div>
 <div id="container" style="width: 100%;height:400px"></div>
