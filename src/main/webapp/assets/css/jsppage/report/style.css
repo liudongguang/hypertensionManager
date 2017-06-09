@@ -1,0 +1,39 @@
+  body{font:normal 12px tahoma, arial, helvetica, sans-serif}
+  .row{ margin: 0px }
+  .table-bordered td, .table-bordered th{ border: 1px solid #999;}
+  .table td, .table th{ padding:5px !important }
+  .commen_tt {border: 1px solid #333; padding: 0 10px; margin: 15px 0;}
+  .commen_tt2 {border: 1px solid #99bbe8}
+  .td_bg{ background: #d4e1f1; text-align: right; }
+  .td_cont{ background: #f5fafa; text-align: left }
+  .row{ padding: 5px; }
+  .commen_topt{position: relative; top: -10px; background: #fff; padding:5px 10px;}
+  .tb_comen th{ background: #d4e1f1; text-align: center }
+  .tb_comen td{ background: #f5fafa; text-align: center }
+  .tx_normal{ color: rgb(244,238,62) }
+  .tx_red{ color: rgb(256,56,57) }
+  .tx_orange{ color: rgb(252,178,52) }
+  .tx_green{ color: rgb(136,197,59) }
+  .tx_yellow{ color: rgb(244,213,44) }
+  .selected{ background: rgb(223,232,246) !important }
+  .w_28{ width: 28px !important; }
+  .w_63{ width: 63px !important; }
+  .w_148{ width: 148px !important; }
+  .w_88{ width: 88px !important; }
+  .td_null{ border: 0 !important; background: #fff!important }
+  .hg_top{
+  overflow: hidden;
+  zoom: 1;
+  color: #15428b;
+  font: bold 12px tahoma, arial, verdana, sans-serif;
+  padding: 5px 3px 4px 5px;
+  border: 1px solid #99bbe8;
+  line-height: 15px;
+  background: url(../../../../assets/images/white-top-bottom.gif) repeat-x 0 -1px;
+  }
+  .t_tbody{
+  height: 255px; overflow: scroll; width: 100%
+  }
+  .n-p{ padding: 5px 0 !important }
+  .n-p-l{ padding-left: 0 }
+  .n-p-r{ padding-right: 0 }

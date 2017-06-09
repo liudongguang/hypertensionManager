@@ -5,7 +5,10 @@ import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.vo.HytbDeviceRepertoryExt;
+import com.kangkang.api.vo.report.ReportParam;
 import com.ldg.api.vo.PageParam;
+
+import java.util.List;
 
 /**
  * Created by LiuDongguang on 2017/5/16.
@@ -54,4 +57,11 @@ public interface DeviceService {
      * @return
      */
     int unbindDeviceById(HytbDeviceRepertory device);
+
+    /**
+     * 获取统计数据
+
+     * @return
+     */
+    List<Acceptkkdata> getRoportDataByPatientID(ReportParam param);
 }

@@ -6,6 +6,7 @@ import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.vo.AppstatisticsParam;
 import com.kangkang.api.vo.MyAsingleRecordRs;
+import com.kangkang.api.vo.report.ReportParam;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.Date;
@@ -27,4 +28,6 @@ public interface AcceptkkdataMapper extends Mapper<Acceptkkdata> {
     List<StatisicsBaseInfo> getMeasureDateByBetDate2(AppstatisticsParam param);
 
     List<StatisicsBaseInfoForMonth> getMeasureMothDataByDate(AppstatisticsParam param);
+
+    List<Acceptkkdata> getRoportDataByPatientID(ReportParam param);
 }

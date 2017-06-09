@@ -7,6 +7,7 @@ import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.service.DeviceService;
 import com.kangkang.api.vo.HytbDeviceRepertoryExt;
+import com.kangkang.api.vo.report.ReportParam;
 import com.kangkang.constant.SysConstant;
 import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.HytbDeviceLandlogMapper;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by LiuDongguang on 2017/5/16.
@@ -94,5 +96,10 @@ public class DeviceServiceImpl implements DeviceService {
         int updateNum=userDao.unBindedDeviceBySN(device.getSn());
         int updateNum2=deviceLandlogDao.unBindedDevice(device);
         return deviceRepertoryDao.unbindDeviceById(device);
+    }
+
+    @Override
+    public List<Acceptkkdata> getRoportDataByPatientID(ReportParam param) {
+        return acceptkkdataMapper.getRoportDataByPatientID(param);
     }
 }

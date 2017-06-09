@@ -29,7 +29,9 @@
         where kkdata.userid=#{uid} order by kkdata.kktime desc
   </select>
     <select id="getAcceptkkDataByDeviceSNAndPatientID" parameterType="com.kangkang.api.po.HytbDeviceLandlog" resultMap="BaseResultMap">
-        select * from acceptkkdata where userid=#{patientid} and kksn=#{devicesn} order by kktime desc
+        select * from acceptkkdata where userid=#{patientid}
+         <if test="devicesn!=null and devicesn!=''"> and kksn=#{devicesn} </if>
+          order by kktime desc
     </select>
 
     <select id="getgetLastDateByPatientID" parameterType="com.kangkang.api.vo.AppstatisticsParam" resultType="Date">
@@ -48,4 +50,8 @@
     <select id="dataCountByDays" parameterType="com.kangkang.api.vo.AppstatisticsParam" resultType="int">
         select count(1) from acceptkkdata where userid=#{patientid} and kktime BETWEEN #{start} AND #{end}
     </select>
+
+  <select id="getRoportDataByPatientID" parameterType="com.kangkang.api.vo.report.ReportParam" resultMap="BaseResultMap">
+     select uid,kktime,pulse,systolicpressure,diastolicpressure,kklevel from acceptkkdata where userid=#{patientuid} and source=1  and kktime BETWEEN #{start} AND #{end} order by kktime asc
+  </select>
 </mapper>

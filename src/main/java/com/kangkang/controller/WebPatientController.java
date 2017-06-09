@@ -7,6 +7,8 @@ import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.DeviceService;
 import com.kangkang.api.service.WebPationtService;
 import com.kangkang.api.vo.SavePatientParam;
+import com.kangkang.api.vo.report.ReportParam;
+import com.kangkang.api.vo.report.ReportRs;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,18 @@ public class WebPatientController {
         return "/jsppage/patient/list.jsp";
     }
 
+    /**
+     * 获取患者列表为报告使用
+     * @param request
+     * @param pageParam
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/patientListForReport")
+    public String patientListForReport(HttpServletRequest request, PageParam pageParam) throws Exception {
+        patientList(request,pageParam);
+        return "/jsppage/report/patientlist.jsp";
+    }
     /**
      * 进入添加患者页面
      * @param request
@@ -127,6 +141,17 @@ public class WebPatientController {
         return "/jsppage/patient/binddevicedatalist.jsp";
     }
 
-
+    /**
+     * 24小时报告
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/getReport")
+    public String getReport(HttpServletRequest request, ReportParam param) throws Exception {
+        ReportRs rs=webPationtService.getReport(param);
+        request.setAttribute("obj", rs);
+        return "/jsppage/report/index.jsp";
+    }
 
 }

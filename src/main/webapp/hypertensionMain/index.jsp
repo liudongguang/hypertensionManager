@@ -65,6 +65,9 @@
                     <li><a  href="/webPatientHandler/patientList"><span
                             class="glyphicon glyphicon-list-alt"></span>患者管理</a>
                     </li>
+                    <li><a  href="/webPatientHandler/patientListForReport"><span
+                            class="glyphicon glyphicon-list-alt"></span>患者报告</a>
+                    </li>
                 </ul>
             </li>
             <li class="sub"><a href="javascript:;"><span class="glyphicon glyphicon-calendar btn-lg"></span> 医生管理

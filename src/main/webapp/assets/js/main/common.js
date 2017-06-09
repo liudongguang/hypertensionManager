@@ -98,11 +98,17 @@ function layerWindow(pageUrl, title, width, height, frame) {
         type = 2;
     }
     if (type == 2) {
+        if(width.indexOf('%')==-1){
+            width=width + 'px';
+        }
+        if(height.indexOf('%')==-1){
+            height=height + 'px';
+        }
         jumpPageLayerNum = layer.open({
             type: type,
             title: title,
             skin: 'layui-layer-rim', // 加上边框
-            area: [width + 'px', height + 'px'], // 宽高
+            area: [width, height], // 宽高
             content: basePath+pageUrl,
             success: function (index, layero) {
                 // do something

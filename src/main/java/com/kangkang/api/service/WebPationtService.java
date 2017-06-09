@@ -3,6 +3,8 @@ package com.kangkang.api.service;
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.TUsers;
 import com.kangkang.api.vo.SavePatientParam;
+import com.kangkang.api.vo.report.ReportParam;
+import com.kangkang.api.vo.report.ReportRs;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
 
@@ -28,4 +30,11 @@ public interface WebPationtService {
 
 
     SavePatientParam patientBindDeviceByUid(Integer patientid);
+
+    /**
+     * 24小时统计
+     * @param param
+     * @return
+     */
+    ReportRs getReport(ReportParam param) throws Exception;
 }

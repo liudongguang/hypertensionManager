@@ -2,6 +2,7 @@ package com.kangkang.impl.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.kangkang.api.po.Acceptkkdata;
 import com.kangkang.api.po.HytbDeviceLandlog;
 import com.kangkang.api.po.HytbDeviceRepertory;
 import com.kangkang.api.po.TUsers;
@@ -10,7 +11,10 @@ import com.kangkang.api.service.WebPationtService;
 import com.kangkang.api.util.PeonySystemTool;
 import com.kangkang.api.vo.RongYunJsonRsInfo;
 import com.kangkang.api.vo.SavePatientParam;
+import com.kangkang.api.vo.report.ReportParam;
+import com.kangkang.api.vo.report.ReportRs;
 import com.kangkang.constant.SysConstant;
+import com.kangkang.impl.mapper.AcceptkkdataMapper;
 import com.kangkang.impl.mapper.HytbDeviceLandlogMapper;
 import com.kangkang.impl.mapper.HytbDeviceRepertoryMapper;
 import com.kangkang.impl.mapper.TUsersMapper;
@@ -18,10 +22,15 @@ import com.ldg.api.util.DateUtil;
 import com.ldg.api.util.MD5Util;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by LiuDongguang on 2017/5/16.
@@ -37,6 +46,8 @@ public class WebPationtServiceImpl implements WebPationtService {
     private HytbDeviceLandlogMapper deviceLandlogDao;
     @Autowired
     private HytbDeviceRepertoryMapper deviceRepertoryMapper;
+    @Autowired
+    private AcceptkkdataMapper acceptkkdataMapper;
 
     @Override
     public PageInfo<TUsers> getPatientListPageInfo(PageParam pageParam) {
@@ -130,5 +141,160 @@ public class WebPationtServiceImpl implements WebPationtService {
         return user;
     }
 
+    @Override
+    public ReportRs getReport(ReportParam param) throws Exception{
+        ReportRs rs=new ReportRs();
+        param.setPatientuid(42);
+        Date d= DateUtils.parseDate("20170602-07:22:30","yyyyMMdd-hh:mm:ss");
+        param.setReportDate(d);
+        List<Acceptkkdata> dataList=acceptkkdataMapper.getRoportDataByPatientID(param);
+        rs.setAcceptDataList(dataList);
+        rs.setName(param.getName());
+        rs.setSex(param.getSex());
+        if(dataList!=null&&dataList.size()!=0){
+            Date start=dataList.get(0).getKktime();
+            Date end=dataList.get(dataList.size()-1).getKktime();
+            rs.setLogStartTime(start);
+            rs.setLogEndTime(end);
+            rs.setShicha(DateUtil.getDatePoor(end,start));
+            rs.setLogSize(dataList.size());
+        }
+        //最大收缩压
+        dataList.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(max->{
+            rs.setMaxSystolic(max.getSystolicpressure());
+            rs.setMaxSystolicTime(max.getKktime());
+        });
+        //最小收缩压
+        dataList.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(min->{
+            rs.setMinSystolic(min.getSystolicpressure());
+            rs.setMinSystolicTime(min.getKktime());
+        });
+        //平均收缩压
+        Double avgSystolic = dataList.stream().collect(Collectors.averagingInt(Acceptkkdata::getSystolicpressure));
+        rs.setAvgSystolic(avgSystolic);
+        /***********************舒张压******************************/
+        //最大舒张压
+        dataList.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max->{
+            rs.setMaxDiastolic(max.getDiastolicpressure());
+            rs.setMaxDiastolicTime(max.getKktime());
+        });
+        //最小舒张压
+        dataList.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(min->{
+            rs.setMinDiastolic(min.getDiastolicpressure());
+            rs.setMinDiastolicTime(min.getKktime());
+        });
+        //平均舒张压
+        Double avgDiastolic = dataList.stream().collect(Collectors.averagingInt(Acceptkkdata::getDiastolicpressure));
+        rs.setAvgDiastolic(avgDiastolic);
+        /***********************心率******************************/
+        //最大心率
+        dataList.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max->{
+            rs.setMaxHrrest(max.getPulse());
+        });
+        //最小心率
+        dataList.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(min->{
+            rs.setMinHrrest(min.getPulse());
+        });
+        //平均心率
+        Double avgHrrest = dataList.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
+        rs.setAvgHrrest(avgHrrest);
+        /**分日夜*/
+        Date startdate = param.getStart();
+        Date date22 = DateUtil.getDateHour22(startdate);//当天的晚上十点
+        Date date6 = DateUtil.getDateHour6(startdate);//第二天的凌晨6点
+        final Map<Boolean, List<Acceptkkdata>> riyeMap = dataList.stream().collect(Collectors.partitioningBy(item -> {
+            //System.out.println(DateFormatUtils.format(item.getKktime(),"yyyy-MM-dd HH:mm:ss")+"    "+DateFormatUtils.format(date22,"yyyy-MM-dd HH:mm:ss"));
+            if (item.getKktime().after(date22)&&item.getKktime().before(date6)) {
+                return false;
+            }
+            return true;
+        }));
+        List<Acceptkkdata> yelist=riyeMap.get(false);//晚上的统计 22点到早上6点
+        List<Acceptkkdata> rilist=riyeMap.get(true);//早上六点到晚上22点
+        /***日统计start**/
+        /***********************日收缩 压******************************/
+        rilist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(max->{
+            rs.setDaymaxSystolic(max.getSystolicpressure());
+            rs.setDaymaxSystolicTime(max.getKktime());
+        });
+        //最小收缩压
+        rilist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(min->{
+            rs.setDayminSystolic(min.getSystolicpressure());
+            rs.setDayminSystolicTime(min.getKktime());
+        });
+        //平均收缩压
+        Double dayAvgSystolic = rilist.stream().collect(Collectors.averagingInt(Acceptkkdata::getSystolicpressure));
+        rs.setDayavgSystolic(dayAvgSystolic);
+        /***********************日舒张压******************************/
+        //最大舒张压
+        rilist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max->{
+            rs.setDaymaxDiastolic(max.getDiastolicpressure());
+            rs.setDaymaxDiastolicTime(max.getKktime());
+        });
+        //最小舒张压
+        rilist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(min->{
+            rs.setDayminDiastolic(min.getDiastolicpressure());
+            rs.setDayminDiastolicTime(min.getKktime());
+        });
+        //平均舒张压
+        Double DayavgDiastolic = rilist.stream().collect(Collectors.averagingInt(Acceptkkdata::getDiastolicpressure));
+        rs.setDayavgDiastolic(DayavgDiastolic);
+        /***********************日心率******************************/
+        //最大心率
+        rilist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max->{
+            rs.setDaymaxHrrest(max.getPulse());
+        });
+        //最小心率
+        rilist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(min->{
+            rs.setDayminHrrest(min.getPulse());
+        });
+        //平均心率
+        Double DayavgHrrest = rilist.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
+        rs.setDayavgHrrest(DayavgHrrest);
+        /***日统计end*/
+        /***晚上统计start**/
+        /***********************晚上收缩 压******************************/
+        yelist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(max->{
+            rs.setNightmaxSystolic(max.getSystolicpressure());
+            rs.setNightmaxSystolicTime(max.getKktime());
+        });
+        //最小收缩压
+        yelist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getSystolicpressure))).ifPresent(min->{
+            rs.setNightminSystolic(min.getSystolicpressure());
+            rs.setNightminSystolicTime(min.getKktime());
+        });
+        //平均收缩压
+        Double nightAvgSystolic = yelist.stream().collect(Collectors.averagingInt(Acceptkkdata::getSystolicpressure));
+        rs.setNightavgSystolic(nightAvgSystolic);
+        /***********************晚上舒张压******************************/
+        //最大舒张压
+        yelist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max->{
+            rs.setNightmaxDiastolic(max.getDiastolicpressure());
+            rs.setNightmaxDiastolicTime(max.getKktime());
+        });
+        //最小舒张压
+        yelist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(min->{
+            rs.setNightminDiastolic(min.getDiastolicpressure());
+            rs.setNightminDiastolicTime(min.getKktime());
+        });
+        //平均舒张压
+        Double NightavgDiastolic = yelist.stream().collect(Collectors.averagingInt(Acceptkkdata::getDiastolicpressure));
+        rs.setNightavgDiastolic(NightavgDiastolic);
+        /***********************晚上心率******************************/
+        //最大心率
+        yelist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max->{
+            rs.setNightmaxHrrest(max.getPulse());
+        });
+        //最小心率
+        yelist.stream().collect(Collectors.minBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(min->{
+            rs.setNightminHrrest(min.getPulse());
+        });
+        //平均心率
+        Double NightavgHrrest = yelist.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
+        rs.setNightavgHrrest(NightavgHrrest);
+        /***晚上统计end*/
 
+
+        return rs;
+    }
 }

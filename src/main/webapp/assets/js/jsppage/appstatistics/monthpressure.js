@@ -18,7 +18,6 @@ $(function () {
     var patientid=$("#patientUID").val();
     var currentDate=$("#currentDateID").val();
     jumpPageNoAuthorityForHandlerNoContainer("/appstatistics/displayMonthChat?patientid="+patientid,function(data) {
-
         var chart = new Highcharts.Chart('container',data.data);
     });
     $("#listLogID").click(function () {

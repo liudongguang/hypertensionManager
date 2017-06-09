@@ -291,4 +291,11 @@ public class Acceptkkdata {
     public void setSource(Integer source) {
         this.source = source;
     }
+
+    @Override
+    public String toString() {
+        return "Acceptkkdata{" +
+                ", kktime=" + kktime +
+                '}';
+    }
 }

@@ -257,4 +257,74 @@ public class DateUtil {
     public static String getDayStrByData(Date kktime) {
         return DateFormatUtils.format(kktime,DateUtil.dd);
     }
+
+    /**
+     * 24小时
+     * @param reportDate
+     * @return
+     */
+    public static Date[] getDATEBetweenFor24(Date reportDate) {
+        Date[] dates = new Date[2];
+        Calendar start = Calendar.getInstance();
+        start.setTime(reportDate);
+        dates[0] = start.getTime();
+        Calendar end = Calendar.getInstance();
+        end.setTime(reportDate);
+        end.add(Calendar.DAY_OF_YEAR,1);
+        dates[1] = end.getTime();
+        return dates;
+    }
+
+    /**
+     * 计算时间差
+     * @param endDate
+     * @param nowDate
+     * @return
+     */
+    public static String getDatePoor(Date endDate, Date nowDate) {
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        // long ns = 1000;
+        // 获得两个时间的毫秒时间差异
+        long diff = endDate.getTime() - nowDate.getTime();
+        // 计算差多少天
+        long day = diff / nd;
+        // 计算差多少小时
+        long hour = diff % nd / nh;
+        // 计算差多少分钟
+        long min = diff % nd % nh / nm;
+        // 计算差多少秒//输出结果
+        // long sec = diff % nd % nh % nm / ns;
+        return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+    /**
+     * 获取第二天凌晨6点
+     * @param date
+     * @return
+     */
+    public static Date getDateHour6(Date date) {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(date);
+        cl.add(Calendar.DAY_OF_YEAR,1);
+        cl.set(Calendar.HOUR_OF_DAY,6);
+        cl.set(Calendar.MINUTE,0);
+        cl.set(Calendar.SECOND,0);
+        return cl.getTime();
+    }
+
+    /**
+     * 获取晚上10点
+     * @param date
+     * @return
+     */
+    public static Date getDateHour22(Date date) {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(date);
+        cl.set(Calendar.HOUR_OF_DAY,22);
+        cl.set(Calendar.MINUTE,0);
+        cl.set(Calendar.SECOND,0);
+        return cl.getTime();
+    }
 }
