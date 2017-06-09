@@ -48,7 +48,6 @@
                     <td class="td_bg">成功的读数</td>
                     <td class="td_cont">${obj.logSize}</td>
                 </tr>
-
                 </tbody>
             </table>
 
@@ -68,8 +67,7 @@
                                                                            pattern="HH:mm:ss"></fmt:formatDate>)
                     </td>
                     <td class="td_bg">收缩压(平均)</td>
-                    <td class="td_cont"><fmt:formatNumber pattern="0.00"
-                                                          value="${obj.avgSystolic}"></fmt:formatNumber></td>
+                    <td class="td_cont">${obj.avgSystolic}</td>
                     <td class="td_bg">舒张压(最高)</td>
                     <td class="td_cont">${obj.maxDiastolic}(<fmt:formatDate value="${obj.maxDiastolicTime}"
                                                                             pattern="HH:mm:ss"></fmt:formatDate>)
@@ -81,8 +79,7 @@
                                                                             pattern="HH:mm:ss"></fmt:formatDate>)
                     </td>
                     <td class="td_bg">舒张压(平均)</td>
-                    <td class="td_cont"><fmt:formatNumber pattern="0.00"
-                                                                             value="${obj.avgDiastolic}"></fmt:formatNumber></td>
+                    <td class="td_cont">${obj.avgDiastolic}</td>
                     <td class="td_bg">血压负荷<br>收缩压</td>
                     <td class="td_cont">91.2%</td>
                     <td class="td_bg">血压负荷<br>舒张压</td>
@@ -90,9 +87,9 @@
                 </tr>
                 <tr>
                     <td class="td_bg">血压变异系数<br>收缩压</td>
-                    <td class="td_cont">9.94%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.shousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                     <td class="td_bg">血压变异系数<br>舒张压</td>
-                    <td class="td_cont">18.69%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.shuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                     <td class="td_bg">夜间血压下降率<br>收缩压</td>
                     <td class="td_cont">-8.00%</td>
                     <td class="td_bg">夜间血压下降率<br>舒张压</td>
@@ -126,7 +123,7 @@
                         <tbody>
                         <tr>
                             <td>收缩压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.avgSystolic}"></fmt:formatNumber></td>
+                            <td>${obj.avgSystolic}</td>
                             <td>${obj.maxSystolic}(<fmt:formatDate value="${obj.maxSystolicTime}"
                                                                    pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -136,7 +133,7 @@
                         </tr>
                         <tr>
                             <td>舒张压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.avgDiastolic}"></fmt:formatNumber></td>
+                            <td>${obj.avgDiastolic}</td>
                             <td>${obj.maxDiastolic}(<fmt:formatDate value="${obj.maxDiastolicTime}"
                                                                     pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -146,15 +143,15 @@
                         </tr>
                         <tr>
                             <td>心率(BPM)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.avgHrrest}"></fmt:formatNumber></td>
+                            <td>${obj.avgHrrest}</td>
                             <td>${obj.maxHrrest}</td>
                             <td>${obj.minHrrest}</td>
                         </tr>
                         </tbody>
                     </table>
                     <p style="line-height: 20px">
-                        收缩压变异系数：9.94%<br>
-                        舒张压变异系数：18.69%<br>
+                        收缩压变异系数：<fmt:formatNumber value="${obj.shousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压变异系数：<fmt:formatNumber value="${obj.shuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         平均脉压差：66<br>
                         血压负荷(收缩压)：91.2%<br>
                         血压负荷(舒张压)：67.6%<br>
@@ -178,7 +175,7 @@
                         <tbody>
                         <tr>
                             <td>收缩压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.dayavgSystolic}"></fmt:formatNumber></td>
+                            <td>${obj.dayavgSystolic}</td>
                             <td>${obj.daymaxSystolic}(<fmt:formatDate value="${obj.daymaxSystolicTime}"
                                                                       pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -188,7 +185,7 @@
                         </tr>
                         <tr>
                             <td>舒张压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.dayavgDiastolic}"></fmt:formatNumber></td>
+                            <td>${obj.dayavgDiastolic}</td>
                             <td>${obj.daymaxDiastolic}(<fmt:formatDate value="${obj.daymaxDiastolicTime}"
                                                                        pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -198,15 +195,15 @@
                         </tr>
                         <tr>
                             <td>心率(BPM)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.dayavgHrrest}"></fmt:formatNumber></td>
+                            <td>${obj.dayavgHrrest}</td>
                             <td>${obj.daymaxHrrest}</td>
                             <td>${obj.dayminHrrest}</td>
                         </tr>
                         </tbody>
                     </table>
                     <p style="line-height: 20px">
-                        收缩压变异系数：9.94%<br>
-                        舒张压变异系数：18.69%<br>
+                        收缩压变异系数：<fmt:formatNumber value="${obj.dayshousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压变异系数：<fmt:formatNumber value="${obj.dayshuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         平均脉压差：66<br>
                         血压负荷(收缩压)：91.2%<br>
                         血压负荷(舒张压)：67.6%<br>
@@ -230,7 +227,7 @@
                         <tbody>
                         <tr>
                             <td>收缩压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.nightavgSystolic}"></fmt:formatNumber></td>
+                            <td>${obj.nightavgSystolic}</td>
                             <td>${obj.nightmaxSystolic}(<fmt:formatDate value="${obj.nightmaxSystolicTime}"
                                                                       pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -240,7 +237,7 @@
                         </tr>
                         <tr>
                             <td>舒张压(mmHg)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.nightavgDiastolic}"></fmt:formatNumber></td>
+                            <td>${obj.nightavgDiastolic}</td>
                             <td>${obj.nightmaxDiastolic}(<fmt:formatDate value="${obj.nightmaxDiastolicTime}"
                                                                        pattern="HH:mm:ss"></fmt:formatDate>)
                             </td>
@@ -250,15 +247,15 @@
                         </tr>
                         <tr>
                             <td>心率(BPM)</td>
-                            <td><fmt:formatNumber pattern="0.00" value="${obj.nightavgHrrest}"></fmt:formatNumber></td>
+                            <td>${obj.nightavgHrrest}</td>
                             <td>${obj.nightmaxHrrest}</td>
                             <td>${obj.nightminHrrest}</td>
                         </tr>
                         </tbody>
                     </table>
                     <p style="line-height: 20px">
-                        收缩压变异系数：9.94%<br>
-                        舒张压变异系数：18.69%<br>
+                        收缩压变异系数：<fmt:formatNumber value="${obj.nightshousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压变异系数：<fmt:formatNumber value="${obj.nightshuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         平均脉压差：66<br>
                         血压负荷(收缩压)：91.2%<br>
                         血压负荷(舒张压)：67.6%<br>
