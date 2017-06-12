@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -145,6 +146,22 @@ public class WebPationtServiceImpl implements WebPationtService {
 
     @Override
     public ReportRs getReport(ReportParam param) throws Exception {
+        ////
+        Predicate<Acceptkkdata> p135=item->{
+            int Systolicpressure=item.getSystolicpressure();
+            if(Systolicpressure>=135){
+                return true;
+            }
+            return false;
+        };
+        Predicate<Acceptkkdata> p85=item->{
+            int Systolicpressure=item.getSystolicpressure();
+            if(Systolicpressure>=85){
+                return true;
+            }
+            return false;
+        };
+        ////
         ReportRs rs = new ReportRs();
         param.setPatientuid(42);
         Date d = DateUtils.parseDate("20170602-07:22:30", "yyyyMMdd-hh:mm:ss");
@@ -175,10 +192,13 @@ public class WebPationtServiceImpl implements WebPationtService {
         //平均收缩压
         Double avgSystolic = dataList.stream().collect(Collectors.averagingInt(Acceptkkdata::getSystolicpressure));
         rs.setAvgSystolic(LdgNumberFormat.formatDoubleToInt_floor(avgSystolic));
-        //计算编译系数
+        //计算变异系数
         List<Integer> systolicpressureListData = dataList.stream().map(item -> item.getSystolicpressure()).collect(Collectors.toList());
         Double shousuobianyi = ReportCalculate.calculateBianYiXishu(systolicpressureListData, rs.getAvgSystolic());
         rs.setShousuobianyi(shousuobianyi);
+        //血压负荷收缩压  大于135的次数除以总次数
+        int Systolicpressure135=dataList.stream().filter(p135).collect(Collectors.toList()).size();
+        rs.setShousuofuhe(Systolicpressure135*1.0/rs.getLogSize());
         /***********************舒张压******************************/
         //最大舒张压
         dataList.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max -> {
@@ -197,6 +217,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         List<Integer> diastolicpressureListData = dataList.stream().map(item -> item.getDiastolicpressure()).collect(Collectors.toList());
         Double shuzhangbianyi = ReportCalculate.calculateBianYiXishu(diastolicpressureListData, rs.getAvgDiastolic());
         rs.setShuzhangbianyi(shuzhangbianyi);
+        //血压负荷舒张压  大于85的次数除以总次数
+        int Diastolicpressure85=dataList.stream().filter(p85).collect(Collectors.toList()).size();
+        rs.setShuzhangfuhe(Diastolicpressure85*1.0/rs.getLogSize());
         /***********************心率******************************/
         //最大心率
         dataList.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max -> {
@@ -209,6 +232,10 @@ public class WebPationtServiceImpl implements WebPationtService {
         //平均心率
         Double avgHrrest = dataList.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
         rs.setAvgHrrest(LdgNumberFormat.formatDoubleToInt_floor(avgHrrest));
+       //平均脉压差
+        Double avgMaiyacha=dataList.stream().map(item->item.getSystolicpressure()-item.getDiastolicpressure()).collect(Collectors.averagingInt(Integer::intValue));
+        rs.setAvgMaiyacha(LdgNumberFormat.formatDoubleToInt_floor(avgMaiyacha));
+
         /**分日夜*/
         Date startdate = param.getStart();
         Date date22 = DateUtil.getDateHour22(startdate);//当天的晚上十点
@@ -240,6 +267,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         List<Integer> daysystolicpressureListData = rilist.stream().map(item -> item.getSystolicpressure()).collect(Collectors.toList());
         Double dayshousuobianyi = ReportCalculate.calculateBianYiXishu(daysystolicpressureListData, rs.getDayavgSystolic());
         rs.setDayshousuobianyi(dayshousuobianyi);
+        //血压负荷收缩压  大于135的次数除以总次数
+        int daySystolicpressure135=rilist.stream().filter(p135).collect(Collectors.toList()).size();
+        rs.setDayshousuofuhe(daySystolicpressure135*1.0/rs.getLogSize());
         /***********************日舒张压******************************/
         //最大舒张压
         rilist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max -> {
@@ -258,6 +288,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         List<Integer> daydiastolicpressureListData = rilist.stream().map(item -> item.getDiastolicpressure()).collect(Collectors.toList());
         Double dayshuzhangbianyi = ReportCalculate.calculateBianYiXishu(daydiastolicpressureListData, rs.getDayavgDiastolic());
         rs.setDayshuzhangbianyi(dayshuzhangbianyi);
+        //血压负荷舒张压  大于85的次数除以总次数
+        int DayDiastolicpressure85=rilist.stream().filter(p85).collect(Collectors.toList()).size();
+        rs.setDayshuzhangfuhe(DayDiastolicpressure85*1.0/rs.getLogSize());
         /***********************日心率******************************/
         //最大心率
         rilist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max -> {
@@ -270,6 +303,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         //平均心率
         Double DayavgHrrest = rilist.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
         rs.setDayavgHrrest(LdgNumberFormat.formatDoubleToInt_floor(DayavgHrrest));
+        //平均脉压差
+        Double dayavgMaiyacha=rilist.stream().map(item->item.getSystolicpressure()-item.getDiastolicpressure()).collect(Collectors.averagingInt(Integer::intValue));
+        rs.setDayavgMaiyacha(LdgNumberFormat.formatDoubleToInt_floor(dayavgMaiyacha));
         /***日统计end*/
         /***晚上统计start**/
         /***********************晚上收缩 压******************************/
@@ -289,6 +325,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         List<Integer> nigthsystolicpressureListData = yelist.stream().map(item -> item.getSystolicpressure()).collect(Collectors.toList());
         Double nigthshousuobianyi = ReportCalculate.calculateBianYiXishu(nigthsystolicpressureListData, rs.getNightavgSystolic());
         rs.setNightshousuobianyi(nigthshousuobianyi);
+        //血压负荷收缩压  大于135的次数除以总次数
+        int nigthSystolicpressure135=yelist.stream().filter(p135).collect(Collectors.toList()).size();
+        rs.setNightshousuofuhe(nigthSystolicpressure135*1.0/rs.getLogSize());
         /***********************晚上舒张压******************************/
         //最大舒张压
         yelist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getDiastolicpressure))).ifPresent(max -> {
@@ -307,6 +346,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         List<Integer> nightdiastolicpressureListData = yelist.stream().map(item -> item.getDiastolicpressure()).collect(Collectors.toList());
         Double nightshuzhangbianyi = ReportCalculate.calculateBianYiXishu(nightdiastolicpressureListData, rs.getNightavgDiastolic());
         rs.setNightshuzhangbianyi(nightshuzhangbianyi);
+        //血压负荷舒张压  大于85的次数除以总次数
+        int NightDiastolicpressure85=yelist.stream().filter(p85).collect(Collectors.toList()).size();
+        rs.setNightshuzhangfuhe(NightDiastolicpressure85*1.0/rs.getLogSize());
         /***********************晚上心率******************************/
         //最大心率
         yelist.stream().collect(Collectors.maxBy(Comparator.comparingInt(Acceptkkdata::getPulse))).ifPresent(max -> {
@@ -319,6 +361,9 @@ public class WebPationtServiceImpl implements WebPationtService {
         //平均心率
         Double NightavgHrrest = yelist.stream().collect(Collectors.averagingInt(Acceptkkdata::getPulse));
         rs.setNightavgHrrest(LdgNumberFormat.formatDoubleToInt_floor(NightavgHrrest));
+        //平均脉压差
+        Double nightavgMaiyacha=yelist.stream().map(item->item.getSystolicpressure()-item.getDiastolicpressure()).collect(Collectors.averagingInt(Integer::intValue));
+        rs.setNightavgMaiyacha(LdgNumberFormat.formatDoubleToInt_floor(nightavgMaiyacha));
         /***晚上统计end*/
 
 

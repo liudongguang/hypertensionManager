@@ -81,9 +81,9 @@
                     <td class="td_bg">舒张压(平均)</td>
                     <td class="td_cont">${obj.avgDiastolic}</td>
                     <td class="td_bg">血压负荷<br>收缩压</td>
-                    <td class="td_cont">91.2%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.shousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                     <td class="td_bg">血压负荷<br>舒张压</td>
-                    <td class="td_cont">67.6%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.shuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                 </tr>
                 <tr>
                     <td class="td_bg">血压变异系数<br>收缩压</td>
@@ -97,7 +97,7 @@
                 </tr>
                 <tr>
                     <td class="td_bg">心率平均值</td>
-                    <td class="td_cont">69</td>
+                    <td class="td_cont">${obj.avgHrrest}</td>
                     <td class="td_bg">血压晨峰比</td>
                     <td class="td_cont">-10</td>
                     <td class="td_bg">谷/峰值</td>
@@ -152,9 +152,9 @@
                     <p style="line-height: 20px">
                         收缩压变异系数：<fmt:formatNumber value="${obj.shousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         舒张压变异系数：<fmt:formatNumber value="${obj.shuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        平均脉压差：66<br>
-                        血压负荷(收缩压)：91.2%<br>
-                        血压负荷(舒张压)：67.6%<br>
+                        平均脉压差：${obj.avgMaiyacha}<br>
+                        血压负荷(收缩压)：<fmt:formatNumber value="${obj.shousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        血压负荷(舒张压)：<fmt:formatNumber value="${obj.shuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         收缩压读数超过临床限制的百分比：91.2%<br>
                         舒张压读数超过临床限制的百分比：67.6%<br>
                         收缩压时间超过临床限制的百分比：93.1%<br>
@@ -204,9 +204,9 @@
                     <p style="line-height: 20px">
                         收缩压变异系数：<fmt:formatNumber value="${obj.dayshousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         舒张压变异系数：<fmt:formatNumber value="${obj.dayshuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        平均脉压差：66<br>
-                        血压负荷(收缩压)：91.2%<br>
-                        血压负荷(舒张压)：67.6%<br>
+                        平均脉压差：${obj.dayavgMaiyacha}<br>
+                        血压负荷(收缩压)：<fmt:formatNumber value="${obj.dayshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        血压负荷(舒张压)：<fmt:formatNumber value="${obj.dayshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         收缩压读数超过临床限制的百分比：91.2%<br>
                         舒张压读数超过临床限制的百分比：67.6%<br>
                         收缩压时间超过临床限制的百分比：93.1%<br>
@@ -256,9 +256,9 @@
                     <p style="line-height: 20px">
                         收缩压变异系数：<fmt:formatNumber value="${obj.nightshousuobianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         舒张压变异系数：<fmt:formatNumber value="${obj.nightshuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        平均脉压差：66<br>
-                        血压负荷(收缩压)：91.2%<br>
-                        血压负荷(舒张压)：67.6%<br>
+                        平均脉压差：${obj.nightavgMaiyacha}<br>
+                        血压负荷(收缩压)：<fmt:formatNumber value="${obj.nightshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        血压负荷(舒张压)：<fmt:formatNumber value="${obj.nightshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         收缩压读数超过临床限制的百分比：91.2%<br>
                         舒张压读数超过临床限制的百分比：67.6%<br>
                         收缩压时间超过临床限制的百分比：93.1%<br>

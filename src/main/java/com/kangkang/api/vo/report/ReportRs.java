@@ -22,6 +22,7 @@ public class ReportRs {
     private Date minSystolicTime;//最小收缩压时间
     private Integer avgSystolic;//收缩压的平均值
     private Double shousuobianyi;//收缩变异系数
+    private Double shousuofuhe;//血压负荷收缩压
     /****/
     private Integer maxDiastolic;//最大舒张压
     private Integer minDiastolic;//最小舒张压
@@ -29,10 +30,12 @@ public class ReportRs {
     private Date minDiastolicTime;//最小舒张压时间
     private Integer avgDiastolic;//舒张压的平均值
     private Double shuzhangbianyi;//舒张变异系数
+    private Double shuzhangfuhe;//血压负荷舒张压
     /***/
     private Integer maxHrrest;//最大心率
     private Integer minHrrest;//最小心率
     private Integer avgHrrest;//心率平均值
+    private Integer avgMaiyacha;//脉压差
     /**日统计start*/
     private Integer daymaxSystolic;//最大收缩压
     private Integer dayminSystolic;//最小收缩压
@@ -40,6 +43,7 @@ public class ReportRs {
     private Date dayminSystolicTime;//最小收缩压时间
     private Integer dayavgSystolic;//收缩压的平均值
     private Double dayshousuobianyi;//收缩变异系数
+    private Double dayshousuofuhe;//血压负荷收缩压
     /****/
     private Integer daymaxDiastolic;//最大舒张压
     private Integer dayminDiastolic;//最小舒张压
@@ -47,10 +51,12 @@ public class ReportRs {
     private Date dayminDiastolicTime;//最小舒张压时间
     private Integer dayavgDiastolic;//舒张压的平均值
     private Double dayshuzhangbianyi;//舒张变异系数
+    private Double dayshuzhangfuhe;//血压负荷舒张压
     /***/
     private Integer daymaxHrrest;//最大心率
     private Integer dayminHrrest;//最小心率
     private Integer dayavgHrrest;//心率平均值
+    private Integer dayavgMaiyacha;//脉压差
     /**日统计end*/
     /**晚上统计start*/
     private Integer nightmaxSystolic;//最大收缩压
@@ -59,6 +65,7 @@ public class ReportRs {
     private Date nightminSystolicTime;//最小收缩压时间
     private Integer nightavgSystolic;//收缩压的平均值
     private Double nightshousuobianyi;//收缩变异系数
+    private Double nightshousuofuhe;//血压负荷收缩压
     /****/
     private Integer nightmaxDiastolic;//最大舒张压
     private Integer nightminDiastolic;//最小舒张压
@@ -66,11 +73,13 @@ public class ReportRs {
     private Date nightminDiastolicTime;//最小舒张压时间
     private Integer nightavgDiastolic;//舒张压的平均值
     private Double nightshuzhangbianyi;//舒张变异系数
+    private Double nightshuzhangfuhe;//血压负荷舒张压
 
     /***/
     private Integer nightmaxHrrest;//最大心率
     private Integer nightminHrrest;//最小心率
     private Integer nightavgHrrest;//心率平均值
+    private Integer nightavgMaiyacha;//脉压差
     /**晚上统计end*/
 
 
@@ -158,6 +167,30 @@ public class ReportRs {
 
     public void setMaxSystolic(Integer maxSystolic) {
         this.maxSystolic = maxSystolic;
+    }
+
+    public Integer getAvgMaiyacha() {
+        return avgMaiyacha;
+    }
+
+    public void setAvgMaiyacha(Integer avgMaiyacha) {
+        this.avgMaiyacha = avgMaiyacha;
+    }
+
+    public Integer getDayavgMaiyacha() {
+        return dayavgMaiyacha;
+    }
+
+    public void setDayavgMaiyacha(Integer dayavgMaiyacha) {
+        this.dayavgMaiyacha = dayavgMaiyacha;
+    }
+
+    public Integer getNightavgMaiyacha() {
+        return nightavgMaiyacha;
+    }
+
+    public void setNightavgMaiyacha(Integer nightavgMaiyacha) {
+        this.nightavgMaiyacha = nightavgMaiyacha;
     }
 
     public Integer getMinSystolic() {
@@ -494,5 +527,53 @@ public class ReportRs {
 
     public void setNightavgHrrest(Integer nightavgHrrest) {
         this.nightavgHrrest = nightavgHrrest;
+    }
+
+    public Double getShousuofuhe() {
+        return shousuofuhe;
+    }
+
+    public void setShousuofuhe(Double shousuofuhe) {
+        this.shousuofuhe = shousuofuhe;
+    }
+
+    public Double getShuzhangfuhe() {
+        return shuzhangfuhe;
+    }
+
+    public void setShuzhangfuhe(Double shuzhangfuhe) {
+        this.shuzhangfuhe = shuzhangfuhe;
+    }
+
+    public Double getDayshousuofuhe() {
+        return dayshousuofuhe;
+    }
+
+    public void setDayshousuofuhe(Double dayshousuofuhe) {
+        this.dayshousuofuhe = dayshousuofuhe;
+    }
+
+    public Double getDayshuzhangfuhe() {
+        return dayshuzhangfuhe;
+    }
+
+    public void setDayshuzhangfuhe(Double dayshuzhangfuhe) {
+        this.dayshuzhangfuhe = dayshuzhangfuhe;
+    }
+
+    public Double getNightshousuofuhe() {
+        return nightshousuofuhe;
+    }
+
+    public void setNightshousuofuhe(Double nightshousuofuhe) {
+        this.nightshousuofuhe = nightshousuofuhe;
+    }
+
+    public Double getNightshuzhangfuhe() {
+        return nightshuzhangfuhe;
+    }
+
+    public void setNightshuzhangfuhe(Double nightshuzhangfuhe) {
+        this.nightshuzhangfuhe = nightshuzhangfuhe;
     }
 }
