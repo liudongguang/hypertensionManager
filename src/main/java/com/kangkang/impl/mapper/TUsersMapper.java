@@ -33,7 +33,7 @@ public interface TUsersMapper extends Mapper<TUsers> {
 
     int updateUserPhone(GetVerificationCodeParam param);
     ////////////////////////////////////////////////////
-    List<TUsers> selectAllForPatientListList();
+    List<TUsers> selectAllForPatientListList(TUsers user);
 
     Integer selectUidByPhone(SavePatientParam checkParam);
 

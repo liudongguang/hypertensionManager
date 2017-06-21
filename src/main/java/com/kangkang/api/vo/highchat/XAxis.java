@@ -2,7 +2,6 @@ package com.kangkang.api.vo.highchat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +9,28 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class XAxis {
-    private List<String> categories=new ArrayList<>();
-    private Axis_labels labels=new Axis_labels();
+    private String type;
+    private List<String> categories;
+    private Axis_labels labels;
+    private List<PlotBands> plotBands;
+    private DateTimeLabelFormats dateTimeLabelFormats=new  DateTimeLabelFormats();
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<PlotBands> getPlotBands() {
+        return plotBands;
+    }
+
+    public void setPlotBands(List<PlotBands> plotBands) {
+        this.plotBands = plotBands;
+    }
 
     public Axis_labels getLabels() {
         return labels;
@@ -27,5 +46,13 @@ public class XAxis {
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+
+    public DateTimeLabelFormats getDateTimeLabelFormats() {
+        return dateTimeLabelFormats;
+    }
+
+    public void setDateTimeLabelFormats(DateTimeLabelFormats dateTimeLabelFormats) {
+        this.dateTimeLabelFormats = dateTimeLabelFormats;
     }
 }

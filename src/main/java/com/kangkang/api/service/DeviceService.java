@@ -14,7 +14,7 @@ import java.util.List;
  * Created by LiuDongguang on 2017/5/16.
  */
 public interface DeviceService {
-    PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam);
+    PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam,HytbDeviceRepertory param);
 
     /**
      * 检查是否存在SN

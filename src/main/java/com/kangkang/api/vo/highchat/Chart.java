@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Chart {
-    private String type="area";
+    private String type="spline";
     private Boolean inverted;
 
     public String getType() {

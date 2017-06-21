@@ -327,4 +327,19 @@ public class DateUtil {
         cl.set(Calendar.SECOND,0);
         return cl.getTime();
     }
+
+    /**
+     * 获取第二天的凌晨2点
+     * @param date
+     * @return
+     */
+    public static Date getDateHour2(Date date) {
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(date);
+        cl.add(Calendar.DAY_OF_YEAR,1);
+        cl.set(Calendar.HOUR_OF_DAY,2);
+        cl.set(Calendar.MINUTE,0);
+        cl.set(Calendar.SECOND,0);
+        return cl.getTime();
+    }
 }

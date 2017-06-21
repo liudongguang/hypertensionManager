@@ -81,8 +81,17 @@
          update t_users set registphone=#{mobile},username=#{mobile} where uid=#{uid}
     </update>
     <!--     -->
-    <select id="selectAllForPatientListList" resultMap="BaseResultMap">
-        select uid,sn,name,registphone,birthday,sex,age from t_users   order by uid desc
+    <select id="selectAllForPatientListList" resultMap="BaseResultMap" parameterType="com.kangkang.api.po.TUsers">
+        select uid,sn,name,registphone,birthday,sex,age from t_users
+          <where>
+              <if test="name!=null and name.length()>0">
+                   name like CONCAT(#{name}, '%')
+              </if>
+              <if test="registphone!=null and registphone.length()>0">
+                  and registphone like CONCAT(#{registphone}, '%')
+              </if>
+          </where>
+          order by uid desc
     </select>
     <select id="selectUidByPhone" parameterType="com.kangkang.api.vo.SavePatientParam" resultType="int">
         select uid from t_users where registphone=#{registphone}

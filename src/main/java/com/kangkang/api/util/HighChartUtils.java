@@ -1,6 +1,7 @@
 package com.kangkang.api.util;
 
 import com.kangkang.api.vo.highchat.HighchartsConfig;
+import com.kangkang.api.vo.highchat.HighchartsConfig_arr;
 import com.kangkang.api.vo.highchat.YAxis;
 
 /**
@@ -24,6 +25,16 @@ public class HighChartUtils {
     public final static HighchartsConfig createBasicChat(String title,String yAxisTitle,boolean inverted){
         HighchartsConfig config = createBasicChat(title,yAxisTitle);
         config.getChart().setInverted(inverted);
+        return config;
+    }
+
+
+    public final static HighchartsConfig_arr createArrBasicChat(String title,String yAxisTitle){
+        HighchartsConfig_arr config = new HighchartsConfig_arr();
+        config.getTitle().setText(title);
+        //config.getSubtitle().setText("数据来源: WorldClimate.com");
+        YAxis yAxis=config.getyAxis();
+        yAxis.getTitle().setText(yAxisTitle);
         return config;
     }
 }

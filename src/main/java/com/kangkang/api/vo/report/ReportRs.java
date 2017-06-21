@@ -81,11 +81,25 @@ public class ReportRs {
     private Integer nightavgHrrest;//心率平均值
     private Integer nightavgMaiyacha;//脉压差
     /**晚上统计end*/
+   private Double yeshousuoxjl;//夜间血压收缩压下降率
+   private Double yeshuzhangxjl;//夜间血压舒张压下降率
 
 
+    public Double getYeshousuoxjl() {
+        return yeshousuoxjl;
+    }
 
+    public void setYeshousuoxjl(Double yeshousuoxjl) {
+        this.yeshousuoxjl = yeshousuoxjl;
+    }
 
+    public Double getYeshuzhangxjl() {
+        return yeshuzhangxjl;
+    }
 
+    public void setYeshuzhangxjl(Double yeshuzhangxjl) {
+        this.yeshuzhangxjl = yeshuzhangxjl;
+    }
 
     public Double getShousuobianyi() {
         return shousuobianyi;

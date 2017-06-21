@@ -30,8 +30,8 @@ public class DeviceController {
      * @throws Exception
      */
     @RequestMapping(value = "/deviceList")
-    public String deviceList(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam);
+    public String deviceList(HttpServletRequest request, PageParam pageParam,HytbDeviceRepertory param) throws Exception {
+        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam,param);
         request.setAttribute("page", page);
         return "/jsppage/device/devicelist.jsp";
     }
@@ -44,8 +44,8 @@ public class DeviceController {
      * @throws Exception
      */
     @RequestMapping(value = "/deviceListForSelect")
-    public String deviceListForSelect(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam);
+    public String deviceListForSelect(HttpServletRequest request, PageParam pageParam,HytbDeviceRepertory param) throws Exception {
+        PageInfo<HytbDeviceRepertoryExt> page = deviceService.getDeviceListPageInfo(pageParam,param);
         request.setAttribute("page", page);
         return "/jsppage/device/selectdevicelist.jsp";
     }

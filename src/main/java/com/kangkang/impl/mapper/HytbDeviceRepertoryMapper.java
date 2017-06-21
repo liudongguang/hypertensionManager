@@ -7,7 +7,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface HytbDeviceRepertoryMapper extends Mapper<HytbDeviceRepertory> {
-    List<HytbDeviceRepertoryExt> selectAllForDeviceList();
+    List<HytbDeviceRepertoryExt> selectAllForDeviceList(HytbDeviceRepertory param);
 
     Integer selectUidBySN(HytbDeviceRepertory device);
 

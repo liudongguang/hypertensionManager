@@ -13,12 +13,20 @@
     <result column="destroy" jdbcType="INTEGER" property="destroy" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
-    <select id="selectAllForDeviceList" resultType="com.kangkang.api.vo.HytbDeviceRepertoryExt">
+    <select id="selectAllForDeviceList" resultType="com.kangkang.api.vo.HytbDeviceRepertoryExt" parameterType="com.kangkang.api.po.HytbDeviceRepertory">
         select shebei.*,landlog.returnstate,landlog.zjstart,landlog.zjend,landlog.patientname from hypertensionmanager.hytb_device_repertory shebei
 left join (
 select landlog.uid,landlog.zjstart,landlog.zjend,landlog.returnstate,patient.name as patientname from hypertensionmanager.hytb_device_landlog landlog
 left join hypertensionmanager.t_users patient on landlog.patientid=patient.uid
 ) landlog on shebei.landlogid=landlog.uid
+<where>
+    <if test="sn!=null and sn.length()>0">
+        shebei.sn=#{sn}
+    </if>
+    <if test="alias!=null and alias.length()>0">
+        and shebei.alias like CONCAT('%',#{alias}, '%')
+    </if>
+</where>
 order by shebei.uid desc
     </select>
     <select id="selectUidBySN" resultType="int">

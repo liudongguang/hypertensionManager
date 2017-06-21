@@ -7,27 +7,38 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PlotOptions {
-    private PlotOptions_series series = new PlotOptions_series();
+    private PlotOptions_spline spline=new PlotOptions_spline();
 
-    public PlotOptions_series getSeries() {
-        return series;
+    public PlotOptions_spline getSpline() {
+        return spline;
     }
 
-    public void setSeries(PlotOptions_series series) {
-        this.series = series;
+    public void setSpline(PlotOptions_spline spline) {
+        this.spline = spline;
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class PlotOptions_series {
-        private String stacking = "normal";
+    private class PlotOptions_spline {
+          private PlotOptions_marker marker=new PlotOptions_marker();
 
-        public String getStacking() {
-            return stacking;
+        public PlotOptions_marker getMarker() {
+            return marker;
         }
 
-        public void setStacking(String stacking) {
-            this.stacking = stacking;
+        public void setMarker(PlotOptions_marker marker) {
+            this.marker = marker;
         }
     }
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private class PlotOptions_marker{
+        private boolean enabled=true;
 
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+    }
 }

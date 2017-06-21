@@ -37,8 +37,8 @@ public class DeviceServiceImpl implements DeviceService {
 
 
     @Override
-    public PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam) {
-        PageInfo<HytbDeviceRepertoryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> deviceRepertoryDao.selectAllForDeviceList());
+    public PageInfo<HytbDeviceRepertoryExt> getDeviceListPageInfo(PageParam pageParam,HytbDeviceRepertory param) {
+        PageInfo<HytbDeviceRepertoryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> deviceRepertoryDao.selectAllForDeviceList(param));
         return pageInfo;
     }
 

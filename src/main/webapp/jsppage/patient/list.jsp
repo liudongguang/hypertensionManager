@@ -3,7 +3,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
-
+    <div style="margin-bottom: 10px;">
+        <form class="form-inline" id="subForm" action="webPatientHandler/patientList">
+            <div class="form-group">
+                <label for="snid">姓名</label>
+                <input type="text" name="name" class="form-control" id="snid" placeholder="查询的病人姓名" value="${param.name}">
+            </div>
+            <div class="form-group" style="margin-left: 15px;">
+                <label for="nameid">手机号</label>
+                <input type="text" name="registphone" class="form-control" id="nameid" placeholder="查询的手机号" value="${param.registphone}">
+            </div>
+        </form>
+        <div class="pull-right"><button id="subBT" type="button" class="btn btn-default">查询</button></div>
+    </div>
 
     <button class="btn btn-primary ldgbtmarginbottom5" id="addPatient" type="button">新增</button>
 
@@ -58,7 +70,7 @@
     <input id="pageSize" type="hidden" value="${page.pageSize}"/>
     <input id="pages" type="hidden" value="${page.pages}"/>
     <input id="total" type="hidden" value="${page.total}"/>
-    <input id="loadDataURL" type="hidden" value="/deviceHandler/deviceList"/>
+    <input id="loadDataURL" type="hidden" value="/webPatientHandler/patientList"/>
     <input id="searFormID" type="hidden" value="subForm"/>
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jPage-1.2.js"></script>

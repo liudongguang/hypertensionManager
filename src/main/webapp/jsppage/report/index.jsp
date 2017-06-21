@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/css/jsppage/report/style.css">
 </head>
 <body>
+<input type="hidden" id="basePath" value="${pageContext.request.contextPath }/"/>
 <div class="row">
     <div class="col-md-12">
         <div class="commen_tt"><span class="commen_topt">个人信息</span>
@@ -91,17 +92,17 @@
                     <td class="td_bg">血压变异系数<br>舒张压</td>
                     <td class="td_cont"><fmt:formatNumber value="${obj.shuzhangbianyi}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                     <td class="td_bg">夜间血压下降率<br>收缩压</td>
-                    <td class="td_cont">-8.00%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.yeshousuoxjl}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                     <td class="td_bg">夜间血压下降率<br>舒张压</td>
-                    <td class="td_cont">4.60%</td>
+                    <td class="td_cont"><fmt:formatNumber value="${obj.yeshuzhangxjl}" type="PERCENT" pattern="0.00%"></fmt:formatNumber></td>
                 </tr>
                 <tr>
                     <td class="td_bg">心率平均值</td>
                     <td class="td_cont">${obj.avgHrrest}</td>
                     <td class="td_bg">血压晨峰比</td>
-                    <td class="td_cont">-10</td>
+                    <td class="td_cont"></td>
                     <td class="td_bg">谷/峰值</td>
-                    <td class="td_cont" colspan="3">50.29%</td>
+                    <td class="td_cont" colspan="3"></td>
                 </tr>
 
                 </tbody>
@@ -155,10 +156,10 @@
                         平均脉压差：${obj.avgMaiyacha}<br>
                         血压负荷(收缩压)：<fmt:formatNumber value="${obj.shousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         血压负荷(舒张压)：<fmt:formatNumber value="${obj.shuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        收缩压读数超过临床限制的百分比：91.2%<br>
-                        舒张压读数超过临床限制的百分比：67.6%<br>
-                        收缩压时间超过临床限制的百分比：93.1%<br>
-                        舒张压时间超过临床限制的百分比：70.1%<br>
+                        收缩压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.shousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.shuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        收缩压时间超过临床限制的百分比：<br>
+                        舒张压时间超过临床限制的百分比：<br>
                     </p>
                 </div>
             </div>
@@ -207,10 +208,10 @@
                         平均脉压差：${obj.dayavgMaiyacha}<br>
                         血压负荷(收缩压)：<fmt:formatNumber value="${obj.dayshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         血压负荷(舒张压)：<fmt:formatNumber value="${obj.dayshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        收缩压读数超过临床限制的百分比：91.2%<br>
-                        舒张压读数超过临床限制的百分比：67.6%<br>
-                        收缩压时间超过临床限制的百分比：93.1%<br>
-                        舒张压时间超过临床限制的百分比：70.1%<br>
+                        收缩压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.dayshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.dayshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        收缩压时间超过临床限制的百分比：<br>
+                        舒张压时间超过临床限制的百分比：<br>
                     </p>
                 </div>
             </div>
@@ -259,10 +260,10 @@
                         平均脉压差：${obj.nightavgMaiyacha}<br>
                         血压负荷(收缩压)：<fmt:formatNumber value="${obj.nightshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
                         血压负荷(舒张压)：<fmt:formatNumber value="${obj.nightshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
-                        收缩压读数超过临床限制的百分比：91.2%<br>
-                        舒张压读数超过临床限制的百分比：67.6%<br>
-                        收缩压时间超过临床限制的百分比：93.1%<br>
-                        舒张压时间超过临床限制的百分比：70.1%<br>
+                        收缩压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.nightshousuofuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        舒张压读数超过临床限制的百分比：<fmt:formatNumber value="${obj.nightshuzhangfuhe}" type="PERCENT" pattern="0.00%"></fmt:formatNumber><br>
+                        收缩压时间超过临床限制的百分比：<br>
+                        舒张压时间超过临床限制的百分比：<br>
                     </p>
                 </div>
             </div>
@@ -272,8 +273,8 @@
         <div class="hg_top">血压趋势图(反勺型血压)</div>
         <div class="commen_tt2">
             <!--这里放心电的插件-->
-
-
+            <div id="container">
+            </div>
         </div>
         <!-- 血压趋势图ending -->
 
@@ -356,6 +357,9 @@
     </div>
 </div>
 <script language="javascript" type="text/javascript" src="assets/js/jquery-3.2.0.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="assets/js/main/common.js"></script>
+<script language="javascript" type="text/javascript" src="assets/Highcharts/highcharts.js"></script>
 <script language="javascript" type="text/javascript" src="assets/js/jsppage/report/index.js"></script>
 </body>
 </html>

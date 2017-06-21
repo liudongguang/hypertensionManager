@@ -3,6 +3,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
+    <div style="margin-bottom: 10px;">
+        <form class="form-inline" id="subForm" action="deviceHandler/deviceList">
+            <div class="form-group">
+                <label for="snid">SN</label>
+                <input type="text" name="sn" class="form-control" id="snid" placeholder="查询设备SN" value="${param.sn}">
+            </div>
+
+            <div class="form-group" style="margin-left: 15px;">
+                <label for="nameid">名称</label>
+                <input type="text" name="alias" class="form-control" id="nameid" placeholder="查询设备名称" value="${param.alias}">
+            </div>
+        </form>
+        <div class="pull-right"><button id="subBT" type="button" class="btn btn-default">查询</button></div>
+    </div>
     <button class="btn btn-primary ldgbtmarginbottom5" id="addDevice" type="button">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">

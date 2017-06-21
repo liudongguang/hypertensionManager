@@ -7,6 +7,7 @@ import com.kangkang.api.po.TUsers;
 import com.kangkang.api.service.DeviceService;
 import com.kangkang.api.service.WebPationtService;
 import com.kangkang.api.vo.SavePatientParam;
+import com.kangkang.api.vo.highchat.HighchartsConfig_arr;
 import com.kangkang.api.vo.report.ReportParam;
 import com.kangkang.api.vo.report.ReportRs;
 import com.ldg.api.vo.PageParam;
@@ -36,8 +37,8 @@ public class WebPatientController {
      * @throws Exception
      */
     @RequestMapping(value = "/patientList")
-    public String patientList(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<TUsers> page = webPationtService.getPatientListPageInfo(pageParam);
+    public String patientList(HttpServletRequest request, PageParam pageParam,TUsers user) throws Exception {
+        PageInfo<TUsers> page = webPationtService.getPatientListPageInfo(pageParam,user);
         request.setAttribute("page", page);
         return "/jsppage/patient/list.jsp";
     }
@@ -50,8 +51,8 @@ public class WebPatientController {
      * @throws Exception
      */
     @RequestMapping(value = "/patientListForReport")
-    public String patientListForReport(HttpServletRequest request, PageParam pageParam) throws Exception {
-        patientList(request,pageParam);
+    public String patientListForReport(HttpServletRequest request, PageParam pageParam,TUsers user) throws Exception {
+        patientList(request,pageParam,user);
         return "/jsppage/report/patientlist.jsp";
     }
     /**
@@ -152,6 +153,22 @@ public class WebPatientController {
         ReportRs rs=webPationtService.getReport(param);
         request.setAttribute("obj", rs);
         return "/jsppage/report/index.jsp";
+    }
+
+    /**
+     * 日统计图
+     * @param request
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/displayDay24Chat")
+    @ResponseBody
+    public ResultMsg displayDay24Chat(HttpServletRequest request, ReportParam param) throws Exception {
+        ResultMsg rs = new ResultMsg();
+        HighchartsConfig_arr hcfg= webPationtService.displayDay24Chat(param);
+        rs.setData(hcfg);
+        return rs;
     }
 
 }

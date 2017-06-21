@@ -5,5 +5,12 @@ jQuery(document).ready(function () {
          var $this=$(this);
          $this.children('td').css('background-color','#cdcdcd');
      }
-  })
+  });
+  jumpPageNoAuthorityForHandlerNoContainer("/webPatientHandler/displayDay24Chat",function(data) {
+      Highcharts.setOptions({ global: { useUTC: false } });
+      var chart = new Highcharts.Chart('container',data.data);
+    });
+    initAjaxForm($("#subForm"), $("#subBT"), function (data) {
+        $("#mainContent").empty().html(data);
+    });
 });
