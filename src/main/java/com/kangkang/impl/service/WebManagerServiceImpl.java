@@ -145,8 +145,8 @@ public class WebManagerServiceImpl implements WebManagerService {
 
 
     @Override
-    public PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam) {
-        PageInfo<HytbZixunHealthinquiryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list());
+    public PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam,ZixunSearchParam param) {
+        PageInfo<HytbZixunHealthinquiryExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> healthinquiryDao.healthInquiry_list(param));
         return pageInfo;
     }
 
@@ -186,8 +186,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     ////////////////////////////////////////////////健康资讯 end
 
     @Override
-    public PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam) {
-        PageInfo<HytbZixunFeedbackExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> feedbackDao.feedback_list());
+    public PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam,ZixunSearchParam param) {
+        PageInfo<HytbZixunFeedbackExt> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> feedbackDao.feedback_list(param));
         return pageInfo;
     }
 

@@ -3,6 +3,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
+    <div style="margin-bottom: 10px;">
+        <form class="form-inline" id="subForm" action="webHandler/healthInquiry_list">
+            <div class="form-group">
+                <label for="snid">标题</label>
+                <input type="text" name="title" class="form-control" id="snid" placeholder="查询的标题"
+                       value="${param.title}"/>
+            </div>
+            <div class="form-group" style="margin-left: 15px;position: relative;">
+                <label for="startTimeID">查询时间</label>
+                <input type="text" name="start" class="form-control" id="startTimeID" value="${param.start}"/> - <input
+                    type="text" name="end" class="form-control" id="endTimeID" value="${param.end}"/>
+            </div>
+        </form>
+        <div class="pull-right">
+            <button id="subBT" type="button" class="btn btn-default">查询</button>
+        </div>
+    </div>
     <button class="btn btn-primary ldgbtmarginbottom5" id="addhealthInquiryID" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">

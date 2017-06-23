@@ -454,10 +454,10 @@ public class AppController {
     //////////健康资讯
     @RequestMapping(value = "/informationList")
     @ResponseBody
-    public ResultMsg informationList(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public ResultMsg informationList(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
         /////
         ResultMsg rs = new ResultMsg();
-        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam,param);
         rs.setData(faqpageInfo);
         /////
         return rs;

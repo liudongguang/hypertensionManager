@@ -267,10 +267,10 @@ public class WebPageController {
      * @throws Exception
      */
     @RequestMapping(value = "/healthInquiry_list")
-    public String healthInquiry_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public String healthInquiry_list(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
         request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam,param);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
         return "/zixun/healthInquiry/index.jsp";
@@ -313,9 +313,9 @@ public class WebPageController {
     }
     ///app
     @RequestMapping(value = "/informationList")
-    public String informationList(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public String informationList(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
         /////
-        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam);
+        PageInfo<HytbZixunHealthinquiryExt> faqpageInfo = webManagerService.healthInquiry_list(pageParam,param);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
         return "/zixun/healthInquiry/appIndex.jsp";
@@ -338,10 +338,10 @@ public class WebPageController {
      * @throws Exception
      */
     @RequestMapping(value = "/feedback_list")
-    public String feedback_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public String feedback_list(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
         request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunFeedbackExt> pageInfo = webManagerService.feedback_list(pageParam);
+        PageInfo<HytbZixunFeedbackExt> pageInfo = webManagerService.feedback_list(pageParam,param);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, pageInfo);
         /////
         return "/zixun/feedback/index.jsp";

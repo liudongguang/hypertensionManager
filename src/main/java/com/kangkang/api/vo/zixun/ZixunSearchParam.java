@@ -10,6 +10,15 @@ public class ZixunSearchParam {
     private String title;
     private Date start;
     private Date end;
+    private String userregistphone;
+
+    public String getUserregistphone() {
+        return userregistphone;
+    }
+
+    public void setUserregistphone(String userregistphone) {
+        this.userregistphone = userregistphone;
+    }
 
     public String getTitle() {
         return title;

@@ -88,7 +88,7 @@ public interface WebManagerService {
      * @param pageParam
      * @return
      */
-    PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam);
+    PageInfo<HytbZixunHealthinquiryExt> healthInquiry_list(PageParam pageParam,ZixunSearchParam param);
 
     /**
      * 保存健康资讯
@@ -117,7 +117,7 @@ public interface WebManagerService {
      * @param pageParam
      * @return
      */
-    PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam);
+    PageInfo<HytbZixunFeedbackExt> feedback_list(PageParam pageParam,ZixunSearchParam param);
 
     /**
      * 保存意见反馈
