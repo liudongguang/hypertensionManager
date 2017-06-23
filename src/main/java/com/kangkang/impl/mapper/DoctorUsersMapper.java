@@ -10,7 +10,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface DoctorUsersMapper extends Mapper<DoctorUsers> {
-    List<DoctorUsers> selectAllForDoctorList();
+    List<DoctorUsers> selectAllForDoctorList(DoctorUsers param);
 
     Integer selectUidByGonghaoOrUserName(String username);
 

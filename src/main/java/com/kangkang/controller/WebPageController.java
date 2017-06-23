@@ -8,6 +8,7 @@ import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.*;
+import com.kangkang.api.vo.zixun.ZixunSearchParam;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.PageParam;
 import com.ldg.api.vo.ResultMsg;
@@ -209,10 +210,11 @@ public class WebPageController {
      * @throws Exception
      */
     @RequestMapping(value = "/faq_list")
-    public String faq_list(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public String faq_list(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
+        System.out.println(param);
         request.setAttribute("pici", UUID.randomUUID().toString());
         /////
-        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam);
+        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam,param);
         request.setAttribute(SysConstant.PAGE_REQUEST_ATTR, faqpageInfo);
         /////
         return "/zixun/faq/index.jsp";

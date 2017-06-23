@@ -25,8 +25,8 @@ public class DoctorLogicController {
     private DoctorLogicService doctorLogicService;
 
     @RequestMapping(value = "/doctorList")
-    public String doctorList(HttpServletRequest request, PageParam pageParam) throws Exception {
-        PageInfo<DoctorUsers> page = doctorLogicService.getDoctorListPageInfo(pageParam);
+    public String doctorList(HttpServletRequest request, PageParam pageParam,DoctorUsers param) throws Exception {
+        PageInfo<DoctorUsers> page = doctorLogicService.getDoctorListPageInfo(pageParam,param);
         request.setAttribute("page", page);
         return "/jsppage/doctor/list.jsp";
     }

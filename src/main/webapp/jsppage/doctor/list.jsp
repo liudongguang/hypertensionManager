@@ -3,6 +3,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div>
+    <div style="margin-bottom: 10px;">
+        <form class="form-inline" id="subForm" action="webDoctorHandler/doctorList">
+            <div class="form-group">
+                <label for="snid">医生姓名</label>
+                <input type="text" name="name" class="form-control" id="snid" placeholder="查询的医生姓名" value="${param.name}">
+            </div>
+            <div class="form-group" style="margin-left: 15px;">
+                <label for="nameid">工号</label>
+                <input type="text" name="gonghao" class="form-control" id="nameid" placeholder="查询的工号" value="${param.gonghao}">
+            </div>
+        </form>
+        <div class="pull-right"><button id="subBT" type="button" class="btn btn-default">查询</button></div>
+    </div>
     <button class="btn btn-primary ldgbtmarginbottom5" id="addDoctor" type="button" pici="${pici}">新增</button>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">

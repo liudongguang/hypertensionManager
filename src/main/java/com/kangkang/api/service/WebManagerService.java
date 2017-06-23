@@ -9,6 +9,7 @@ import com.kangkang.api.vo.fileinput.FileInputParam;
 import com.kangkang.api.vo.fileinput.InitialPreviewImgVo;
 import com.kangkang.api.vo.fileinput.SendingVo;
 import com.kangkang.api.vo.webpagecontroller.*;
+import com.kangkang.api.vo.zixun.ZixunSearchParam;
 import com.ldg.api.vo.PageParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +67,7 @@ public interface WebManagerService {
      * @param pageParam
      * @return
      */
-    PageInfo<HytbZixunFaq> faq_list(PageParam pageParam);
+    PageInfo<HytbZixunFaq> faq_list(PageParam pageParam,ZixunSearchParam param);
 
     /**
      * 删除常见问题

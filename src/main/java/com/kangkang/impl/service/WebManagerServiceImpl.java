@@ -10,6 +10,7 @@ import com.kangkang.api.vo.HytbZixunFeedbackExt;
 import com.kangkang.api.vo.WebParamVo;
 import com.kangkang.api.vo.fileinput.*;
 import com.kangkang.api.vo.webpagecontroller.*;
+import com.kangkang.api.vo.zixun.ZixunSearchParam;
 import com.kangkang.impl.mapper.*;
 import com.ldg.api.util.RequestFileUtil;
 import com.ldg.api.vo.PageParam;
@@ -124,8 +125,8 @@ public class WebManagerServiceImpl implements WebManagerService {
     }
 
     @Override
-    public PageInfo<HytbZixunFaq> faq_list(PageParam pageParam) {
-        PageInfo<HytbZixunFaq> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> faqDao.faq_list());
+    public PageInfo<HytbZixunFaq> faq_list(PageParam pageParam,ZixunSearchParam param) {
+        PageInfo<HytbZixunFaq> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> faqDao.faq_list(param));
         return pageInfo;
     }
 

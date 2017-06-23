@@ -9,6 +9,7 @@ import com.kangkang.api.util.PeonyMessageUtil;
 import com.kangkang.api.vo.*;
 import com.kangkang.api.vo.webpagecontroller.FeedbackParam;
 import com.kangkang.api.vo.webpagecontroller.HytbZixunHealthinquiryExt;
+import com.kangkang.api.vo.zixun.ZixunSearchParam;
 import com.kangkang.constant.SysConstant;
 import com.ldg.api.vo.MsgResult;
 import com.ldg.api.vo.PageParam;
@@ -498,9 +499,9 @@ public class AppController {
     /////常见问题start
     @RequestMapping(value = "/commonProblems")
     @ResponseBody
-    public ResultMsg commonProblems(HttpServletRequest request, PageParam pageParam) throws Exception {
+    public ResultMsg commonProblems(HttpServletRequest request, PageParam pageParam,ZixunSearchParam param) throws Exception {
         ResultMsg rs = new ResultMsg();
-        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam);
+        PageInfo<HytbZixunFaq> faqpageInfo = webManagerService.faq_list(pageParam,param);
         rs.setData(faqpageInfo);
         /////
         return rs;

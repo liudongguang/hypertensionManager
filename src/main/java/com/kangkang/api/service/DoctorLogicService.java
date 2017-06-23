@@ -2,7 +2,6 @@ package com.kangkang.api.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kangkang.api.po.DoctorUsers;
-import com.kangkang.api.po.HytbDeviceLandlog;
 import com.ldg.api.vo.PageParam;
 import com.qq.weixin.mp.aes.AesException;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface DoctorLogicService {
 
-    PageInfo<DoctorUsers> getDoctorListPageInfo(PageParam pageParam);
+    PageInfo<DoctorUsers> getDoctorListPageInfo(PageParam pageParam,DoctorUsers param);
 
     /**
      * 保存医生信息

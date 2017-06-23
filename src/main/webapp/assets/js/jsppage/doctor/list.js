@@ -3,4 +3,8 @@ jQuery(document).ready(function () {
     $("#addDoctor").click(function () {
         jumpPageNoAuthority("/webDoctorHandler/addDoctor",$("#mainContent"));
     });
+    initAjaxForm($("#subForm"), $("#subBT"), function (data) {
+        $("#mainContent").empty().html(data);
+    });
+
 });

@@ -20,8 +20,17 @@
         <result column="rytoken" jdbcType="VARCHAR" property="rytoken"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
     </resultMap>
-    <select id="selectAllForDoctorList" resultMap="BaseResultMap">
-     select * from doctor_users order by uid
+    <select id="selectAllForDoctorList" resultMap="BaseResultMap" parameterType="com.kangkang.api.po.DoctorUsers">
+     select * from doctor_users
+        <where>
+            <if test="name!=null and name.length()>0">
+                name like CONCAT(#{name}, '%')
+            </if>
+            <if test="gonghao!=null and gonghao.length()>0">
+                and gonghao like CONCAT(#{gonghao}, '%')
+            </if>
+        </where>
+      order by uid
   </select>
     <select id="selectUidByGonghaoOrUserName" parameterType="string" resultType="int">
           select uid from doctor_users where gonghao=#{username} or username=#{username}

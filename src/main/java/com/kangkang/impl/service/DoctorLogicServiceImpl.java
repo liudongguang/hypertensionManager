@@ -32,8 +32,8 @@ public class DoctorLogicServiceImpl implements DoctorLogicService {
     private RongYunServie rongYunServie;
 
     @Override
-    public PageInfo<DoctorUsers> getDoctorListPageInfo(PageParam pageParam) {
-        PageInfo<DoctorUsers> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> doctorUsersDao.selectAllForDoctorList());
+    public PageInfo<DoctorUsers> getDoctorListPageInfo(PageParam pageParam,DoctorUsers param) {
+        PageInfo<DoctorUsers> pageInfo = PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize(), true).doSelectPageInfo(() -> doctorUsersDao.selectAllForDoctorList(param));
         return pageInfo;
     }
 
